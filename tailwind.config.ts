@@ -13,7 +13,14 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        heading: ['"Space Grotesk"', 'sans-serif'],
+        body: ['Inter', 'sans-serif'],
+      },
       colors: {
+        'neon-orchid': 'hsl(var(--neon-orchid))',
+        'neon-coral': 'hsl(var(--neon-coral))',
+        'neon-lime': 'hsl(var(--neon-lime))',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
