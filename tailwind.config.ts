@@ -21,6 +21,7 @@ export default {
         'neon-orchid': 'hsl(var(--neon-orchid))',
         'neon-coral': 'hsl(var(--neon-coral))',
         'neon-lime': 'hsl(var(--neon-lime))',
+        'quartz-pink': 'hsl(var(--quartz-pink))',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
