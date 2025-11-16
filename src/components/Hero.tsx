@@ -10,6 +10,10 @@ const Hero = () => {
       <div className="absolute top-1/3 right-1/4 w-80 h-80 rounded-full opacity-15" style={{ background: 'hsl(var(--secondary))', filter: 'blur(100px)' }} />
       <div className="absolute bottom-1/4 left-1/2 w-96 h-96 rounded-full opacity-12" style={{ background: 'hsl(var(--accent))', filter: 'blur(110px)' }} />
       
+      {/* Soft radial gradients */}
+      <div className="absolute top-1/2 left-[30%] w-[500px] h-[500px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(200,162,255,0.08) 0%, transparent 70%)', filter: 'blur(120px)' }} />
+      <div className="absolute top-1/2 left-[70%] w-[500px] h-[500px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(110,199,255,0.06) 0%, transparent 70%)', filter: 'blur(120px)' }} />
+      
       {/* Animated gradient background */}
       <div className="absolute inset-0 opacity-20">
         <div 
@@ -71,7 +75,10 @@ const Hero = () => {
               <div className="flex flex-col sm:flex-row gap-4 mt-8 opacity-0 animate-fade-up animation-delay-500">
                 <Button 
                   size="lg" 
-                  className="bg-primary text-primary-foreground hover:bg-primary/90 hover-glow-lavender text-sm md:text-base px-6 py-5 rounded-full font-medium"
+                  className="text-sm md:text-base px-6 py-5 rounded-full font-medium text-[#0B0B0D] hover:opacity-90 transition-opacity"
+                  style={{
+                    background: 'linear-gradient(135deg, #C8A2FF 0%, #6EC7FF 50%, #8EE8C7 100%)'
+                  }}
                 >
                   Vamos conversar
                 </Button>
@@ -79,7 +86,7 @@ const Hero = () => {
                 <Button 
                   variant="ghost" 
                   size="lg"
-                  className="border-2 border-transparent hover:border-primary/50 text-sm md:text-base px-6 py-5 rounded-full font-medium transition-all duration-300"
+                  className="border-2 border-[#C8A2FF] hover:bg-[#C8A2FF]/10 text-sm md:text-base px-6 py-5 rounded-full font-medium transition-all duration-300"
                   style={{ color: '#D6D6E0' }}
                 >
                   Conheça meu trabalho
@@ -104,6 +111,31 @@ const Hero = () => {
               >
                 MARCUS T. MELO
               </h2>
+            </div>
+            
+            {/* Floating particles in bottom-right */}
+            <div className="absolute bottom-16 right-16 space-y-4">
+              <div 
+                className="w-3 h-3 rounded-full animate-float-1" 
+                style={{ 
+                  background: '#FF7AC0',
+                  boxShadow: '0 0 20px rgba(255,122,192,0.6)'
+                }}
+              />
+              <div 
+                className="w-3 h-3 rounded-full animate-float-2" 
+                style={{ 
+                  background: '#C8A2FF',
+                  boxShadow: '0 0 20px rgba(200,162,255,0.6)'
+                }}
+              />
+              <div 
+                className="w-3 h-3 rounded-full animate-float-3" 
+                style={{ 
+                  background: '#6EC7FF',
+                  boxShadow: '0 0 20px rgba(110,199,255,0.6)'
+                }}
+              />
             </div>
             
             <SplineScene 
