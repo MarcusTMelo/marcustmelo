@@ -15,7 +15,7 @@ const Hero = () => {
         <div 
           className="absolute inset-0 animate-gradient"
           style={{
-            background: 'linear-gradient(135deg, hsl(var(--neon-orchid)) 0%, hsl(var(--neon-coral)) 50%, hsl(var(--neon-lime)) 100%)',
+            background: 'linear-gradient(135deg, #C8A2FF 0%, #6EC7FF 50%, #8EE8C7 100%)',
           }}
         />
       </div>
@@ -51,9 +51,9 @@ const Hero = () => {
                 Automação e IA com{" "}
                 <span style={{ color: '#FF7AC0' }}>alma</span>
                 {", "}
-                <span style={{ color: 'hsl(var(--neon-orchid))' }}>cor</span>
+                <span style={{ color: '#C8A2FF' }}>cor</span>
                 {" e "}
-                <span style={{ color: 'hsl(var(--neon-coral))' }}>inteligência</span>
+                <span style={{ color: '#6EC7FF' }}>inteligência</span>
                 .
               </h1>
               <p className="mt-4 text-base md:text-lg leading-relaxed font-body font-light opacity-0 animate-fade-up animation-delay-300" style={{ color: '#D6D6E0' }}>
