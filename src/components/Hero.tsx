@@ -47,22 +47,28 @@ const Hero = () => {
                 </p>
               </div>
               
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-4 opacity-0 animate-fade-up animation-delay-200 leading-tight" style={{ color: '#D6D6E0' }}>
-                Automação e IA com{" "}
-                <span style={{ color: '#FF7AC0' }}>alma</span>
-                {", "}
-                <span style={{ color: '#C8A2FF' }}>cor</span>
-                {" e "}
-                <span style={{ color: '#6EC7FF' }}>inteligência</span>
-                .
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-4 opacity-0 animate-fade-up animation-delay-200 leading-tight">
+                <span className="block bg-gradient-to-r from-[#FF7AC0] via-[#C8A2FF] to-[#6EC7FF] bg-clip-text text-transparent">
+                  Automação & IA
+                </span>
+                <span className="block" style={{ color: '#D6D6E0' }}>
+                  Humanizada
+                </span>
               </h1>
-              <p className="mt-4 text-base md:text-lg leading-relaxed font-body font-light opacity-0 animate-fade-up animation-delay-300" style={{ color: '#D6D6E0' }}>
+              
+              {/* Decorative lines */}
+              <div className="flex gap-2 mb-6 opacity-0 animate-fade-up animation-delay-300">
+                <div className="h-1 w-20 bg-gradient-to-r from-[#FF7AC0] via-[#C8A2FF] to-[#6EC7FF] rounded-full" />
+                <div className="h-1 w-12 bg-gradient-to-r from-[#FF7AC0] via-[#C8A2FF] to-[#6EC7FF] rounded-full" />
+                <div className="h-1 w-6 bg-gradient-to-r from-[#FF7AC0] via-[#C8A2FF] to-[#6EC7FF] rounded-full" />
+              </div>
+              <p className="mt-4 text-base md:text-lg leading-relaxed font-body font-light opacity-0 animate-fade-up animation-delay-400" style={{ color: '#D6D6E0' }}>
                 Transformo processos, negócios e rotinas através de sistemas inteligentes, 
                 design vivo e tecnologia humanizada — com foco em pessoas LGBTQIA+ e pequenos 
                 negócios que querem autonomia digital.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 mt-8 opacity-0 animate-fade-up animation-delay-400">
+              <div className="flex flex-col sm:flex-row gap-4 mt-8 opacity-0 animate-fade-up animation-delay-500">
                 <Button 
                   size="lg" 
                   className="bg-primary text-primary-foreground hover:bg-primary/90 hover-glow-lavender text-sm md:text-base px-6 py-5 rounded-full font-medium"
@@ -85,8 +91,17 @@ const Hero = () => {
           {/* Right content - Spline Scene */}
           <div className="w-full lg:w-[55%] relative min-h-[400px] lg:min-h-screen flex items-center justify-center">
             {/* Watermark */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <h2 className="text-6xl md:text-8xl lg:text-9xl font-bold font-heading tracking-wider opacity-5" style={{ color: '#D6D6E0' }}>
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+              <h2 
+                className="text-[70px] md:text-[90px] lg:text-[120px] font-bold font-heading uppercase tracking-[0.3em]"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(200,162,255,0.06) 50%, rgba(110,199,255,0.04) 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  opacity: 0.04
+                }}
+              >
                 MARCUS T. MELO
               </h2>
             </div>
