@@ -7,8 +7,8 @@ const Hero = () => {
     <div className="relative w-full min-h-[700px] overflow-hidden" style={{ backgroundColor: "#0B0B0D" }}>
       {/* Névoas sutis atmosféricas */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#0D0B12] via-[#0B0B0D] to-[#0D0B12]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,107,157,0.08),transparent_65%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(0,217,232,0.06),transparent_65%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(199,167,255,0.08),transparent_65%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(110,200,255,0.06),transparent_65%)]" />
 
       {/* Spotlight */}
       <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
@@ -20,10 +20,10 @@ const Hero = () => {
           {/* Tag de saudação */}
           <div
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.03] backdrop-blur-sm border"
-            style={{ borderColor: "rgba(255,107,157,0.15)" }}
+            style={{ borderColor: "rgba(199,167,255,0.15)" }}
           >
-            <div className="w-2 h-2 rounded-full bg-gradient-to-r from-[#FF6B9D] to-[#B857FF] animate-pulse" />
-            <span className="text-sm font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#FF6B9D] via-[#00D9E8] to-[#FFB088]">
+            <div className="w-2 h-2 rounded-full bg-gradient-to-r from-[#FF7ACB] to-[#C7A7FF] animate-pulse" />
+            <span className="text-sm font-medium text-transparent bg-clip-text bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF]">
               Olá, eu sou Marcus
             </span>
           </div>
@@ -32,8 +32,8 @@ const Hero = () => {
           <div className="space-y-4">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
               <span
-                className="block text-transparent bg-clip-text bg-gradient-to-br from-[#FF6B9D] via-[#B857FF] to-[#FFB088]"
-                style={{ filter: "drop-shadow(0 0 30px rgba(255,107,157,0.3))" }}
+                className="block text-transparent bg-clip-text bg-gradient-to-br from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF]"
+                style={{ filter: "drop-shadow(0 0 30px rgba(199,167,255,0.3))" }}
               >
                 Automação & IA
               </span>
@@ -45,11 +45,11 @@ const Hero = () => {
             {/* Linhas decorativas */}
             <div className="flex items-center gap-3">
               <div
-                className="h-1 w-20 rounded-full bg-gradient-to-r from-[#FF6B9D] via-[#B857FF] to-[#00D9E8]"
-                style={{ boxShadow: "0 0 15px rgba(255,107,157,0.4)" }}
+                className="h-1 w-20 rounded-full bg-gradient-to-r from-[#FF7ACB] via-[#C7A7FF] to-[#6EC8FF]"
+                style={{ boxShadow: "0 0 15px rgba(199,167,255,0.4)" }}
               />
-              <div className="h-1 w-12 rounded-full bg-gradient-to-r from-[#B857FF] to-[#00D9E8] opacity-60" />
-              <div className="h-1 w-6 rounded-full bg-[#FFB088] opacity-40" />
+              <div className="h-1 w-12 rounded-full bg-gradient-to-r from-[#C7A7FF] to-[#6EC8FF] opacity-60" />
+              <div className="h-1 w-6 rounded-full bg-[#4A8CFF] opacity-40" />
             </div>
           </div>
 
@@ -59,21 +59,21 @@ const Hero = () => {
               Transformo processos, negócios e rotinas através de sistemas inteligentes e automações criadas com{" "}
               <span
                 className="font-semibold"
-                style={{ color: "#FF6B9D", filter: "drop-shadow(0 0 8px rgba(255,107,157,0.5))" }}
+                style={{ color: "#FF7ACB", filter: "drop-shadow(0 0 8px rgba(255,122,203,0.5))" }}
               >
                 alma
               </span>
               ,{" "}
               <span
                 className="font-semibold"
-                style={{ color: "#B857FF", filter: "drop-shadow(0 0 8px rgba(184,87,255,0.5))" }}
+                style={{ color: "#C7A7FF", filter: "drop-shadow(0 0 8px rgba(199,167,255,0.5))" }}
               >
                 cor
               </span>{" "}
               e{" "}
               <span
                 className="font-semibold"
-                style={{ color: "#00D9E8", filter: "drop-shadow(0 0 8px rgba(0,217,232,0.5))" }}
+                style={{ color: "#6EC8FF", filter: "drop-shadow(0 0 8px rgba(110,200,255,0.5))" }}
               >
                 inteligência
               </span>
@@ -82,11 +82,11 @@ const Hero = () => {
 
             <p className="text-base md:text-lg italic leading-relaxed" style={{ color: "#D6D6E0", opacity: 0.7 }}>
               Tecnologia acessível, sem jargões — apenas{" "}
-              <span className="not-italic" style={{ color: "#B857FF", opacity: 0.9 }}>
+              <span className="not-italic" style={{ color: "#C7A7FF", opacity: 0.9 }}>
                 soluções humanas
               </span>{" "}
               para{" "}
-              <span className="not-italic" style={{ color: "#00D9E8", opacity: 0.9 }}>
+              <span className="not-italic" style={{ color: "#6EC8FF", opacity: 0.9 }}>
                 pessoas reais
               </span>
               .
@@ -95,13 +95,13 @@ const Hero = () => {
 
           {/* Botões CTA */}
           <div className="flex flex-wrap gap-4 pt-4">
-            <button className="group relative px-8 py-4 font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 bg-gradient-to-r from-[#FF6B9D] via-[#B857FF] to-[#FFB088] text-white hover:shadow-[0_0_30px_rgba(255,107,157,0.4)]">
+            <button className="group relative px-8 py-4 font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] text-white hover:shadow-[0_0_30px_rgba(199,167,255,0.4)]">
               <span className="relative z-10">Vamos conversar</span>
             </button>
 
             <button
               className="px-8 py-4 font-semibold rounded-full transition-all duration-300 bg-white/[0.03] backdrop-blur-sm border hover:bg-white/[0.06]"
-              style={{ color: "#D6D6E0", borderColor: "rgba(255,107,157,0.2)" }}
+              style={{ color: "#D6D6E0", borderColor: "rgba(199,167,255,0.2)" }}
             >
               Conheça meu trabalho
             </button>
@@ -113,8 +113,8 @@ const Hero = () => {
           {/* Watermark */}
           <div className="absolute top-16 left-0 right-0 flex items-center justify-center pointer-events-none overflow-hidden">
             <span
-              className="text-[50px] xl:text-[70px] font-black tracking-[0.2em] text-transparent bg-clip-text bg-gradient-to-br from-white/[0.05] via-[#FF6B9D]/[0.06] to-[#00D9E8]/[0.04] whitespace-nowrap"
-              style={{ filter: "drop-shadow(0 0 20px rgba(255,107,157,0.15))" }}
+              className="text-[50px] xl:text-[70px] font-black tracking-[0.2em] text-transparent bg-clip-text bg-gradient-to-br from-white/[0.05] via-[#C7A7FF]/[0.06] to-[#6EC8FF]/[0.04] whitespace-nowrap"
+              style={{ filter: "drop-shadow(0 0 20px rgba(199,167,255,0.15))" }}
             >
               MARCUS T. MELO
             </span>
@@ -125,7 +125,7 @@ const Hero = () => {
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full animate-pulse"
             style={{
               background:
-                "radial-gradient(circle, rgba(255,107,157,0.12), rgba(0,217,232,0.10), rgba(255,176,136,0.12))",
+                "radial-gradient(circle, rgba(199,167,255,0.12), rgba(110,200,255,0.10), rgba(74,140,255,0.12))",
               filter: "blur(120px)",
             }}
           />
@@ -133,7 +133,7 @@ const Hero = () => {
           <div
             className="absolute top-[25%] left-[45%] w-[350px] h-[350px] rounded-full animate-pulse"
             style={{
-              background: "rgba(255,107,157,0.10)",
+              background: "rgba(255,122,203,0.10)",
               filter: "blur(100px)",
               animationDuration: "3s",
               animationDelay: "0.5s",
@@ -143,7 +143,7 @@ const Hero = () => {
           <div
             className="absolute top-[65%] left-[55%] w-[350px] h-[350px] rounded-full animate-pulse"
             style={{
-              background: "rgba(0,217,232,0.10)",
+              background: "rgba(110,200,255,0.10)",
               filter: "blur(100px)",
               animationDuration: "3.5s",
               animationDelay: "1s",
@@ -152,13 +152,13 @@ const Hero = () => {
 
           <div
             className="absolute top-[45%] left-[35%] w-[280px] h-[280px] rounded-full animate-pulse"
-            style={{ background: "rgba(184,87,255,0.08)", filter: "blur(90px)", animationDuration: "4s" }}
+            style={{ background: "rgba(199,167,255,0.08)", filter: "blur(90px)", animationDuration: "4s" }}
           />
 
           {/* Color overlays */}
-          <div className="absolute inset-0 pointer-events-none mix-blend-soft-light opacity-30 bg-[radial-gradient(circle_at_48%_35%,rgba(255,107,157,0.45),rgba(0,217,232,0.35),rgba(255,176,136,0.30),transparent_65%)]" />
+          <div className="absolute inset-0 pointer-events-none mix-blend-soft-light opacity-30 bg-[radial-gradient(circle_at_48%_35%,rgba(199,167,255,0.45),rgba(110,200,255,0.35),rgba(74,140,255,0.30),transparent_65%)]" />
 
-          <div className="absolute inset-0 pointer-events-none mix-blend-color-dodge opacity-20 bg-[radial-gradient(circle_at_52%_50%,rgba(184,87,255,0.35),rgba(0,217,232,0.25),rgba(255,107,157,0.30),transparent_68%)]" />
+          <div className="absolute inset-0 pointer-events-none mix-blend-color-dodge opacity-20 bg-[radial-gradient(circle_at_52%_50%,rgba(199,167,255,0.35),rgba(110,200,255,0.25),rgba(255,122,203,0.30),transparent_68%)]" />
 
           {/* 3D Robot */}
           <div className="relative z-10 w-full h-full pointer-events-auto">
@@ -173,8 +173,8 @@ const Hero = () => {
             <div
               className="w-3 h-3 rounded-full animate-bounce"
               style={{
-                backgroundColor: "#FF6B9D",
-                boxShadow: "0 0 15px rgba(255,107,157,0.6)",
+                backgroundColor: "#FF7ACB",
+                boxShadow: "0 0 15px rgba(255,122,203,0.6)",
                 animationDelay: "0s",
                 animationDuration: "2s",
               }}
@@ -182,8 +182,8 @@ const Hero = () => {
             <div
               className="w-3 h-3 rounded-full animate-bounce"
               style={{
-                backgroundColor: "#B857FF",
-                boxShadow: "0 0 15px rgba(184,87,255,0.6)",
+                backgroundColor: "#C7A7FF",
+                boxShadow: "0 0 15px rgba(199,167,255,0.6)",
                 animationDelay: "0.2s",
                 animationDuration: "2s",
               }}
@@ -191,8 +191,8 @@ const Hero = () => {
             <div
               className="w-3 h-3 rounded-full animate-bounce"
               style={{
-                backgroundColor: "#00D9E8",
-                boxShadow: "0 0 15px rgba(0,217,232,0.6)",
+                backgroundColor: "#6EC8FF",
+                boxShadow: "0 0 15px rgba(110,200,255,0.6)",
                 animationDelay: "0.4s",
                 animationDuration: "2s",
               }}
@@ -208,12 +208,12 @@ const Hero = () => {
                 className="absolute inset-0 rounded-full"
                 style={{
                   background:
-                    "radial-gradient(circle, rgba(255,107,157,0.10), rgba(0,217,232,0.08), rgba(255,176,136,0.10))",
+                    "radial-gradient(circle, rgba(199,167,255,0.10), rgba(110,200,255,0.08), rgba(74,140,255,0.10))",
                   filter: "blur(90px)",
                 }}
               />
 
-              <div className="absolute inset-0 pointer-events-none mix-blend-soft-light opacity-35 bg-[radial-gradient(circle_at_50%_50%,rgba(255,107,157,0.4),rgba(0,217,232,0.3),rgba(255,176,136,0.25),transparent_70%)]" />
+              <div className="absolute inset-0 pointer-events-none mix-blend-soft-light opacity-35 bg-[radial-gradient(circle_at_50%_50%,rgba(199,167,255,0.4),rgba(110,200,255,0.3),rgba(74,140,255,0.25),transparent_70%)]" />
 
               <SplineScene
                 scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
