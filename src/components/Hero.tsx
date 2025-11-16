@@ -1,11 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { SplineScene } from "@/components/ui/spline";
 import { Spotlight } from "@/components/ui/spotlight";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-12 px-4 md:px-6">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{ backgroundColor: '#0B0B0D' }}>
       {/* Animated gradient background */}
       <div className="absolute inset-0 opacity-20">
         <div 
@@ -16,20 +15,17 @@ const Hero = () => {
         />
       </div>
       
-      {/* Gradient overlay for depth */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background" />
+      <Spotlight
+        className="-top-40 left-0 md:left-60 md:-top-20"
+        fill="white"
+      />
       
       {/* Content */}
-      <div className="relative z-10 container mx-auto max-w-7xl">
-        <Card className="w-full min-h-[600px] bg-black/[0.96] relative overflow-hidden border-border/20">
-          <Spotlight
-            className="-top-40 left-0 md:left-60 md:-top-20"
-            fill="white"
-          />
-          
-          <div className="flex flex-col lg:flex-row h-full">
-            {/* Left content */}
-            <div className="flex-1 p-8 md:p-12 relative z-10 flex flex-col justify-center">
+      <div className="relative z-10 w-full">
+        <div className="flex flex-col lg:flex-row min-h-screen lg:items-center">
+          {/* Left content */}
+          <div className="w-full lg:flex-1 px-4 md:px-8 lg:px-12 py-12 lg:py-0 flex flex-col justify-center">
+            <div className="max-w-2xl">
               <p className="text-xs md:text-sm uppercase tracking-[0.2em] text-muted-foreground mb-3 opacity-0 animate-fade-up">
                 Experiência interativa
               </p>
@@ -40,7 +36,7 @@ const Hero = () => {
                 </span>
                 .
               </h1>
-              <p className="mt-4 text-base md:text-lg text-muted-foreground max-w-lg leading-relaxed font-body font-light opacity-0 animate-fade-up animation-delay-300">
+              <p className="mt-4 text-base md:text-lg text-muted-foreground leading-relaxed font-body font-light opacity-0 animate-fade-up animation-delay-300">
                 Transformo processos, negócios e rotinas através de sistemas inteligentes, 
                 design vivo e tecnologia humanizada — com foco em pessoas LGBTQIA+ e pequenos 
                 negócios que querem autonomia digital.
@@ -49,7 +45,7 @@ const Hero = () => {
               <div className="flex flex-col sm:flex-row gap-4 mt-8 opacity-0 animate-fade-up animation-delay-400">
                 <Button 
                   size="lg" 
-                  className="bg-primary text-primary-foreground hover:bg-primary/90 hover-glow-lime text-sm md:text-base px-6 py-5 rounded-full font-medium"
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 hover-glow-lavender text-sm md:text-base px-6 py-5 rounded-full font-medium"
                 >
                   Quero simplificar minha vida e meu negócio
                 </Button>
@@ -63,20 +59,17 @@ const Hero = () => {
                 </Button>
               </div>
             </div>
-
-            {/* Right content - Spline Scene */}
-            <div className="flex-1 relative min-h-[400px] lg:min-h-[600px]">
-              <SplineScene 
-                scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-                className="w-full h-full"
-              />
-            </div>
           </div>
-        </Card>
+
+          {/* Right content - Spline Scene */}
+          <div className="w-full lg:w-[55%] relative min-h-[400px] lg:min-h-screen flex items-center justify-center">
+            <SplineScene 
+              scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+              className="w-full h-full"
+            />
+          </div>
+        </div>
       </div>
-      
-      {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
     </section>
   );
 };
