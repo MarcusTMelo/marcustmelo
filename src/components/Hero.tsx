@@ -1,5 +1,5 @@
 "use client";
-import { SplineScene } from "@/components/ui/splite";
+import { SplineScene } from "@/components/ui/spline";
 import { Spotlight as AceternitySpotlight } from "@/components/ui/spotlight";
 import { CursorSpotlight } from "@/components/ui/cursor-spotlight";
 
