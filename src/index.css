@@ -16,6 +16,7 @@ All colors MUST be HSL.
     --neon-orchid: 272 100% 82%; /* Lavender Soft */
     --neon-coral: 199 100% 71%; /* Boreal Blue */
     --neon-lime: 157 65% 73%; /* Aqua Mist */
+    --quartz-pink: 333 100% 73%; /* Quartz Pink */
     
     /* Semantic colors using neon palette */
     --primary: 157 65% 73%; /* aqua mist */
@@ -145,5 +146,30 @@ All colors MUST be HSL.
   
   .animate-spotlight {
     animation: spotlight 2s ease .75s 1 forwards;
+  }
+  
+  /* Floating particles animation */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px) translateX(0px);
+    }
+    33% {
+      transform: translateY(-20px) translateX(10px);
+    }
+    66% {
+      transform: translateY(-10px) translateX(-10px);
+    }
+  }
+  
+  .animate-float-1 {
+    animation: float 8s ease-in-out infinite;
+  }
+  
+  .animate-float-2 {
+    animation: float 10s ease-in-out infinite 2s;
+  }
+  
+  .animate-float-3 {
+    animation: float 12s ease-in-out infinite 4s;
   }
 }
