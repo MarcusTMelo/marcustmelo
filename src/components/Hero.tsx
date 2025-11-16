@@ -1,22 +1,17 @@
 "use client";
 import { SplineScene } from "@/components/ui/spline";
-import { Spotlight as AceternitySpotlight } from "@/components/ui/spotlight";
-import { CursorSpotlight } from "@/components/ui/cursor-spotlight";
+import { Spotlight } from "@/components/ui/spotlight";
 
-export function SplineHero() {
+const Hero = () => {
   return (
     <div className="relative w-full min-h-[700px] overflow-hidden" style={{ backgroundColor: "#0B0B0D" }}>
-      {/* Névoas sutis atmosféricas - Queer Premium Elegante */}
+      {/* Névoas sutis atmosféricas */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#0D0B12] via-[#0B0B0D] to-[#0D0B12]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(200,162,255,0.08),transparent_65%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(110,199,255,0.06),transparent_65%)]" />
 
-      {/* Spotlights suaves - opacity muito reduzida para elegância */}
-      <AceternitySpotlight className="w-[900px] h-[900px] -top-52 -left-40 opacity-15" />
-      <AceternitySpotlight className="w-[800px] h-[800px] top-20 -right-40 opacity-12" />
-
-      {/* Névoa flutuante que segue o cursor - cores premium elegantes */}
-      <CursorSpotlight size={300} className="from-[#C8A2FF]/25 via-[#6EC7FF]/20 to-[#8EE8C7]/15" />
+      {/* Spotlight */}
+      <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
 
       {/* Main container */}
       <div className="relative w-full min-h-[700px] px-6 md:px-12 lg:px-20 py-16">
@@ -100,26 +95,13 @@ export function SplineHero() {
 
           {/* Botões CTA */}
           <div className="flex flex-wrap gap-4 pt-4">
-            <button
-              className="group relative px-8 py-4 font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 bg-gradient-to-r from-[#C8A2FF] via-[#6EC7FF] to-[#8EE8C7] text-white"
-              style={{ boxShadow: "0 0 0 rgba(200,162,255,0)" }}
-              onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 0 30px rgba(200,162,255,0.4)")}
-              onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "0 0 0 rgba(200,162,255,0)")}
-            >
+            <button className="group relative px-8 py-4 font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 bg-gradient-to-r from-[#C8A2FF] via-[#6EC7FF] to-[#8EE8C7] text-white hover:shadow-[0_0_30px_rgba(200,162,255,0.4)]">
               <span className="relative z-10">Vamos conversar</span>
             </button>
 
             <button
-              className="px-8 py-4 font-semibold rounded-full transition-all duration-300 bg-white/[0.03] backdrop-blur-sm border"
+              className="px-8 py-4 font-semibold rounded-full transition-all duration-300 bg-white/[0.03] backdrop-blur-sm border hover:bg-white/[0.06]"
               style={{ color: "#D6D6E0", borderColor: "rgba(200,162,255,0.2)" }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.06)";
-                e.currentTarget.style.borderColor = "rgba(200,162,255,0.3)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.03)";
-                e.currentTarget.style.borderColor = "rgba(200,162,255,0.2)";
-              }}
             >
               Conheça meu trabalho
             </button>
@@ -171,20 +153,6 @@ export function SplineHero() {
           <div
             className="absolute top-[45%] left-[35%] w-[280px] h-[280px] rounded-full animate-pulse"
             style={{ background: "rgba(200,162,255,0.08)", filter: "blur(90px)", animationDuration: "4s" }}
-          />
-
-          {/* Rim lighting */}
-          <div
-            className="absolute top-[20%] right-[10%] w-[200px] h-[400px] rounded-full"
-            style={{
-              background: "linear-gradient(to bottom, rgba(255,122,192,0.08), transparent)",
-              filter: "blur(70px)",
-            }}
-          />
-
-          <div
-            className="absolute bottom-[20%] left-[10%] w-[200px] h-[400px] rounded-full"
-            style={{ background: "linear-gradient(to top, rgba(142,232,199,0.08), transparent)", filter: "blur(70px)" }}
           />
 
           {/* Color overlays */}
@@ -260,4 +228,6 @@ export function SplineHero() {
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#0B0B0D] to-transparent pointer-events-none" />
     </div>
   );
-}
+};
+
+export default Hero;
