@@ -13,19 +13,19 @@ All colors MUST be HSL.
     --foreground: 0 0% 98%;
 
     /* Neon palette */
-    --neon-orchid: 272 100% 82%; /* Lavender Soft */
-    --neon-coral: 199 100% 71%; /* Boreal Blue */
-    --neon-lime: 157 65% 73%; /* Aqua Mist */
-    --quartz-pink: 333 100% 73%; /* Quartz Pink */
+    --neon-orchid: 339 100% 71%; /* Coral Bloom */
+    --neon-coral: 185 100% 45%; /* Warm Cyan */
+    --neon-lime: 20 100% 76%; /* Electric Peach */
+    --quartz-pink: 272 100% 67%; /* Sunset Purple */
     
     /* Semantic colors using neon palette */
-    --primary: 157 65% 73%; /* aqua mist */
+    --primary: 20 100% 76%; /* electric peach */
     --primary-foreground: 220 20% 3%;
     
-    --secondary: 272 100% 82%; /* lavender soft */
+    --secondary: 339 100% 71%; /* coral bloom */
     --secondary-foreground: 220 20% 3%;
     
-    --accent: 199 100% 71%; /* boreal blue */
+    --accent: 185 100% 45%; /* warm cyan */
     --accent-foreground: 220 20% 3%;
 
     --card: 220 20% 8%;
@@ -42,7 +42,7 @@ All colors MUST be HSL.
 
     --border: 220 15% 20%;
     --input: 220 15% 20%;
-    --ring: 157 65% 73%;
+    --ring: 20 100% 76%;
 
     --radius: 0.75rem;
 
