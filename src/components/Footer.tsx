@@ -15,9 +15,9 @@ const Footer = () => {
           {/* Left - About */}
           <div className="space-y-3">
             <h3 className="text-xl font-bold text-foreground">Marcus Túlio Melo</h3>
-            <p className="text-lg text-[#C8B8E6]">Automação & IA Humanizada</p>
+            <p className="text-lg text-[#C8B8E6]">Automação & IA</p>
             <p className="text-sm text-muted-foreground">
-              10+ anos em automação • MBA em IA • Gay e orgulhoso 🏳️‍🌈
+              10+ anos em automação • MBA em IA
             </p>
           </div>
 
@@ -96,7 +96,7 @@ const Footer = () => {
         {/* Bottom - Copyright */}
         <div className="pt-8 border-t border-border/50 text-center">
           <p className="text-sm text-muted-foreground">
-            © 2025 Marcus T. Melo • Feito com 💜, tecnologia e orgulho
+            © 2025 Marcus T. Melo • Feito com 💜 e tecnologia
           </p>
         </div>
       </div>
