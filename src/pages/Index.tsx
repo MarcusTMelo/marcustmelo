@@ -6,6 +6,7 @@ import TechStack from "@/components/TechStack";
 import Blog from "@/components/Blog";
 import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
+import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
@@ -18,6 +19,7 @@ const Index = () => {
       <Blog />
       <FAQ />
       <Contact />
+      <Footer />
     </main>
   );
 };
