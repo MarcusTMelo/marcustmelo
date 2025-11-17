@@ -1,66 +1,71 @@
-import { ArrowRight, Clock } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
+
+interface BlogPost {
+  id: string;
+  title: string;
+  slug: string;
+  category: string | null;
+  excerpt: string | null;
+  featured_image: string | null;
+  published_at: string | null;
+}
 
 const Blog = () => {
   const { elementRef, isVisible } = useIntersectionObserver();
-  const blogPosts = [
-    {
-      category: "Automação",
-      categoryColor: "#C7A7FF",
-      title: "Como automatizar processos repetitivos com Power Automate",
-      excerpt: "Descubra as melhores práticas para criar fluxos de trabalho inteligentes que economizam horas do seu dia.",
-      date: "15 Jan 2024",
-      readTime: "5 min",
-      gradient: "from-[#C7A7FF] to-[#6EC8FF]",
-    },
-    {
-      category: "IA",
-      categoryColor: "#6EC8FF",
-      title: "IA Generativa além do ChatGPT: Claude e outras ferramentas",
-      excerpt: "Explore alternativas poderosas para integrar inteligência artificial no seu negócio com estratégia.",
-      date: "12 Jan 2024",
-      readTime: "7 min",
-      gradient: "from-[#6EC8FF] to-[#4A8CFF]",
-    },
-    {
-      category: "Tech LGBT+",
-      categoryColor: "#FF7ACB",
-      title: "Tecnologia inclusiva: criando espaços seguros digitais",
-      excerpt: "Como pessoas LGBTQIA+ podem usar tecnologia para construir autonomia e visibilidade em seus negócios.",
-      date: "10 Jan 2024",
-      readTime: "6 min",
-      gradient: "from-[#FF7ACB] to-[#C7A7FF]",
-    },
-    {
-      category: "Negócios",
-      categoryColor: "#4A8CFF",
-      title: "Transformação digital para pequenos negócios: por onde começar",
-      excerpt: "Um guia prático para implementar automação e IA sem grandes investimentos iniciais.",
-      date: "8 Jan 2024",
-      readTime: "8 min",
-      gradient: "from-[#4A8CFF] to-[#6EC8FF]",
-    },
-    {
-      category: "Automação",
-      categoryColor: "#C7A7FF",
-      title: "Microsoft Lists: o segredo para organizar operações complexas",
-      excerpt: "Cases reais de como estruturei soluções como Conecta TI e Conecta Ativos na GIZ Brasil.",
-      date: "5 Jan 2024",
-      readTime: "10 min",
-      gradient: "from-[#C7A7FF] to-[#FF7ACB]",
-    },
-    {
-      category: "IA",
-      categoryColor: "#6EC8FF",
-      title: "Prompt Engineering: a arte de conversar com IA",
-      excerpt: "Técnicas avançadas para obter resultados precisos e criativos usando engenharia de prompts.",
-      date: "2 Jan 2024",
-      readTime: "6 min",
-      gradient: "from-[#6EC8FF] to-[#C7A7FF]",
-    },
-  ];
+  const navigate = useNavigate();
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  const fetchPosts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("blog_posts")
+        .select("id, title, slug, category, excerpt, featured_image, published_at")
+        .eq("status", "published")
+        .order("published_at", { ascending: false })
+        .limit(6);
+
+      if (error) throw error;
+      setPosts(data || []);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getCategoryColor = (category: string | null) => {
+    const colors: Record<string, string> = {
+      "Automação": "#C7A7FF",
+      "IA": "#6EC8FF",
+      "Tech": "#FF7ACB",
+      "Negócios": "#4A8CFF",
+      "Tutoriais": "#C7A7FF",
+    };
+    return colors[category || ""] || "#C7A7FF";
+  };
+
+  const getCategoryGradient = (category: string | null) => {
+    const gradients: Record<string, string> = {
+      "Automação": "from-[#C7A7FF] to-[#6EC8FF]",
+      "IA": "from-[#6EC8FF] to-[#4A8CFF]",
+      "Tech": "from-[#FF7ACB] to-[#C7A7FF]",
+      "Negócios": "from-[#4A8CFF] to-[#6EC8FF]",
+      "Tutoriais": "from-[#C7A7FF] to-[#FF7ACB]",
+    };
+    return gradients[category || ""] || "from-[#C7A7FF] to-[#6EC8FF]";
+  };
 
   return (
     <section id="blog" className="relative bg-background py-20 px-6 md:py-32 overflow-hidden">
@@ -81,72 +86,105 @@ const Blog = () => {
           </p>
         </div>
 
+        {/* Loading State */}
+        {loading && (
+          <div className="text-center py-12 text-muted-foreground">
+            Carregando posts...
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!loading && posts.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-lg text-muted-foreground">
+              Em breve novos artigos...
+            </p>
+          </div>
+        )}
+
         {/* Blog Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {blogPosts.map((post, index) => (
-            <article
-              key={index}
-              className={`group relative rounded-2xl bg-card/50 border-2 border-border/50 hover:border-[#4A8CFF]/50 overflow-hidden transition-all duration-500 hover:transform hover:scale-[1.03] hover:shadow-[0_0_40px_rgba(74,140,255,0.2)] cursor-pointer ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
-              style={{ transitionDelay: `${300 + index * 100}ms` }}
-            >
-              {/* Gradient Thumbnail */}
-              <div className={`h-48 bg-gradient-to-br ${post.gradient} relative overflow-hidden`}>
-                {/* Overlay pattern */}
-                <div className="absolute inset-0 bg-black/20 backdrop-blur-[1px]" />
-                
-                {/* Category Badge */}
-                <div className="absolute top-4 left-4">
-                  <Badge
-                    variant="secondary"
-                    className="text-xs font-semibold px-3 py-1 bg-background/90 backdrop-blur-sm border-0"
-                    style={{ color: post.categoryColor }}
-                  >
-                    {post.category}
-                  </Badge>
-                </div>
-              </div>
-
-              {/* Card Content */}
-              <div className="p-6 space-y-4">
-                {/* Title */}
-                <h3 className="text-xl font-bold text-foreground group-hover:bg-gradient-to-r group-hover:from-[#C7A7FF] group-hover:to-[#6EC8FF] group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300 line-clamp-2">
-                  {post.title}
-                </h3>
-
-                {/* Excerpt */}
-                <p className="text-[#D6D6E0]/80 text-sm leading-relaxed line-clamp-2">
-                  {post.excerpt}
-                </p>
-
-                {/* Meta Information */}
-                <div className="flex items-center justify-between text-sm text-[#D6D6E0]/60 pt-4 border-t border-border/30">
-                  <span>{post.date}</span>
-                  <div className="flex items-center gap-1">
-                    <Clock className="w-4 h-4" />
-                    <span>{post.readTime}</span>
+        {!loading && posts.length > 0 && (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+              {posts.map((post, index) => (
+                <article
+                  key={post.id}
+                  onClick={() => navigate(`/blog/${post.slug}`)}
+                  className={`group relative bg-[#1A1A1F] border border-border/50 rounded-2xl overflow-hidden hover:border-[#C7A7FF]/50 transition-all duration-500 hover:shadow-lg hover:shadow-[#C7A7FF]/20 cursor-pointer ${
+                    isVisible
+                      ? 'opacity-100 translate-y-0'
+                      : 'opacity-0 translate-y-8'
+                  }`}
+                  style={{
+                    transitionDelay: `${(index + 2) * 150}ms`,
+                  }}
+                >
+                  {/* Featured Image or Gradient Placeholder */}
+                  <div className={`h-48 bg-gradient-to-br ${getCategoryGradient(post.category)} relative overflow-hidden`}>
+                    {post.featured_image ? (
+                      <img 
+                        src={post.featured_image} 
+                        alt={post.title}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-24 h-24 border-2 border-white/20 rounded-full" />
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1F] to-transparent opacity-60" />
                   </div>
-                </div>
-              </div>
 
-              {/* Decorative gradient line on hover */}
-              <div
-                className="absolute bottom-0 left-0 right-0 h-[3px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{ background: `linear-gradient(90deg, transparent, ${post.categoryColor}, transparent)` }}
-              />
-            </article>
-          ))}
-        </div>
+                  {/* Card Content */}
+                  <div className="p-6">
+                    <Badge
+                      className="mb-3"
+                      style={{
+                        backgroundColor: `${getCategoryColor(post.category)}20`,
+                        color: getCategoryColor(post.category),
+                        borderColor: `${getCategoryColor(post.category)}30`,
+                      }}
+                    >
+                      {post.category || "Geral"}
+                    </Badge>
 
-        {/* View All Button */}
-        <div className="flex justify-center">
-          <Button
-            size="lg"
-            className="group relative overflow-hidden bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] text-background font-semibold hover:shadow-[0_0_40px_rgba(199,167,255,0.4)] transition-all duration-300"
-          >
-            Ver todos os artigos
-            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-          </Button>
-        </div>
+                    <h3 className="text-xl font-bold mb-3 group-hover:bg-gradient-to-r group-hover:from-[#C7A7FF] group-hover:to-[#6EC8FF] group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
+                      {post.title}
+                    </h3>
+
+                    <p className="text-[#D6D6E0]/70 text-sm mb-4 line-clamp-3">
+                      {post.excerpt || ""}
+                    </p>
+
+                    <div className="flex items-center justify-between text-xs text-[#D6D6E0]/50">
+                      <span>
+                        {post.published_at
+                          ? format(new Date(post.published_at), "dd MMM yyyy")
+                          : ""}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Hover Arrow */}
+                  <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300">
+                    <ArrowRight className="w-5 h-5 text-[#C7A7FF]" />
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            {/* View All Button */}
+            <div className={`text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: '900ms' }}>
+              <Button
+                size="lg"
+                className="bg-gradient-to-r from-[#C7A7FF] to-[#6EC8FF] hover:opacity-90 text-background font-semibold px-8 group"
+              >
+                Ver Todos os Artigos
+                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </div>
+          </>
+        )}
       </div>
     </section>
   );
