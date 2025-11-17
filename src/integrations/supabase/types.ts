@@ -14,7 +14,84 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      blog_posts: {
+        Row: {
+          category: string | null
+          content: string | null
+          created_at: string
+          excerpt: string | null
+          featured_image: string | null
+          id: string
+          published_at: string | null
+          slug: string
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          content?: string | null
+          created_at?: string
+          excerpt?: string | null
+          featured_image?: string | null
+          id?: string
+          published_at?: string | null
+          slug: string
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          content?: string | null
+          created_at?: string
+          excerpt?: string | null
+          featured_image?: string | null
+          id?: string
+          published_at?: string | null
+          slug?: string
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      projects: {
+        Row: {
+          created_at: string
+          description: string | null
+          featured_image: string | null
+          id: string
+          order_index: number
+          organization: string | null
+          tech_stack: string[] | null
+          title: string
+          visible: boolean
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          featured_image?: string | null
+          id?: string
+          order_index?: number
+          organization?: string | null
+          tech_stack?: string[] | null
+          title: string
+          visible?: boolean
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          featured_image?: string | null
+          id?: string
+          order_index?: number
+          organization?: string | null
+          tech_stack?: string[] | null
+          title?: string
+          visible?: boolean
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
