@@ -5,6 +5,7 @@ import About from "@/components/About";
 import TechStack from "@/components/TechStack";
 import Blog from "@/components/Blog";
 import FAQ from "@/components/FAQ";
+import Contact from "@/components/Contact";
 
 const Index = () => {
   return (
@@ -16,6 +17,7 @@ const Index = () => {
       <TechStack />
       <Blog />
       <FAQ />
+      <Contact />
     </main>
   );
 };
