@@ -61,7 +61,7 @@ const Blog = () => {
   ];
 
   return (
-    <section className="relative bg-background py-20 px-6 md:py-32 overflow-hidden">
+    <section id="blog" className="relative bg-background py-20 px-6 md:py-32 overflow-hidden">
       {/* Decorative background gradients */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-[#C7A7FF] opacity-5 blur-[120px] rounded-full" />

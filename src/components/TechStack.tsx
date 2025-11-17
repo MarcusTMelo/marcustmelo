@@ -51,7 +51,7 @@ const TechStack = () => {
   ];
 
   return (
-    <section className="relative bg-background py-20 px-6 md:py-32 overflow-hidden">
+    <section id="tech-stack" className="relative bg-background py-20 px-6 md:py-32 overflow-hidden">
       {/* Decorative background gradients */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#4A8CFF] opacity-5 blur-[120px] rounded-full" />
