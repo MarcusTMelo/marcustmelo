@@ -7,13 +7,13 @@ const About = () => {
     "MBA em IA aplicada a negócios (em andamento)",
     "Especialista Microsoft Lists + Power Automate",
     "Administração de servidores e sistemas self-hosted",
-    "Foco em comunidade LGBTQIA+ e pequenos negócios",
+    "Espaço acolhedor para todos os públicos",
   ];
 
   const stats = [
     { value: "10+ anos", label: "de experiência" },
-    { value: "15+ projetos", label: "liderados" },
-    { value: "100%", label: "humanizado" },
+    { value: "15+ projetos", label: "liderados na GIZ Brasil" },
+    { value: "100%", label: "foco em resultados" },
   ];
 
   return (
@@ -62,14 +62,16 @@ const About = () => {
           <div className="space-y-6">
             <div className="space-y-4 text-[#D6D6E0] text-lg leading-relaxed">
               <p>
-                Olá! Sou Marcus, gay, 37 anos, jovial e apaixonado por tecnologia que transforma vidas. 
-                Com mais de 10 anos de experiência em automação, IA e transformação digital, liderei projetos 
-                como Conecta TI, Conecta Ativos e Conecta Estações na GIZ Brasil.
+                Olá! Sou Marcus Túlio Melo, especialista em automação e transformação digital humanizada.
               </p>
               <p>
-                Tenho formação em TI e Gestão, e atualmente faço MBA em Inteligência Artificial aplicada a negócios. 
-                Meu foco? Simplificar o complexo, criar soluções acessíveis e trabalhar especialmente com pessoas 
-                LGBTQIA+ e pequenos negócios que querem autonomia digital.
+                Com mais de 10 anos de experiência, liderei projetos como Conecta TI, Conecta Ativos e Conecta Estações na GIZ Brasil — soluções que organizam operações complexas, eliminam trabalho manual e facilitam a vida de equipes inteiras.
+              </p>
+              <p>
+                Tenho formação em TI e Gestão, e atualmente faço MBA em Inteligência Artificial aplicada a negócios.
+              </p>
+              <p>
+                Meu foco é simplificar o complexo e criar soluções acessíveis para todos. Trabalho especialmente com pequenos negócios, empreendedores e pessoas que buscam autonomia digital — sem jargões, só resultados reais.
               </p>
               <p>
                 Acredito que tecnologia deve ser transparente, empática e construída COM pessoas, não PARA pessoas.
