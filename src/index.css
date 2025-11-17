@@ -8,54 +8,71 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Deep black cinematic background */
-    --background: 220 20% 3%;
-    --foreground: 0 0% 98%;
-
-    /* Neon palette */
-    --neon-orchid: 266 100% 83%; /* Lavender Ice */
-    --neon-coral: 200 100% 71%; /* Boreal Blue */
-    --neon-lime: 217 100% 65%; /* Sapphire Glow */
-    --quartz-pink: 325 100% 74%; /* Quartz Pink */
+    /* ========== BRAND PALETTE ========== */
+    /* Cores principais da marca em HSL */
+    --lavender-ice: 266 52% 80%;     /* #C8B8E6 - Roxo suave */
+    --boreal-blue: 200 73% 65%;      /* #5DADE2 - Azul claro */
+    --sapphire-glow: 217 100% 63%;   /* #4A8CFF - Azul vibrante */
+    --quartz-pink: 325 100% 74%;     /* #FF7ACB - Rosa vibrante */
     
-    /* Semantic colors using neon palette */
-    --primary: 217 100% 65%; /* sapphire glow */
-    --primary-foreground: 220 20% 3%;
+    /* ========== BACKGROUNDS ========== */
+    --night-violet: 263 17% 7%;      /* #0D0B12 - Roxo escuro */
+    --deep-black: 220 20% 4%;        /* #0B0B0D - Preto profundo */
+    --background: 220 20% 4%;        /* deep-black */
+    --foreground: 240 11% 84%;       /* #D6D6E0 - Texto claro */
     
-    --secondary: 266 100% 83%; /* lavender ice */
-    --secondary-foreground: 220 20% 3%;
+    /* ========== SEMANTIC COLORS ========== */
+    --primary: 217 100% 63%;         /* sapphire-glow */
+    --primary-foreground: 220 20% 4%;
     
-    --accent: 200 100% 71%; /* boreal blue */
-    --accent-foreground: 220 20% 3%;
-
-    --card: 220 20% 8%;
-    --card-foreground: 0 0% 98%;
-
-    --popover: 220 20% 8%;
-    --popover-foreground: 0 0% 98%;
-
+    --secondary: 266 52% 80%;        /* lavender-ice */
+    --secondary-foreground: 220 20% 4%;
+    
+    --accent: 200 73% 65%;           /* boreal-blue */
+    --accent-foreground: 220 20% 4%;
+    
+    --quartz: 325 100% 74%;          /* quartz-pink */
+    --quartz-foreground: 220 20% 4%;
+    
+    /* ========== UI COMPONENTS ========== */
+    --card: 263 17% 7%;              /* night-violet */
+    --card-foreground: 240 11% 84%;
+    
+    --popover: 263 17% 7%;
+    --popover-foreground: 240 11% 84%;
+    
     --muted: 220 15% 15%;
     --muted-foreground: 0 0% 65%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-
+    
     --border: 220 15% 20%;
     --input: 220 15% 20%;
-    --ring: 217 100% 65%;
-
+    --ring: 217 100% 63%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    
+    /* ========== DESIGN TOKENS ========== */
     --radius: 0.75rem;
-
-    /* Gradients for animated backgrounds */
-    --gradient-neon: linear-gradient(135deg, hsl(var(--neon-orchid)) 0%, hsl(var(--neon-coral)) 50%, hsl(var(--neon-lime)) 100%);
     
-    /* Glow effects */
-    --glow-orchid: 0 0 40px hsl(var(--neon-orchid) / 0.6);
-    --glow-coral: 0 0 40px hsl(var(--neon-coral) / 0.6);
-    --glow-lavender: 0 0 40px hsl(var(--neon-lime) / 0.6);
+    /* Gradientes */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--lavender-ice)), hsl(var(--boreal-blue)));
+    --gradient-secondary: linear-gradient(135deg, hsl(var(--boreal-blue)), hsl(var(--sapphire-glow)));
+    --gradient-accent: linear-gradient(135deg, hsl(var(--sapphire-glow)), hsl(var(--quartz)));
+    --gradient-full: linear-gradient(135deg, hsl(var(--lavender-ice)), hsl(var(--boreal-blue)), hsl(var(--sapphire-glow)));
     
-    /* Transitions */
+    /* Efeitos de brilho */
+    --glow-lavender: 0 0 40px hsl(var(--lavender-ice) / 0.5);
+    --glow-blue: 0 0 40px hsl(var(--boreal-blue) / 0.5);
+    --glow-sapphire: 0 0 40px hsl(var(--sapphire-glow) / 0.5);
+    --glow-pink: 0 0 40px hsl(var(--quartz) / 0.5);
+    
+    /* Sombras */
+    --shadow-glow: 0 10px 40px -10px hsl(var(--sapphire-glow) / 0.4);
+    --shadow-card: 0 4px 20px -2px hsl(220 20% 0% / 0.3);
+    
+    /* Transições */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
