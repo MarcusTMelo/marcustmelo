@@ -3,6 +3,7 @@ import HowCanIHelp from "@/components/HowCanIHelp";
 import Services from "@/components/Services";
 import About from "@/components/About";
 import TechStack from "@/components/TechStack";
+import Blog from "@/components/Blog";
 
 const Index = () => {
   return (
@@ -12,6 +13,7 @@ const Index = () => {
       <Services />
       <About />
       <TechStack />
+      <Blog />
     </main>
   );
 };
