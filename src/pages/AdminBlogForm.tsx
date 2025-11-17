@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Upload, X } from "lucide-react";
 
 const CATEGORIES = [
   "Automação",
@@ -33,6 +33,8 @@ const AdminBlogForm = () => {
 
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(isEdit);
+  const [uploading, setUploading] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string>("");
   const [formData, setFormData] = useState({
     title: "",
     slug: "",
@@ -78,6 +80,7 @@ const AdminBlogForm = () => {
         status: data.status,
       });
       setIsPublished(data.status === "published");
+      setImagePreview(data.featured_image || "");
     } catch (error) {
       toast({
         title: "Erro ao carregar post",
@@ -105,6 +108,81 @@ const AdminBlogForm = () => {
       title,
       slug: prev.slug || generateSlug(title),
     }));
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    const validTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp", "image/gif"];
+    if (!validTypes.includes(file.type)) {
+      toast({
+        title: "Tipo de arquivo inválido",
+        description: "Apenas JPG, PNG, WEBP e GIF são aceitos.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validate file size (5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      toast({
+        title: "Arquivo muito grande",
+        description: "O tamanho máximo é 5MB.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setUploading(true);
+
+    try {
+      // Generate unique filename
+      const fileExt = file.name.split(".").pop();
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+      const filePath = `${fileName}`;
+
+      // Upload to Supabase Storage
+      const { error: uploadError } = await supabase.storage
+        .from("blog-images")
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from("blog-images")
+        .getPublicUrl(filePath);
+
+      // Update form data
+      setFormData((prev) => ({
+        ...prev,
+        featured_image: publicUrl,
+      }));
+      setImagePreview(publicUrl);
+
+      toast({
+        title: "Imagem enviada",
+        description: "A imagem foi carregada com sucesso.",
+      });
+    } catch (error) {
+      toast({
+        title: "Erro ao enviar imagem",
+        description: "Não foi possível fazer upload da imagem.",
+        variant: "destructive",
+      });
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleRemoveImage = () => {
+    setFormData((prev) => ({
+      ...prev,
+      featured_image: "",
+    }));
+    setImagePreview("");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -257,17 +335,69 @@ const AdminBlogForm = () => {
                   </Select>
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="featured_image">URL da Imagem</Label>
-                  <Input
-                    id="featured_image"
-                    value={formData.featured_image}
-                    onChange={(e) =>
-                      setFormData({ ...formData, featured_image: e.target.value })
-                    }
-                    placeholder="https://exemplo.com/imagem.jpg"
-                    className="bg-background/50 border-border/50"
-                  />
+                <div className="space-y-4 md:col-span-2">
+                  <Label>Imagem Destacada</Label>
+                  
+                  {imagePreview && (
+                    <div className="relative w-full h-48 rounded-lg overflow-hidden border border-border">
+                      <img
+                        src={imagePreview}
+                        alt="Preview"
+                        className="w-full h-full object-cover"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleRemoveImage}
+                        className="absolute top-2 right-2 p-1.5 rounded-full bg-destructive text-destructive-foreground hover:bg-destructive/90 transition-colors"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  )}
+
+                  <div className="flex gap-4">
+                    <div className="flex-1">
+                      <input
+                        type="file"
+                        id="image-upload"
+                        accept="image/jpeg,image/jpg,image/png,image/webp,image/gif"
+                        onChange={handleImageUpload}
+                        className="hidden"
+                      />
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => document.getElementById("image-upload")?.click()}
+                        disabled={uploading}
+                        className="w-full bg-gradient-to-r from-lavender-ice to-boreal-blue text-white border-0 hover:opacity-90"
+                      >
+                        {uploading ? (
+                          <>Enviando...</>
+                        ) : (
+                          <>
+                            <Upload className="w-4 h-4 mr-2" />
+                            Upload de Imagem
+                          </>
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="featured_image" className="text-muted-foreground text-sm">
+                      Ou insira URL manualmente
+                    </Label>
+                    <Input
+                      id="featured_image"
+                      value={formData.featured_image}
+                      onChange={(e) => {
+                        setFormData({ ...formData, featured_image: e.target.value });
+                        setImagePreview(e.target.value);
+                      }}
+                      placeholder="https://exemplo.com/imagem.jpg"
+                      className="bg-background/50 border-border/50"
+                    />
+                  </div>
                 </div>
 
                 <div className="space-y-2 md:col-span-2">
