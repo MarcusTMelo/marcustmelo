@@ -1,6 +1,7 @@
 import Hero from "@/components/Hero";
 import HowCanIHelp from "@/components/HowCanIHelp";
 import Services from "@/components/Services";
+import About from "@/components/About";
 
 const Index = () => {
   return (
@@ -8,6 +9,7 @@ const Index = () => {
       <Hero />
       <HowCanIHelp />
       <Services />
+      <About />
     </main>
   );
 };
