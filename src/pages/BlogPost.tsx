@@ -171,9 +171,9 @@ const BlogPost = () => {
           )}
 
           {/* Content */}
-          <div className="prose prose-invert prose-lg max-w-none">
+          <div className="prose prose-invert prose-lg max-w-none blog-content">
             <div
-              className="text-[#D6D6E0]/90 leading-relaxed whitespace-pre-wrap"
+              className="text-[#D6D6E0]/90 leading-relaxed"
               dangerouslySetInnerHTML={{ __html: post.content || "" }}
             />
           </div>

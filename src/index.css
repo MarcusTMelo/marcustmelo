@@ -195,4 +195,77 @@ All colors MUST be HSL.
   .animate-float-3 {
     animation: float 12s ease-in-out infinite 4s;
   }
+  
+  /* Blog Content Styles */
+  .blog-content {
+    @apply text-foreground;
+  }
+  
+  .blog-content h1 {
+    @apply text-4xl font-bold mb-4 mt-8 bg-gradient-to-r from-lavender-ice to-boreal-blue bg-clip-text text-transparent;
+  }
+  
+  .blog-content h2 {
+    @apply text-3xl font-bold mb-3 mt-6 bg-gradient-to-r from-boreal-blue to-sapphire-glow bg-clip-text text-transparent;
+  }
+  
+  .blog-content h3 {
+    @apply text-2xl font-bold mb-2 mt-5 text-lavender-ice;
+  }
+  
+  .blog-content p {
+    @apply mb-4 leading-relaxed text-foreground/90;
+  }
+  
+  .blog-content strong {
+    @apply font-bold text-lavender-ice;
+  }
+  
+  .blog-content em {
+    @apply italic text-boreal-blue;
+  }
+  
+  .blog-content u {
+    @apply underline decoration-lavender-ice;
+  }
+  
+  .blog-content s {
+    @apply line-through text-muted-foreground;
+  }
+  
+  .blog-content a {
+    @apply text-lavender-ice hover:text-boreal-blue underline transition-colors;
+  }
+  
+  .blog-content ul {
+    @apply list-disc list-inside mb-4 space-y-2;
+  }
+  
+  .blog-content ol {
+    @apply list-decimal list-inside mb-4 space-y-2;
+  }
+  
+  .blog-content li {
+    @apply text-foreground/90 leading-relaxed;
+  }
+  
+  .blog-content blockquote {
+    @apply border-l-4 border-lavender-ice pl-4 py-2 my-4 italic text-foreground/80 bg-lavender-ice/5;
+  }
+  
+  .blog-content pre {
+    @apply bg-muted p-4 rounded-lg overflow-x-auto mb-4 border border-border;
+  }
+  
+  .blog-content code {
+    @apply bg-muted px-2 py-1 rounded text-sm font-mono text-boreal-blue;
+  }
+  
+  .blog-content pre code {
+    @apply bg-transparent p-0 text-foreground/90;
+  }
+  
+  .blog-content hr {
+    @apply border-t border-border/50 my-8;
+  }
 }
