@@ -18,10 +18,15 @@ export default {
         body: ['Inter', 'sans-serif'],
       },
       colors: {
-        'neon-orchid': 'hsl(var(--neon-orchid))',
-        'neon-coral': 'hsl(var(--neon-coral))',
-        'neon-lime': 'hsl(var(--neon-lime))',
-        'quartz-pink': 'hsl(var(--quartz-pink))',
+        /* Brand palette */
+        'lavender-ice': 'hsl(var(--lavender-ice))',
+        'boreal-blue': 'hsl(var(--boreal-blue))',
+        'sapphire-glow': 'hsl(var(--sapphire-glow))',
+        'quartz-pink': 'hsl(var(--quartz))',
+        'night-violet': 'hsl(var(--night-violet))',
+        'deep-black': 'hsl(var(--deep-black))',
+        
+        /* Semantic colors */
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -35,6 +40,14 @@ export default {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
         },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        quartz: {
+          DEFAULT: "hsl(var(--quartz))",
+          foreground: "hsl(var(--quartz-foreground))",
+        },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
@@ -42,10 +55,6 @@ export default {
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
