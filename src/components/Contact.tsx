@@ -1,4 +1,4 @@
-import { Mail, MessageCircle, MapPin, Heart, Zap } from "lucide-react";
+import { Mail, MessageCircle, MapPin, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -72,20 +72,6 @@ const Contact = () => {
             </div>
 
             <div className="flex items-start gap-4">
-              <div className="p-3 rounded-lg bg-[#FF7ACB]/10 text-[#FF7ACB]">
-                <Heart className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-foreground mb-1">
-                  Atendimento Especializado
-                </h3>
-                <p className="text-muted-foreground">
-                  Ambiente acolhedor para a comunidade LGBTQIA+
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
               <div className="p-3 rounded-lg bg-accent/10 text-accent">
                 <Zap className="w-6 h-6" />
               </div>
@@ -101,10 +87,6 @@ const Contact = () => {
 
             {/* Badges Row */}
             <div className="flex flex-wrap gap-3 pt-4">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#C7A7FF]/30 bg-[#0D0B12] text-sm text-[#D6D6E0]">
-                <span>🏳️‍🌈</span>
-                <span>LGBT+ Friendly</span>
-              </div>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#C7A7FF]/30 bg-[#0D0B12] text-sm text-[#D6D6E0]">
                 <span>⚡</span>
                 <span>Resposta em 24h</span>

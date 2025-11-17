@@ -4,15 +4,15 @@ import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 const About = () => {
   const { elementRef, isVisible } = useIntersectionObserver();
   const highlights = [
-    "MBA em IA aplicada a negócios (em andamento)",
+    "MBA em IA aplicada a negócios",
     "Especialista Microsoft Lists + Power Automate",
     "Administração de servidores e sistemas self-hosted",
-    "Espaço acolhedor para todos os públicos",
+    "Soluções personalizadas para cada cliente",
   ];
 
   const stats = [
     { value: "10+ anos", label: "de experiência" },
-    { value: "15+ projetos", label: "liderados na GIZ Brasil" },
+    { value: "15+ projetos", label: "liderados" },
     { value: "100%", label: "foco em resultados" },
   ];
 
@@ -62,7 +62,7 @@ const About = () => {
           <div className="space-y-6">
             <div className="space-y-4 text-[#D6D6E0] text-lg leading-relaxed">
               <p>
-                Olá! Sou Marcus Túlio Melo, especialista em automação e transformação digital humanizada.
+                Olá! Sou Marcus Túlio Melo, especialista em automação e transformação digital.
               </p>
               <p>
                 Com mais de 10 anos de experiência, liderei projetos como Conecta TI, Conecta Ativos e Conecta Estações na GIZ Brasil — soluções que organizam operações complexas, eliminam trabalho manual e facilitam a vida de equipes inteiras.
@@ -71,10 +71,10 @@ const About = () => {
                 Tenho formação em TI e Gestão, e atualmente faço MBA em Inteligência Artificial aplicada a negócios.
               </p>
               <p>
-                Meu foco é simplificar o complexo e criar soluções acessíveis para todos. Trabalho especialmente com pequenos negócios, empreendedores e pessoas que buscam autonomia digital — sem jargões, só resultados reais.
+                Meu foco é simplificar o complexo e criar soluções acessíveis. Trabalho especialmente com pequenos negócios e empreendedores que buscam autonomia digital — sem jargões, só resultados reais.
               </p>
               <p>
-                Acredito que tecnologia deve ser transparente, empática e construída COM pessoas, não PARA pessoas.
+                Acredito que tecnologia deve ser transparente, empática e construída com pessoas, para pessoas.
               </p>
             </div>
 
