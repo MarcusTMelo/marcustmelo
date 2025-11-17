@@ -1,8 +1,10 @@
 import { ArrowRight, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
 const Blog = () => {
+  const { elementRef, isVisible } = useIntersectionObserver();
   const blogPosts = [
     {
       category: "Automação",
@@ -68,13 +70,13 @@ const Blog = () => {
         <div className="absolute bottom-1/3 left-1/4 w-96 h-96 bg-[#FF7ACB] opacity-5 blur-[120px] rounded-full" />
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div ref={elementRef} className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] bg-clip-text text-transparent">
+          <h2 className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] bg-clip-text text-transparent transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             Blog & Artigos
           </h2>
-          <p className="text-lg md:text-xl text-[#D6D6E0]/80">
+          <p className={`text-lg md:text-xl text-[#D6D6E0]/80 transition-all duration-700 delay-150 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             Insights sobre automação, IA e transformação digital
           </p>
         </div>
@@ -84,7 +86,8 @@ const Blog = () => {
           {blogPosts.map((post, index) => (
             <article
               key={index}
-              className="group relative rounded-2xl bg-card/50 border-2 border-border/50 hover:border-[#4A8CFF]/50 overflow-hidden transition-all duration-500 hover:transform hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(74,140,255,0.2)] cursor-pointer"
+              className={`group relative rounded-2xl bg-card/50 border-2 border-border/50 hover:border-[#4A8CFF]/50 overflow-hidden transition-all duration-500 hover:transform hover:scale-[1.03] hover:shadow-[0_0_40px_rgba(74,140,255,0.2)] cursor-pointer ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+              style={{ transitionDelay: `${300 + index * 100}ms` }}
             >
               {/* Gradient Thumbnail */}
               <div className={`h-48 bg-gradient-to-br ${post.gradient} relative overflow-hidden`}>

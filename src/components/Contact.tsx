@@ -4,8 +4,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
 const Contact = () => {
+  const { elementRef, isVisible } = useIntersectionObserver();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Form submission logic will be added later
@@ -14,20 +16,20 @@ const Contact = () => {
 
   return (
     <section id="contact" className="py-24 px-4 bg-[#0B0B0D]">
-      <div className="max-w-6xl mx-auto">
+      <div ref={elementRef} className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+          <h2 className={`text-4xl md:text-5xl font-bold text-foreground mb-4 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             Vamos Conversar
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className={`text-lg text-muted-foreground max-w-2xl mx-auto transition-all duration-700 delay-150 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             Tem um projeto em mente? Vamos transformar sua ideia em realidade.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-12">
+        <div className={`grid md:grid-cols-2 gap-12 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
           {/* Left side - Contact Info */}
           <div className="space-y-8">
-            <div className="flex items-start gap-4">
+            <div className="flex items-start gap-4 hover:translate-x-2 transition-transform duration-300">
               <div className="p-3 rounded-lg bg-primary/10 text-primary">
                 <Mail className="w-6 h-6" />
               </div>

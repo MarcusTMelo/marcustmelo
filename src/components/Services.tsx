@@ -1,7 +1,9 @@
 import { Bot, Boxes, Lightbulb } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
 const Services = () => {
+  const { elementRef, isVisible } = useIntersectionObserver();
   const services = [
     {
       icon: Boxes,
@@ -40,9 +42,9 @@ const Services = () => {
         <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-[#C7A7FF] opacity-5 blur-[120px] rounded-full" />
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div ref={elementRef} className="max-w-7xl mx-auto relative z-10">
         {/* Section Title */}
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-16 bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] bg-clip-text text-transparent">
+        <h2 className={`text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-16 bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] bg-clip-text text-transparent transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           Serviços
         </h2>
 
@@ -51,7 +53,8 @@ const Services = () => {
           {services.map((service, index) => (
             <div
               key={index}
-              className="group relative p-8 rounded-2xl bg-card/50 border-2 border-[#4A8CFF]/20 hover:border-[#4A8CFF]/50 transition-all duration-500 hover:transform hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(74,140,255,0.3)]"
+              className={`group relative p-8 rounded-2xl bg-card/50 border-2 border-[#4A8CFF]/20 hover:border-[#4A8CFF]/50 transition-all duration-500 hover:transform hover:scale-[1.03] hover:shadow-[0_0_40px_rgba(74,140,255,0.3)] ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+              style={{ transitionDelay: `${200 + index * 200}ms` }}
             >
               {/* Badge */}
               <div className="mb-6">

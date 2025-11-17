@@ -1,6 +1,8 @@
 import { Check } from "lucide-react";
+import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
 const About = () => {
+  const { elementRef, isVisible } = useIntersectionObserver();
   const highlights = [
     "MBA em IA aplicada a negócios (em andamento)",
     "Especialista Microsoft Lists + Power Automate",
@@ -22,22 +24,22 @@ const About = () => {
         <div className="absolute bottom-1/3 left-1/3 w-96 h-96 bg-[#6EC8FF] opacity-5 blur-[120px] rounded-full" />
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div ref={elementRef} className="max-w-7xl mx-auto relative z-10">
         {/* Title Section */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] bg-clip-text text-transparent">
+          <h2 className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] bg-clip-text text-transparent transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             Marcus Túlio Melo
           </h2>
-          <p className="text-xl md:text-2xl text-[#D6D6E0]/80">
+          <p className={`text-xl md:text-2xl text-[#D6D6E0]/80 transition-all duration-700 delay-150 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             Automação & IA Humanizada
           </p>
         </div>
 
         {/* Two Column Layout */}
-        <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-start mb-16">
+        <div className={`grid md:grid-cols-2 gap-12 md:gap-16 items-start mb-16 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
           {/* Left Column - Image */}
           <div className="flex justify-center md:justify-end">
-            <div className="relative group">
+            <div className="relative group hover:scale-105 transition-transform duration-500">
               {/* Gradient frame */}
               <div className="absolute -inset-4 bg-gradient-to-br from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] rounded-3xl opacity-20 blur-xl group-hover:opacity-30 transition-opacity duration-500" />
               
@@ -77,7 +79,11 @@ const About = () => {
             {/* Bullet Points */}
             <div className="space-y-3 pt-6">
               {highlights.map((highlight, index) => (
-                <div key={index} className="flex items-start gap-3">
+                <div 
+                  key={index} 
+                  className={`flex items-start gap-3 transition-all duration-500 hover:translate-x-2 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+                  style={{ transitionDelay: `${500 + index * 100}ms` }}
+                >
                   <div className="mt-1 w-5 h-5 rounded-full bg-gradient-to-br from-[#C7A7FF]/30 to-[#6EC8FF]/30 flex items-center justify-center flex-shrink-0">
                     <Check className="w-3 h-3 text-[#C7A7FF]" />
                   </div>

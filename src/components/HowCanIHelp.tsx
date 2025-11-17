@@ -1,6 +1,8 @@
 import { Sparkles, Workflow, Target } from "lucide-react";
+import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
 const HowCanIHelp = () => {
+  const { elementRef, isVisible } = useIntersectionObserver();
   const features = [
     {
       icon: Workflow,
@@ -24,14 +26,14 @@ const HowCanIHelp = () => {
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#6EC8FF] opacity-5 blur-[120px] rounded-full" />
       </div>
 
-      <div className="max-w-6xl mx-auto relative z-10">
+      <div ref={elementRef} className="max-w-6xl mx-auto relative z-10">
         {/* Title with gradient */}
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-6 bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] bg-clip-text text-transparent">
+        <h2 className={`text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-6 bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] bg-clip-text text-transparent transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           Como posso transformar seu negócio
         </h2>
 
         {/* Subtitle */}
-        <p className="text-lg md:text-xl text-[#D6D6E0] text-center max-w-4xl mx-auto mb-16 leading-relaxed">
+        <p className={`text-lg md:text-xl text-[#D6D6E0] text-center max-w-4xl mx-auto mb-16 leading-relaxed transition-all duration-700 delay-150 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           Com mais de 10 anos liderando projetos de automação e transformação digital, 
           eu estruturo processos que realmente funcionam — sem jargões, com resultados reais.
         </p>
@@ -41,7 +43,8 @@ const HowCanIHelp = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="group relative p-8 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/50 hover:border-[#C7A7FF]/30 transition-all duration-300 hover:transform hover:scale-105"
+              className={`group relative p-8 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border border-border/50 hover:border-[#C7A7FF]/30 transition-all duration-500 hover:transform hover:scale-105 hover:shadow-[0_0_40px_rgba(199,167,255,0.2)] ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+              style={{ transitionDelay: `${300 + index * 150}ms` }}
             >
               {/* Icon with gradient background */}
               <div className="w-14 h-14 mb-6 rounded-xl bg-gradient-to-br from-[#C7A7FF]/20 to-[#6EC8FF]/20 flex items-center justify-center group-hover:shadow-[0_0_30px_rgba(199,167,255,0.3)] transition-all duration-300">
