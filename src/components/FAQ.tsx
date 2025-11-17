@@ -4,8 +4,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
 const FAQ = () => {
+  const { elementRef, isVisible } = useIntersectionObserver();
   const faqCategories = [
     {
       category: "SERVIÇOS",
@@ -85,9 +87,9 @@ const FAQ = () => {
         <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-[#6EC8FF] opacity-5 blur-[120px] rounded-full" />
       </div>
 
-      <div className="max-w-5xl mx-auto relative z-10">
+      <div ref={elementRef} className="max-w-5xl mx-auto relative z-10">
         {/* Section Title */}
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-16 bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] bg-clip-text text-transparent">
+        <h2 className={`text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-16 bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] bg-clip-text text-transparent transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           Perguntas Frequentes
         </h2>
 
@@ -96,7 +98,8 @@ const FAQ = () => {
           {faqCategories.map((category, categoryIndex) => (
             <div
               key={categoryIndex}
-              className="rounded-2xl bg-card/50 border-2 border-border/50 hover:border-[#4A8CFF]/30 p-6 md:p-8 transition-all duration-300"
+              className={`rounded-2xl bg-card/50 border-2 border-border/50 hover:border-[#4A8CFF]/30 p-6 md:p-8 transition-all duration-500 hover:shadow-[0_0_30px_rgba(74,140,255,0.15)] ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+              style={{ transitionDelay: `${300 + categoryIndex * 150}ms` }}
             >
               {/* Category Label */}
               <div className="mb-6">

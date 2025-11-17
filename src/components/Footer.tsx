@@ -27,31 +27,31 @@ const Footer = () => {
             <nav className="flex flex-col space-y-2">
               <button
                 onClick={() => scrollToSection("hero")}
-                className="text-muted-foreground hover:text-[#C8B8E6] transition-colors text-left"
+                className="text-muted-foreground hover:text-[#C8B8E6] transition-all duration-300 text-left hover:translate-x-2"
               >
                 Início
               </button>
               <button
                 onClick={() => scrollToSection("services")}
-                className="text-muted-foreground hover:text-[#C8B8E6] transition-colors text-left"
+                className="text-muted-foreground hover:text-[#C8B8E6] transition-all duration-300 text-left hover:translate-x-2"
               >
                 Serviços
               </button>
               <button
                 onClick={() => scrollToSection("about")}
-                className="text-muted-foreground hover:text-[#C8B8E6] transition-colors text-left"
+                className="text-muted-foreground hover:text-[#C8B8E6] transition-all duration-300 text-left hover:translate-x-2"
               >
                 Sobre
               </button>
               <button
                 onClick={() => scrollToSection("blog")}
-                className="text-muted-foreground hover:text-[#C8B8E6] transition-colors text-left"
+                className="text-muted-foreground hover:text-[#C8B8E6] transition-all duration-300 text-left hover:translate-x-2"
               >
                 Blog
               </button>
               <button
                 onClick={() => scrollToSection("contact")}
-                className="text-muted-foreground hover:text-[#C8B8E6] transition-colors text-left"
+                className="text-muted-foreground hover:text-[#C8B8E6] transition-all duration-300 text-left hover:translate-x-2"
               >
                 Contato
               </button>
@@ -66,27 +66,27 @@ const Footer = () => {
                 href="https://www.instagram.com/marcustmelo/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-muted-foreground hover:text-transparent hover:bg-gradient-to-r hover:from-[#C8B8E6] hover:to-[#5DADE2] hover:bg-clip-text transition-all group"
+                className="flex items-center gap-2 text-muted-foreground hover:text-transparent hover:bg-gradient-to-r hover:from-[#C8B8E6] hover:to-[#5DADE2] hover:bg-clip-text transition-all duration-300 hover:translate-x-2 group"
               >
-                <Instagram className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                <Instagram className="w-5 h-5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300" />
                 <span>Instagram</span>
               </a>
               <a
                 href="https://www.linkedin.com/in/marcustmelo/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-muted-foreground hover:text-transparent hover:bg-gradient-to-r hover:from-[#C8B8E6] hover:to-[#5DADE2] hover:bg-clip-text transition-all group"
+                className="flex items-center gap-2 text-muted-foreground hover:text-transparent hover:bg-gradient-to-r hover:from-[#C8B8E6] hover:to-[#5DADE2] hover:bg-clip-text transition-all duration-300 hover:translate-x-2 group"
               >
-                <Linkedin className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                <Linkedin className="w-5 h-5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300" />
                 <span>LinkedIn</span>
               </a>
               <a
                 href="https://wa.me/5561999999999"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-muted-foreground hover:text-transparent hover:bg-gradient-to-r hover:from-[#C8B8E6] hover:to-[#5DADE2] hover:bg-clip-text transition-all group"
+                className="flex items-center gap-2 text-muted-foreground hover:text-transparent hover:bg-gradient-to-r hover:from-[#C8B8E6] hover:to-[#5DADE2] hover:bg-clip-text transition-all duration-300 hover:translate-x-2 group"
               >
-                <MessageCircle className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                <MessageCircle className="w-5 h-5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300" />
                 <span>WhatsApp</span>
               </a>
             </div>

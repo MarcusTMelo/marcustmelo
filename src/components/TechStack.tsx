@@ -1,7 +1,9 @@
 import { Workflow, Brain, Server, Database } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
 const TechStack = () => {
+  const { elementRef, isVisible } = useIntersectionObserver();
   const categories = [
     {
       title: "Automação & No-Code",
@@ -58,9 +60,9 @@ const TechStack = () => {
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#FF7ACB] opacity-5 blur-[120px] rounded-full" />
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div ref={elementRef} className="max-w-7xl mx-auto relative z-10">
         {/* Section Title */}
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-16 bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] bg-clip-text text-transparent">
+        <h2 className={`text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-16 bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] bg-clip-text text-transparent transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           Stack de Tecnologias
         </h2>
 
@@ -69,7 +71,8 @@ const TechStack = () => {
           {categories.map((category, categoryIndex) => (
             <div
               key={categoryIndex}
-              className="group relative p-6 rounded-2xl bg-[#0D0B12] border-2 border-[#4A8CFF]/20 hover:border-[#4A8CFF]/40 transition-all duration-300"
+              className={`group relative p-6 rounded-2xl bg-[#0D0B12] border-2 border-[#4A8CFF]/20 hover:border-[#4A8CFF]/40 transition-all duration-500 hover:scale-105 hover:shadow-[0_0_30px_rgba(74,140,255,0.2)] ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+              style={{ transitionDelay: `${200 + categoryIndex * 100}ms` }}
             >
               {/* Category Icon */}
               <div className="flex items-center gap-3 mb-6">
@@ -93,7 +96,7 @@ const TechStack = () => {
                 {category.technologies.map((tech, techIndex) => (
                   <div
                     key={techIndex}
-                    className="flex items-center justify-between gap-2 p-2 rounded-lg bg-background/50 hover:bg-background/80 transition-colors duration-200"
+                    className="flex items-center justify-between gap-2 p-2 rounded-lg bg-background/50 hover:bg-background/80 hover:scale-105 transition-all duration-200 cursor-pointer"
                   >
                     <span className="text-[#D6D6E0] text-sm">{tech.name}</span>
                     {tech.badge && (
