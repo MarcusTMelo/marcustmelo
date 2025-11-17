@@ -10,16 +10,18 @@ All colors MUST be HSL.
   :root {
     /* ========== BRAND PALETTE ========== */
     /* Cores principais da marca em HSL */
-    --lavender-ice: 266 52% 80%;     /* #C8B8E6 - Roxo suave */
-    --boreal-blue: 200 73% 65%;      /* #5DADE2 - Azul claro */
-    --sapphire-glow: 217 100% 63%;   /* #4A8CFF - Azul vibrante */
+    --lavender-ice: 266 52% 83%;     /* #C7A7FF - Roxo suave */
+    --boreal-blue: 200 100% 72%;     /* #6EC8FF - Azul claro */
+    --sapphire-glow: 217 100% 64%;   /* #4A8CFF - Azul vibrante */
     --quartz-pink: 325 100% 74%;     /* #FF7ACB - Rosa vibrante */
+    --deep-graphite: 240 14% 5%;     /* #0B0B0D - Grafite profundo */
+    --text-color: 240 11% 84%;       /* #D6D6E0 - Texto claro */
     
     /* ========== BACKGROUNDS ========== */
-    --night-violet: 263 17% 7%;      /* #0D0B12 - Roxo escuro */
-    --deep-black: 220 20% 4%;        /* #0B0B0D - Preto profundo */
-    --background: 220 20% 4%;        /* deep-black */
-    --foreground: 240 11% 84%;       /* #D6D6E0 - Texto claro */
+    --night-violet: 263 17% 6%;      /* #0D0B12 - Roxo escuro */
+    --deep-black: 240 14% 5%;        /* #0B0B0D - Preto profundo (deep-graphite) */
+    --background: 240 14% 5%;        /* deep-graphite */
+    --foreground: 240 11% 84%;       /* #D6D6E0 - Texto claro (text-color) */
     
     /* ========== SEMANTIC COLORS ========== */
     --primary: 217 100% 63%;         /* sapphire-glow */
