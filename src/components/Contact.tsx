@@ -98,6 +98,22 @@ const Contact = () => {
                 </p>
               </div>
             </div>
+
+            {/* Badges Row */}
+            <div className="flex flex-wrap gap-3 pt-4">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#C7A7FF]/30 bg-[#0D0B12] text-sm text-[#D6D6E0]">
+                <span>🏳️‍🌈</span>
+                <span>LGBT+ Friendly</span>
+              </div>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#C7A7FF]/30 bg-[#0D0B12] text-sm text-[#D6D6E0]">
+                <span>⚡</span>
+                <span>Resposta em 24h</span>
+              </div>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#C7A7FF]/30 bg-[#0D0B12] text-sm text-[#D6D6E0]">
+                <span>✅</span>
+                <span>Primeira consulta gratuita</span>
+              </div>
+            </div>
           </div>
 
           {/* Right side - Contact Form */}
