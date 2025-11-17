@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
 import { ArrowLeft, Upload, X } from "lucide-react";
+import { RichTextEditor } from "@/components/RichTextEditor";
 
 const CATEGORIES = [
   "Automação",
@@ -416,15 +417,11 @@ const AdminBlogForm = () => {
 
                 <div className="space-y-2 md:col-span-2">
                   <Label htmlFor="content">Conteúdo</Label>
-                  <Textarea
-                    id="content"
-                    value={formData.content}
-                    onChange={(e) =>
-                      setFormData({ ...formData, content: e.target.value })
+                  <RichTextEditor
+                    content={formData.content}
+                    onChange={(content) =>
+                      setFormData({ ...formData, content })
                     }
-                    placeholder="Escreva o conteúdo completo do post..."
-                    rows={12}
-                    className="bg-background/50 border-border/50"
                   />
                 </div>
 
