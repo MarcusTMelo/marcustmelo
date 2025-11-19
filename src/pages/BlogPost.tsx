@@ -17,6 +17,7 @@ interface BlogPostData {
   content: string | null;
   featured_image: string | null;
   published_at: string | null;
+  views_count: number;
 }
 
 const BlogPost = () => {
@@ -45,6 +46,17 @@ const BlogPost = () => {
         setNotFound(true);
       } else {
         setPost(data);
+        
+        // Increment view count asynchronously (don't block page load)
+        supabase
+          .rpc("increment_post_views", { post_slug: slug })
+          .then(({ error: rpcError }) => {
+            if (rpcError) {
+              console.error("Error incrementing views:", rpcError);
+            } else {
+              console.log("View count incremented");
+            }
+          });
       }
     } catch (error) {
       console.error("Error fetching post:", error);
@@ -139,7 +151,7 @@ const BlogPost = () => {
           )}
 
           {/* Category & Date */}
-          <div className="flex items-center gap-4 mb-6">
+          <div className="flex items-center gap-4 mb-6 flex-wrap">
             {post.category && (
               <Badge
                 style={{
@@ -154,6 +166,11 @@ const BlogPost = () => {
             {post.published_at && (
               <span className="text-sm text-muted-foreground">
                 {format(new Date(post.published_at), "dd 'de' MMMM 'de' yyyy")}
+              </span>
+            )}
+            {post.views_count > 0 && (
+              <span className="text-sm text-muted-foreground flex items-center gap-1">
+                👁️ {post.views_count.toLocaleString('pt-BR')} {post.views_count === 1 ? 'visualização' : 'visualizações'}
               </span>
             )}
           </div>

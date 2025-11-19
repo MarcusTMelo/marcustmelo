@@ -10,6 +10,7 @@ interface Stats {
   totalPosts: number;
   publishedPosts: number;
   totalProjects: number;
+  totalViews: number;
 }
 
 const AdminDashboard = () => {
@@ -19,6 +20,7 @@ const AdminDashboard = () => {
     totalPosts: 0,
     publishedPosts: 0,
     totalProjects: 0,
+    totalViews: 0,
   });
 
   useEffect(() => {
@@ -53,10 +55,18 @@ const AdminDashboard = () => {
         .from("projects")
         .select("*", { count: "exact", head: true });
 
+      // Fetch total views
+      const { data: viewsData } = await supabase
+        .from("blog_posts")
+        .select("views_count");
+      
+      const totalViews = viewsData?.reduce((sum, post) => sum + (post.views_count || 0), 0) || 0;
+
       setStats({
         totalPosts: totalPosts || 0,
         publishedPosts: publishedPosts || 0,
         totalProjects: totalProjects || 0,
+        totalViews,
       });
     } catch (error) {
       console.error("Error fetching stats:", error);
@@ -91,7 +101,7 @@ const AdminDashboard = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <Card className="bg-background/50 border-[#C7A7FF]/30 hover:border-[#C7A7FF]/50 transition-colors">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium text-muted-foreground">
@@ -139,6 +149,23 @@ const AdminDashboard = () => {
                   </div>
                   <p className="text-xs text-muted-foreground mt-1">
                     Portfólio completo
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="bg-background/50 border-[#4A8CFF]/30 hover:border-[#4A8CFF]/50 transition-colors">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium text-muted-foreground">
+                    Total de Visualizações
+                  </CardTitle>
+                  <span className="text-lg">👁️</span>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-3xl font-bold bg-gradient-to-r from-[#4A8CFF] to-[#6EC8FF] bg-clip-text text-transparent">
+                    {stats.totalViews.toLocaleString('pt-BR')}
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Views nos posts
                   </p>
                 </CardContent>
               </Card>
