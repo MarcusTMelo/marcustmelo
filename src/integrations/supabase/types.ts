@@ -95,6 +95,24 @@ export type Database = {
         }
         Relationships: []
       }
+      site_settings: {
+        Row: {
+          id: string
+          status: Database["public"]["Enums"]["site_status_enum"]
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          status?: Database["public"]["Enums"]["site_status_enum"]
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          status?: Database["public"]["Enums"]["site_status_enum"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -103,7 +121,7 @@ export type Database = {
       increment_post_views: { Args: { post_slug: string }; Returns: undefined }
     }
     Enums: {
-      [_ in never]: never
+      site_status_enum: "ativo" | "manutencao" | "desenvolvimento"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -230,6 +248,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      site_status_enum: ["ativo", "manutencao", "desenvolvimento"],
+    },
   },
 } as const
