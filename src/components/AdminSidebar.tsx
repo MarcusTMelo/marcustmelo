@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { NavLink } from "@/components/NavLink";
-import { LayoutDashboard, FileText, Briefcase, LogOut } from "lucide-react";
+import { LayoutDashboard, FileText, LogOut } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -18,7 +18,6 @@ import { Button } from "@/components/ui/button";
 const menuItems = [
   { title: "Dashboard", url: "/admin/dashboard", icon: LayoutDashboard },
   { title: "Blog Posts", url: "/admin/blog", icon: FileText },
-  { title: "Projetos", url: "/admin/projects", icon: Briefcase },
 ];
 
 export function AdminSidebar() {
