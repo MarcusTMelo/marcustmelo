@@ -27,6 +27,7 @@ export type Database = {
           status: string
           title: string
           updated_at: string
+          views_count: number
         }
         Insert: {
           category?: string | null
@@ -40,6 +41,7 @@ export type Database = {
           status?: string
           title: string
           updated_at?: string
+          views_count?: number
         }
         Update: {
           category?: string | null
@@ -53,6 +55,7 @@ export type Database = {
           status?: string
           title?: string
           updated_at?: string
+          views_count?: number
         }
         Relationships: []
       }
@@ -97,7 +100,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      increment_post_views: { Args: { post_slug: string }; Returns: undefined }
     }
     Enums: {
       [_ in never]: never

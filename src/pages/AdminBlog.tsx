@@ -34,6 +34,7 @@ interface BlogPost {
   category: string | null;
   status: string;
   created_at: string;
+  views_count: number;
 }
 
 const AdminBlog = () => {
@@ -58,7 +59,7 @@ const AdminBlog = () => {
     try {
       const { data, error } = await supabase
         .from("blog_posts")
-        .select("id, title, slug, category, status, created_at")
+        .select("id, title, slug, category, status, created_at, views_count")
         .order("created_at", { ascending: false });
 
       if (error) throw error;
@@ -154,6 +155,7 @@ const AdminBlog = () => {
                       <TableHead>Título</TableHead>
                       <TableHead>Categoria</TableHead>
                       <TableHead>Status</TableHead>
+                      <TableHead>Visualizações</TableHead>
                       <TableHead>Data</TableHead>
                       <TableHead className="text-right">Ações</TableHead>
                     </TableRow>
@@ -189,6 +191,11 @@ const AdminBlog = () => {
                               ? "Publicado"
                               : "Rascunho"}
                           </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <span className="text-muted-foreground">
+                            👁️ {post.views_count.toLocaleString('pt-BR')}
+                          </span>
                         </TableCell>
                         <TableCell>
                           {format(new Date(post.created_at), "dd/MM/yyyy")}
