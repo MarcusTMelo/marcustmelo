@@ -5,6 +5,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AdminSidebar } from "@/components/AdminSidebar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileText, CheckCircle } from "lucide-react";
+import { SiteStatusManager } from "@/components/SiteStatusManager";
 
 interface Stats {
   totalPosts: number;
@@ -92,6 +93,8 @@ const AdminDashboard = () => {
                 Gerencie seu conteúdo e projetos
               </p>
             </div>
+
+            <SiteStatusManager />
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               <Card className="bg-background/50 border-[#C7A7FF]/30 hover:border-[#C7A7FF]/50 transition-colors">
