@@ -4,12 +4,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AdminSidebar } from "@/components/AdminSidebar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileText, CheckCircle, Briefcase } from "lucide-react";
+import { FileText, CheckCircle } from "lucide-react";
 
 interface Stats {
   totalPosts: number;
   publishedPosts: number;
-  totalProjects: number;
   totalViews: number;
 }
 
@@ -19,7 +18,6 @@ const AdminDashboard = () => {
   const [stats, setStats] = useState<Stats>({
     totalPosts: 0,
     publishedPosts: 0,
-    totalProjects: 0,
     totalViews: 0,
   });
 
@@ -50,11 +48,6 @@ const AdminDashboard = () => {
         .select("*", { count: "exact", head: true })
         .eq("status", "published");
 
-      // Fetch total projects
-      const { count: totalProjects } = await supabase
-        .from("projects")
-        .select("*", { count: "exact", head: true });
-
       // Fetch total views
       const { data: viewsData } = await supabase
         .from("blog_posts")
@@ -65,7 +58,6 @@ const AdminDashboard = () => {
       setStats({
         totalPosts: totalPosts || 0,
         publishedPosts: publishedPosts || 0,
-        totalProjects: totalProjects || 0,
         totalViews,
       });
     } catch (error) {
@@ -132,23 +124,6 @@ const AdminDashboard = () => {
                   </div>
                   <p className="text-xs text-muted-foreground mt-1">
                     Visíveis ao público
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-background/50 border-[#FF6EC7]/30 hover:border-[#FF6EC7]/50 transition-colors">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-muted-foreground">
-                    Projetos
-                  </CardTitle>
-                  <Briefcase className="h-4 w-4 text-[#FF6EC7]" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-3xl font-bold bg-gradient-to-r from-[#FF6EC7] to-[#C7A7FF] bg-clip-text text-transparent">
-                    {stats.totalProjects}
-                  </div>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Portfólio completo
                   </p>
                 </CardContent>
               </Card>
