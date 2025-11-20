@@ -69,8 +69,9 @@ export function PublicRoute({ children }: PublicRouteProps) {
     );
   }
 
-  // Admin and /admin routes bypass maintenance/development restrictions
-  if (isAdminRoute || isAdmin) {
+  // Only /admin routes bypass maintenance/development restrictions
+  // Public routes show maintenance/dev pages regardless of user role
+  if (isAdminRoute) {
     return <>{children}</>;
   }
   if (status === 'manutencao') {
