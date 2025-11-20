@@ -35,17 +35,7 @@ const AdminDashboard = () => {
       return;
     }
 
-    // Verify admin role
-    const { data: isAdmin } = await supabase.rpc('has_role', {
-      _user_id: session.user.id,
-      _role: 'admin'
-    });
-
-    if (!isAdmin) {
-      navigate("/");
-      return;
-    }
-
+    // For now, any authenticated user can access the admin dashboard
     setLoading(false);
   };
 
