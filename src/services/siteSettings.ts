@@ -68,19 +68,25 @@ export async function updateSiteStatus(novoStatus: SiteStatus): Promise<boolean>
   }
 
   try {
-    const { error } = await supabase
+    console.log('[updateSiteStatus] Iniciando update para:', novoStatus);
+    
+    const { data, error } = await supabase
       .from('site_settings')
       .update({ status: novoStatus })
-      .eq('id', '00000000-0000-0000-0000-000000000001');
+      .eq('id', '00000000-0000-0000-0000-000000000001')
+      .select();
+
+    console.log('[updateSiteStatus] Resultado:', { data, error });
 
     if (error) {
-      console.error('Error updating site status:', error);
+      console.error('[updateSiteStatus] Error updating site status:', error);
       return false;
     }
 
+    console.log('[updateSiteStatus] Status atualizado com sucesso:', data);
     return true;
   } catch (error) {
-    console.error('Unexpected error updating site status:', error);
+    console.error('[updateSiteStatus] Unexpected error:', error);
     return false;
   }
 }
