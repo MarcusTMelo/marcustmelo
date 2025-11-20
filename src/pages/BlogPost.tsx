@@ -7,6 +7,7 @@ import { ArrowLeft } from "lucide-react";
 import { format } from "date-fns";
 import { Helmet } from "react-helmet";
 import Footer from "@/components/Footer";
+import DOMPurify from 'dompurify';
 
 interface BlogPostData {
   id: string;
@@ -191,7 +192,12 @@ const BlogPost = () => {
           <div className="prose prose-invert prose-lg max-w-none blog-content">
             <div
               className="text-[#D6D6E0]/90 leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: post.content || "" }}
+              dangerouslySetInnerHTML={{ 
+                __html: DOMPurify.sanitize(post.content || "", {
+                  ALLOWED_TAGS: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'strong', 'em', 'u', 's', 'ol', 'ul', 'li', 'blockquote', 'code', 'pre', 'a', 'br', 'hr', 'img'],
+                  ALLOWED_ATTR: ['href', 'target', 'rel', 'src', 'alt', 'class']
+                })
+              }}
             />
           </div>
 
