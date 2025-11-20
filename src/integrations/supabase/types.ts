@@ -59,42 +59,6 @@ export type Database = {
         }
         Relationships: []
       }
-      projects: {
-        Row: {
-          created_at: string
-          description: string | null
-          featured_image: string | null
-          id: string
-          order_index: number
-          organization: string | null
-          tech_stack: string[] | null
-          title: string
-          visible: boolean
-        }
-        Insert: {
-          created_at?: string
-          description?: string | null
-          featured_image?: string | null
-          id?: string
-          order_index?: number
-          organization?: string | null
-          tech_stack?: string[] | null
-          title: string
-          visible?: boolean
-        }
-        Update: {
-          created_at?: string
-          description?: string | null
-          featured_image?: string | null
-          id?: string
-          order_index?: number
-          organization?: string | null
-          tech_stack?: string[] | null
-          title?: string
-          visible?: boolean
-        }
-        Relationships: []
-      }
       site_settings: {
         Row: {
           id: string
