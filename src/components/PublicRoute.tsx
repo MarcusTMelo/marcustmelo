@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { getSiteStatus, type SiteStatus } from "@/services/siteSettings";
 import { supabase } from "@/integrations/supabase/client";
 import MaintenancePage from "@/pages/MaintenancePage";
@@ -12,25 +13,29 @@ export function PublicRoute({ children }: PublicRouteProps) {
   const [status, setStatus] = useState<SiteStatus | null>(null);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
-
+  const location = useLocation();
   useEffect(() => {
     const checkAdminStatus = async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      
-      if (user) {
-        const { data: roleData } = await supabase
-          .from('user_roles')
-          .select('role')
-          .eq('user_id', user.id)
-          .eq('role', 'admin')
-          .maybeSingle();
-        
-        setIsAdmin(!!roleData);
-      } else {
-        setIsAdmin(false);
-      }
-    };
 
+      if (!user) {
+        setIsAdmin(false);
+        return;
+      }
+
+      const { data, error } = await supabase.rpc("has_role", {
+        _user_id: user.id,
+        _role: "admin",
+      });
+
+      if (error) {
+        console.error("Error checking admin role", error);
+        setIsAdmin(false);
+        return;
+      }
+
+      setIsAdmin(Boolean(data));
+    };
     const loadStatus = async () => {
       await checkAdminStatus();
       const currentStatus = await getSiteStatus();
@@ -54,6 +59,8 @@ export function PublicRoute({ children }: PublicRouteProps) {
     };
   }, []);
 
+  const isAdminRoute = location.pathname.startsWith("/admin");
+
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-background">
@@ -62,11 +69,10 @@ export function PublicRoute({ children }: PublicRouteProps) {
     );
   }
 
-  // Admins bypass maintenance/development restrictions
-  if (isAdmin) {
+  // Admin and /admin routes bypass maintenance/development restrictions
+  if (isAdminRoute || isAdmin) {
     return <>{children}</>;
   }
-
   if (status === 'manutencao') {
     return <MaintenancePage />;
   }
