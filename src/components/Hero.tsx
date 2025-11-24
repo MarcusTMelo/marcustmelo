@@ -55,30 +55,30 @@ const Hero = () => {
 
           {/* Descrição */}
           <div className="space-y-4" style={{ color: "#D6D6E0", opacity: 0.9 }}>
-            <p className="text-lg md:text-xl leading-relaxed">
-              Transformo processos, negócios e rotinas através de sistemas inteligentes e automações criadas com{" "}
-              <span
-                className="font-semibold"
-                style={{ color: "#FF7ACB", filter: "drop-shadow(0 0 8px rgba(255,122,203,0.5))" }}
-              >
-                alma
-              </span>
-              ,{" "}
-              <span
-                className="font-semibold"
-                style={{ color: "#C7A7FF", filter: "drop-shadow(0 0 8px rgba(199,167,255,0.5))" }}
-              >
-                cor
-              </span>{" "}
-              e{" "}
-              <span
-                className="font-semibold"
-                style={{ color: "#6EC8FF", filter: "drop-shadow(0 0 8px rgba(110,200,255,0.5))" }}
-              >
-                inteligência
-              </span>
-              .
-            </p>
+          <p className="text-lg md:text-xl leading-relaxed">
+            Transformo processos, negócios e rotinas através de sistemas inteligentes e automações criadas com{" "}
+            <span
+              className="font-semibold"
+              style={{ color: "#FF7ACB", filter: "drop-shadow(0 0 8px rgba(255,122,203,0.5))" }}
+            >
+              alma
+            </span>
+            ,{" "}
+            <span
+              className="font-semibold"
+              style={{ color: "#C7A7FF", filter: "drop-shadow(0 0 8px rgba(199,167,255,0.5))" }}
+            >
+              cor
+            </span>{" "}
+            e{" "}
+            <span
+              className="font-semibold"
+              style={{ color: "#6EC8FF", filter: "drop-shadow(0 0 8px rgba(110,200,255,0.5))" }}
+            >
+              inteligência
+            </span>
+            , sem jargão técnico e sem soluções engessadas.
+          </p>
 
             <p className="text-base md:text-lg italic leading-relaxed" style={{ color: "#D6D6E0", opacity: 0.7 }}>
               Tecnologia acessível, sem jargões — apenas{" "}
