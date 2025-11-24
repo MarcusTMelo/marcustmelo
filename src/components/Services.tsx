@@ -1,4 +1,4 @@
-import { Bot, Boxes, Lightbulb } from "lucide-react";
+import { Bot, Workflow, Puzzle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
@@ -6,29 +6,51 @@ const Services = () => {
   const { elementRef, isVisible } = useIntersectionObserver();
   const services = [
     {
-      icon: Boxes,
-      title: "Automação Empresarial Microsoft 365",
+      icon: Workflow,
+      title: "Automação Inteligente com n8n",
       description:
-        "Especialista em Microsoft Lists, Power Automate e SharePoint. Já liderei projetos como Conecta TI, Conecta Ativos e Conecta Estações na GIZ Brasil — soluções que organizam operações complexas e eliminam trabalho manual.",
-      badge: "Microsoft Specialist",
+        "Crio automações personalizadas que conectam ferramentas, eliminam tarefas repetitivas e agilizam seu dia a dia. Integro sistemas, organizo fluxos e deixo tudo funcionando automaticamente para você ganhar tempo e clareza.",
+      items: [
+        "Integrações entre ferramentas",
+        "Fluxos automatizados",
+        "Webhooks",
+        "Mensagens automáticas",
+        "Conexões APIs",
+        "Processos inteiros automatizados"
+      ],
+      badge: "n8n Specialist",
       gradientFrom: "#C7A7FF",
       gradientTo: "#6EC8FF",
     },
     {
       icon: Bot,
-      title: "IA Estratégica para Negócios",
+      title: "IA Estratégica para o seu Negócio",
       description:
-        "MBA em Inteligência Artificial aplicada a negócios. Uso Claude, OpenAI e automação inteligente para criar assistentes, automatizar decisões e gerar insights práticos do seu dia a dia.",
+        "Uso IA de forma prática: como assistente, como ferramenta de criação ou como parte de um fluxo inteligente. Nada de hype vazio, apenas soluções reais que ajudam você a trabalhar melhor e viver com mais leveza.",
+      items: [
+        "Assistentes inteligentes",
+        "Automação de conteúdo",
+        "Resumos automáticos",
+        "Atendimento inteligente",
+        "Soluções de IA personalizadas"
+      ],
       badge: "AI Expert",
       gradientFrom: "#6EC8FF",
       gradientTo: "#4A8CFF",
     },
     {
-      icon: Lightbulb,
-      title: "Consultoria em Transformação Digital",
+      icon: Puzzle,
+      title: "Soluções Digitais sob Medida",
       description:
-        "10+ anos liderando equipes multidisciplinares e projetos de transformação. Desenho processos, organizo operações e crio sistemas self-hosted que sua equipe realmente usa.",
-      badge: "Tech Leader",
+        "Nenhum negócio é igual. Por isso, eu desenho sistemas, microaplicações, fluxos e integrações que fazem sentido para você, do jeito que você trabalha e no ritmo que você vive.",
+      items: [
+        "Organização da rotina",
+        "Mapas de processos",
+        "Estruturação digital",
+        "Integrações específicas",
+        "Construção de sistemas simples e humanizados"
+      ],
+      badge: "Custom Solutions",
       gradientFrom: "#4A8CFF",
       gradientTo: "#FF7ACB",
     },
@@ -44,9 +66,14 @@ const Services = () => {
 
       <div ref={elementRef} className="max-w-7xl mx-auto relative z-10">
         {/* Section Title */}
-        <h2 className={`text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-16 bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] bg-clip-text text-transparent transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        <h2 className={`text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-6 bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] bg-clip-text text-transparent transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           Serviços
         </h2>
+
+        {/* Section Description */}
+        <p className={`text-lg md:text-xl text-[#D6D6E0] text-center max-w-4xl mx-auto mb-16 leading-relaxed transition-all duration-700 delay-150 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          Transformo processos, rotinas e atendimentos em sistemas inteligentes, eficientes e humanos, feitos sob medida para você e para a sua realidade.
+        </p>
 
         {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -86,9 +113,19 @@ const Services = () => {
               </h3>
 
               {/* Description */}
-              <p className="text-[#D6D6E0] leading-relaxed">
+              <p className="text-[#D6D6E0] leading-relaxed mb-6">
                 {service.description}
               </p>
+
+              {/* Items List */}
+              <ul className="space-y-2">
+                {service.items.map((item, itemIndex) => (
+                  <li key={itemIndex} className="text-[#D6D6E0]/80 text-sm flex items-start">
+                    <span className="mr-2 mt-1.5 w-1 h-1 rounded-full bg-gradient-to-r from-[#C7A7FF] to-[#6EC8FF] flex-shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
 
               {/* Decorative gradient line on hover */}
               <div
