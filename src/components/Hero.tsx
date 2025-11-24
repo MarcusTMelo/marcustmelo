@@ -81,15 +81,7 @@ const Hero = () => {
           </p>
 
             <p className="text-base md:text-lg italic leading-relaxed" style={{ color: "#D6D6E0", opacity: 0.7 }}>
-              Tecnologia acessível, sem jargões — apenas{" "}
-              <span className="not-italic" style={{ color: "#C7A7FF", opacity: 0.9 }}>
-                soluções humanas
-              </span>{" "}
-              para{" "}
-              <span className="not-italic" style={{ color: "#6EC8FF", opacity: 0.9 }}>
-                pessoas reais
-              </span>
-              .
+              Tecnologia acessível, em linguagem simples, para pessoas reais, negócios reais e problemas reais.
             </p>
           </div>
 
