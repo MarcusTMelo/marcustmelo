@@ -6,15 +6,18 @@ const HowCanIHelp = () => {
   const features = [
     {
       icon: Workflow,
-      text: "Automação profunda usando Microsoft 365 + Power Platform",
+      title: "Organização inteligente do seu negócio",
+      text: "Transformo rotinas soltas e processos confusos em sistemas simples, visuais e fáceis de manter. Da agenda ao atendimento, tudo fica mais claro, mais organizado e sob controle.",
     },
     {
       icon: Sparkles,
-      text: "IA aplicada com estratégia, não só ferramentas",
+      title: "Automação com n8n e IA aplicada à vida real",
+      text: "Crio automações que integram ferramentas, agilizam o seu atendimento, produzem conteúdo, enviam mensagens, geram lembretes e resolvem tarefas repetitivas, tudo de forma personalizada e conectada ao seu jeito de trabalhar.",
     },
     {
       icon: Target,
-      text: "Projetos completos: da análise até a implementação",
+      title: "Soluções personalizadas sob medida",
+      text: "Nenhuma solução é igual à outra. Eu analiso sua rotina e construo fluxos, assistentes e integrações que realmente ajudam você, não apenas o seu negócio, mas a sua vida digital como um todo.",
     },
   ];
 
@@ -34,8 +37,7 @@ const HowCanIHelp = () => {
 
         {/* Subtitle */}
         <p className={`text-lg md:text-xl text-[#D6D6E0] text-center max-w-4xl mx-auto mb-16 leading-relaxed transition-all duration-700 delay-150 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          Com mais de 10 anos liderando projetos de automação e transformação digital, 
-          eu estruturo processos que realmente funcionam — sem jargões, com resultados reais.
+          Com uma abordagem prática e humanizada, eu te ajudo a transformar o seu dia a dia digital, eliminando confusões, reduzindo tarefas manuais e criando automações e fluxos que fazem sentido na sua rotina, sem complicação e sem jargões.
         </p>
 
         {/* Features grid */}
@@ -51,8 +53,13 @@ const HowCanIHelp = () => {
                 <feature.icon className="w-7 h-7 text-[#C7A7FF]" />
               </div>
 
+              {/* Feature title */}
+              <h3 className="text-xl font-semibold text-[#D6D6E0] mb-4">
+                {feature.title}
+              </h3>
+
               {/* Feature text */}
-              <p className="text-[#D6D6E0] text-lg leading-relaxed">
+              <p className="text-[#D6D6E0] text-base leading-relaxed">
                 {feature.text}
               </p>
 
