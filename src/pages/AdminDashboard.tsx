@@ -35,7 +35,18 @@ const AdminDashboard = () => {
       return;
     }
 
-    // For now, any authenticated user can access the admin dashboard
+    // Check if user has admin role
+    const { data: isAdmin, error } = await supabase.rpc("has_role", {
+      _user_id: session.user.id,
+      _role: "admin",
+    });
+
+    if (error || !isAdmin) {
+      console.error("Access denied: User is not an admin");
+      navigate("/admin/login");
+      return;
+    }
+
     setLoading(false);
   };
 
