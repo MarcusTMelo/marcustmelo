@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero";
 import HowCanIHelp from "@/components/HowCanIHelp";
+import WorkStyle from "@/components/WorkStyle";
 import Services from "@/components/Services";
 import About from "@/components/About";
 import TechStack from "@/components/TechStack";
@@ -13,6 +14,7 @@ const Index = () => {
     <main className="bg-background">
       <Hero />
       <HowCanIHelp />
+      <WorkStyle />
       <Services />
       <About />
       <TechStack />
