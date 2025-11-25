@@ -6,18 +6,18 @@ const HowCanIHelp = () => {
   const features = [
     {
       icon: Workflow,
-      title: "Organização inteligente do seu negócio",
-      text: "Transformo rotinas soltas e processos confusos em sistemas simples, visuais e fáceis de manter. Da agenda ao atendimento, tudo fica mais claro, mais organizado e sob controle.",
+      title: "Mais organização, menos bagunça digital",
+      text: "Sua rotina fica mais clara e mais leve com formulários simples, registros organizados, páginas fáceis de usar e sistemas que fazem sentido para o seu negócio — sem complicação.",
     },
     {
       icon: Sparkles,
-      title: "Automação com n8n e IA aplicada à vida real",
-      text: "Crio automações que integram ferramentas, agilizam o seu atendimento, produzem conteúdo, enviam mensagens, geram lembretes e resolvem tarefas repetitivas, tudo de forma personalizada e conectada ao seu jeito de trabalhar.",
+      title: "Atendimentos e tarefas funcionando sozinhos",
+      text: "Crio automações inteligentes que enviam mensagens, confirmam horários, fazem lembretes e organizam informações automaticamente. Você deixa de fazer tudo manualmente e ganha tempo todos os dias.",
     },
     {
       icon: Target,
-      title: "Soluções personalizadas sob medida",
-      text: "Nenhuma solução é igual à outra. Eu analiso sua rotina e construo fluxos, assistentes e integrações que realmente ajudam você, não apenas o seu negócio, mas a sua vida digital como um todo.",
+      title: "Soluções criadas sob medida pra você",
+      text: "Cada negócio tem sua própria forma de funcionar. Por isso, eu analiso sua necessidade e crio pequenas soluções digitais que realmente ajudam a sua rotina — simples, rápidas e personalizadas.",
     },
   ];
 
@@ -37,7 +37,7 @@ const HowCanIHelp = () => {
 
         {/* Subtitle */}
         <p className={`text-lg md:text-xl text-[#D6D6E0] text-center max-w-4xl mx-auto mb-16 leading-relaxed transition-all duration-700 delay-150 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          Com uma abordagem prática e humanizada, eu te ajudo a transformar o seu dia a dia digital, eliminando confusões, reduzindo tarefas manuais e criando automações e fluxos que fazem sentido na sua rotina, sem complicação e sem jargões.
+          Eu ajudo pequenas empresas a organizarem a rotina, ganharem tempo e atenderem melhor — usando tecnologia simples, IA e automações que trabalham por você, enquanto você cuida do que importa.
         </p>
 
         {/* Features grid */}
