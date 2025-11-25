@@ -1,53 +1,42 @@
-import { Workflow, Brain, Server, Database } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Workflow, Brain, Server } from "lucide-react";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
 const TechStack = () => {
   const { elementRef, isVisible } = useIntersectionObserver();
   const categories = [
     {
-      title: "Automação & No-Code",
+      title: "Sites & Presença Digital",
       icon: Workflow,
       iconColor: "#C7A7FF",
-      technologies: [
-        { name: "Microsoft Lists", badge: "Especialista" },
-        { name: "Power Automate", badge: "Avançado" },
-        { name: "SharePoint", badge: null },
-        { name: "n8n", badge: null },
-        { name: "Make", badge: null },
-        { name: "Zapier", badge: null },
+      items: [
+        "Sites modernos, rápidos e fáceis de usar",
+        "Landing pages para captar clientes",
+        "Sistemas simples para pedidos, serviços ou atendimentos",
+        "Hospedagem segura e sem travamentos",
       ],
     },
     {
-      title: "Inteligência Artificial",
+      title: "Assistentes Inteligentes (IA)",
       icon: Brain,
       iconColor: "#6EC8FF",
-      technologies: [
-        { name: "Claude API", badge: null },
-        { name: "OpenAI / ChatGPT", badge: null },
-        { name: "LangChain", badge: null },
-        { name: "Prompt Engineering", badge: null },
+      items: [
+        "Uma assistente virtual que conversa como uma pessoa de verdade",
+        "Respostas automáticas no WhatsApp, Instagram ou site",
+        "Atendimento imediato, mesmo quando você está ocupado",
+        "Explica preços, horários, serviços e agenda",
+        "Comunicação humanizada e clara",
       ],
     },
     {
-      title: "Infraestrutura & DevOps",
+      title: "Automação & Organização",
       icon: Server,
       iconColor: "#4A8CFF",
-      technologies: [
-        { name: "Servidores dedicados", badge: null },
-        { name: "WordPress", badge: null },
-        { name: "Sistemas self-hosted", badge: null },
-        { name: "Linux", badge: null },
-      ],
-    },
-    {
-      title: "Dados & Análise",
-      icon: Database,
-      iconColor: "#FF7ACB",
-      technologies: [
-        { name: "Excel avançado", badge: null },
-        { name: "Power BI", badge: null },
-        { name: "Google Sheets", badge: null },
+      items: [
+        "Mensagens automáticas e lembretes",
+        "Agendamentos automáticos",
+        "Integração com sistemas que você já usa",
+        "Gestão simples de clientes",
+        "Processos atualizados sem esforço",
       ],
     },
   ];
@@ -62,12 +51,17 @@ const TechStack = () => {
 
       <div ref={elementRef} className="max-w-7xl mx-auto relative z-10">
         {/* Section Title */}
-        <h2 className={`text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-16 bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] bg-clip-text text-transparent transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        <h2 className={`text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-6 bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] bg-clip-text text-transparent transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           Stack de Tecnologias
         </h2>
 
+        {/* Section Description */}
+        <p className={`text-center text-[#D6D6E0] text-lg md:text-xl max-w-4xl mx-auto mb-16 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          Uso ferramentas modernas e inteligentes para criar sites, organizar seu negócio e automatizar tarefas. Tudo funciona de forma simples e sem complicação — para que você tenha mais tempo para atender, vender e cuidar da sua empresa.
+        </p>
+
         {/* Categories Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {categories.map((category, categoryIndex) => (
             <div
               key={categoryIndex}
@@ -91,22 +85,15 @@ const TechStack = () => {
                 {category.title}
               </h3>
 
-              {/* Technologies List */}
+              {/* Items List */}
               <div className="space-y-3">
-                {category.technologies.map((tech, techIndex) => (
+                {category.items.map((item, itemIndex) => (
                   <div
-                    key={techIndex}
-                    className="flex items-center justify-between gap-2 p-2 rounded-lg bg-background/50 hover:bg-background/80 hover:scale-105 transition-all duration-200 cursor-pointer"
+                    key={itemIndex}
+                    className="flex items-start gap-3 p-2 rounded-lg bg-background/50 hover:bg-background/80 transition-all duration-200"
                   >
-                    <span className="text-[#D6D6E0] text-sm">{tech.name}</span>
-                    {tech.badge && (
-                      <Badge
-                        variant="secondary"
-                        className="text-xs font-semibold px-2 py-0.5 bg-[#FF7ACB] text-[#0B0B0D] border-0"
-                      >
-                        {tech.badge}
-                      </Badge>
-                    )}
+                    <span className="text-[#6EC8FF] mt-1">•</span>
+                    <span className="text-[#D6D6E0] text-sm leading-relaxed">{item}</span>
                   </div>
                 ))}
               </div>
