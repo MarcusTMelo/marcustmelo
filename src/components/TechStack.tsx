@@ -10,7 +10,7 @@ const TechStack = () => {
       iconColor: "#C7A7FF",
       items: [
         "Sites modernos, rápidos e fáceis de usar",
-        "Landing pages para captar clientes",
+        "Landing pages para atrair mais clientes",
         "Sistemas simples para pedidos, serviços ou atendimentos",
         "Hospedagem segura e sem travamentos",
       ],
@@ -34,7 +34,7 @@ const TechStack = () => {
       items: [
         "Mensagens automáticas e lembretes",
         "Agendamentos automáticos",
-        "Integração com sistemas que você já usa",
+        "Integração com ferramentas que você já usa",
         "Gestão simples de clientes",
         "Processos atualizados sem esforço",
       ],
@@ -52,12 +52,12 @@ const TechStack = () => {
       <div ref={elementRef} className="max-w-7xl mx-auto relative z-10">
         {/* Section Title */}
         <h2 className={`text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-6 bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] bg-clip-text text-transparent transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          Stack de Tecnologias
+          Soluções para facilitar seu dia a dia
         </h2>
 
         {/* Section Description */}
         <p className={`text-center text-[#D6D6E0] text-lg md:text-xl max-w-4xl mx-auto mb-16 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          Uso ferramentas modernas e inteligentes para criar sites, organizar seu negócio e automatizar tarefas. Tudo funciona de forma simples e sem complicação — para que você tenha mais tempo para atender, vender e cuidar da sua empresa.
+          Uso ferramentas modernas e inteligentes para criar sites, organizar sua rotina e automatizar processos. Tudo funciona de forma simples, prática e sem complicação — para que você tenha mais tempo para atender, vender e cuidar do seu negócio.
         </p>
 
         {/* Categories Grid */}
