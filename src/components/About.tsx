@@ -12,12 +12,6 @@ const About = () => {
     "Foco total em facilitar a vida de quem empreende",
   ];
 
-  const stats = [
-    { value: "10+ anos", label: "de experiência" },
-    { value: "15+ projetos", label: "liderados" },
-    { value: "100%", label: "foco em resultados" },
-  ];
-
   return (
     <section id="about" className="relative bg-background py-20 px-6 md:py-32 overflow-hidden">
       {/* Decorative background gradients */}
@@ -40,17 +34,17 @@ const About = () => {
           <div className="flex justify-center md:justify-end">
             <div className="relative group hover:scale-105 transition-transform duration-500">
               {/* Gradient frame */}
-              <div className="absolute -inset-4 bg-gradient-to-br from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] rounded-3xl opacity-20 blur-xl group-hover:opacity-30 transition-opacity duration-500" />
+              <div className="absolute -inset-6 bg-gradient-to-br from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] rounded-3xl opacity-20 blur-xl group-hover:opacity-30 transition-opacity duration-500" />
               
               {/* Image placeholder */}
-              <div className="relative w-80 h-80 md:w-96 md:h-96 rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border-2 border-[#4A8CFF]/30 overflow-hidden">
+              <div className="relative w-[480px] h-[480px] rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border-2 border-[#4A8CFF]/30 overflow-hidden">
                 {/* Placeholder content */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
-                    <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-[#C7A7FF]/20 to-[#6EC8FF]/20 flex items-center justify-center">
-                      <span className="text-6xl">👨‍💻</span>
+                    <div className="w-64 h-64 mx-auto mb-6 rounded-full bg-gradient-to-br from-[#C7A7FF]/20 to-[#6EC8FF]/20 flex items-center justify-center">
+                      <span className="text-9xl">👨‍💻</span>
                     </div>
-                    <p className="text-[#D6D6E0]/50 text-sm">Marcus T. Melo</p>
+                    <p className="text-[#D6D6E0]/50 text-lg">Marcus T. Melo</p>
                   </div>
                 </div>
               </div>
@@ -95,25 +89,6 @@ const About = () => {
           </div>
         </div>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          {stats.map((stat, index) => (
-            <div
-              key={index}
-              className="relative p-6 rounded-xl bg-card/50 border-2 border-[#4A8CFF]/30 hover:border-[#4A8CFF]/50 transition-all duration-300 hover:transform hover:scale-105 hover:shadow-[0_0_30px_rgba(74,140,255,0.2)]"
-            >
-              <div className="text-center">
-                <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#C7A7FF] to-[#6EC8FF] bg-clip-text text-transparent mb-2">
-                  {stat.value}
-                </div>
-                <div className="text-[#D6D6E0] text-sm">{stat.label}</div>
-              </div>
-
-              {/* Decorative gradient line */}
-              <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#4A8CFF] to-transparent opacity-50" />
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   );
