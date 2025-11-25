@@ -1,4 +1,4 @@
-import { Bot, Workflow, Puzzle } from "lucide-react";
+import { Bot, Globe, Puzzle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
@@ -6,51 +6,51 @@ const Services = () => {
   const { elementRef, isVisible } = useIntersectionObserver();
   const services = [
     {
-      icon: Workflow,
-      title: "Automação Inteligente com n8n",
+      icon: Globe,
+      title: "Criação de Sites Simples e Bonitos",
       description:
-        "Crio automações personalizadas que conectam ferramentas, eliminam tarefas repetitivas e agilizam seu dia a dia. Integro sistemas, organizo fluxos e deixo tudo funcionando automaticamente para você ganhar tempo e clareza.",
+        "Seu negócio com uma presença profissional na internet: clara, rápida e fácil de usar. Perfeito para quem precisa de um site que mostre serviços, preços, contato e localização.",
       items: [
-        "Integrações entre ferramentas",
-        "Fluxos automatizados",
-        "Webhooks",
-        "Mensagens automáticas",
-        "Conexões APIs",
-        "Processos inteiros automatizados"
+        "Página inicial",
+        "Apresentação do negócio",
+        "Serviços ou cardápio",
+        "Botão de WhatsApp",
+        "Endereço no Google Maps",
+        "Agendamentos simples (opcional)"
       ],
-      badge: "n8n Specialist",
+      badge: "Web Design",
       gradientFrom: "#C7A7FF",
       gradientTo: "#6EC8FF",
     },
     {
       icon: Bot,
-      title: "IA Estratégica para o seu Negócio",
+      title: "Automação do Atendimento e da Rotina",
       description:
-        "Uso IA de forma prática: como assistente, como ferramenta de criação ou como parte de um fluxo inteligente. Nada de hype vazio, apenas soluções reais que ajudam você a trabalhar melhor e viver com mais leveza.",
+        "Mensagens automáticas, lembretes, confirmações e organização sem você precisar fazer tudo manualmente. Automatizações discretas que economizam tempo todos os dias.",
       items: [
-        "Assistentes inteligentes",
-        "Automação de conteúdo",
-        "Resumos automáticos",
-        "Atendimento inteligente",
-        "Soluções de IA personalizadas"
+        "Resposta automática",
+        "Lembretes",
+        "Organização automática de contatos",
+        "Mensagens pré-agendadas",
+        "Mini-fluxos que funcionam sozinhos"
       ],
-      badge: "AI Expert",
+      badge: "Automação",
       gradientFrom: "#6EC8FF",
       gradientTo: "#4A8CFF",
     },
     {
       icon: Puzzle,
-      title: "Soluções Digitais sob Medida",
+      title: "Soluções Digitais Sob Medida para Seu Negócio",
       description:
-        "Nenhum negócio é igual. Por isso, eu desenho sistemas, microaplicações, fluxos e integrações que fazem sentido para você, do jeito que você trabalha e no ritmo que você vive.",
+        "Pequenos sistemas criados especialmente para sua realidade. Nada complicado — apenas o que você realmente precisa para trabalhar melhor.",
       items: [
-        "Organização da rotina",
-        "Mapas de processos",
-        "Estruturação digital",
-        "Integrações específicas",
-        "Construção de sistemas simples e humanizados"
+        "Formulários personalizados",
+        "Registro de clientes",
+        "Mini-sistemas de organização",
+        "Fluxos simples",
+        "Soluções adaptadas ao seu dia a dia"
       ],
-      badge: "Custom Solutions",
+      badge: "Sob Medida",
       gradientFrom: "#4A8CFF",
       gradientTo: "#FF7ACB",
     },
@@ -72,7 +72,7 @@ const Services = () => {
 
         {/* Section Description */}
         <p className={`text-lg md:text-xl text-[#D6D6E0] text-center max-w-4xl mx-auto mb-16 leading-relaxed transition-all duration-700 delay-150 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          Transformo processos, rotinas e atendimentos em sistemas inteligentes, eficientes e humanos, feitos sob medida para você e para a sua realidade.
+          Aqui você encontra soluções simples e diretas para deixar seu negócio mais organizado, mais profissional e funcionando com menos esforço. Eu cuido da parte técnica — você cuida do seu negócio.
         </p>
 
         {/* Services Grid */}
