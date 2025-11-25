@@ -4,10 +4,12 @@ import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 const About = () => {
   const { elementRef, isVisible } = useIntersectionObserver();
   const highlights = [
-    "MBA em IA aplicada a negócios",
-    "Especialista Microsoft Lists + Power Automate",
-    "Administração de servidores e sistemas self-hosted",
-    "Soluções personalizadas para cada cliente",
+    "Comunicação simples, clara e humana",
+    "Experiência internacional real",
+    "Soluções feitas sob medida",
+    "14 anos de prática em TI",
+    "Automação e IA usadas de forma prática e acessível",
+    "Foco total em facilitar a vida de quem empreende",
   ];
 
   const stats = [
@@ -28,11 +30,8 @@ const About = () => {
         {/* Title Section */}
         <div className="text-center mb-16">
           <h2 className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] bg-clip-text text-transparent transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            Marcus Túlio Melo
+            Sobre mim — Marcus Túlio Melo
           </h2>
-          <p className={`text-xl md:text-2xl text-[#D6D6E0]/80 transition-all duration-700 delay-150 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            Automação & IA Humanizada
-          </p>
         </div>
 
         {/* Two Column Layout */}
@@ -62,19 +61,19 @@ const About = () => {
           <div className="space-y-6">
             <div className="space-y-4 text-[#D6D6E0] text-lg leading-relaxed">
               <p>
-                Olá! Sou Marcus Túlio Melo, especialista em automação e transformação digital.
+                Sou da área de TI há mais de 14 anos, com uma trajetória que começou no Brasil e passou por países como Paquistão, Alemanha, Colômbia e México. Vivi culturas diferentes, trabalhei com pessoas do mundo todo e aprendi algo que levo para cada projeto: tecnologia só funciona quando é simples, humana e feita para facilitar a vida das pessoas.
               </p>
               <p>
-                Com mais de 10 anos de experiência, liderei projetos como Conecta TI, Conecta Ativos e Conecta Estações na GIZ Brasil — soluções que organizam operações complexas, eliminam trabalho manual e facilitam a vida de equipes inteiras.
+                Tenho mais de uma década lidando com todo tipo de situação — de problemas rápidos do dia a dia a desafios mais complexos que chegam sem aviso. Nesse caminho, aprendi a resolver tudo com paciência, clareza e empatia, sempre explicando de um jeito fácil e acolhedor.
               </p>
               <p>
-                Tenho formação em TI e Gestão, e atualmente faço MBA em Inteligência Artificial aplicada a negócios.
+                Também participei de iniciativas e projetos internacionais, o que me deu uma visão muito ampla de como a tecnologia pode ajudar negócios de diferentes tamanhos. Essa vivência me ensinou algo que carrego até hoje: traduzir o técnico para o simples, sem complicar o que não precisa ser complicado.
               </p>
               <p>
-                Meu foco é simplificar o complexo e criar soluções acessíveis. Trabalho especialmente com pequenos negócios e empreendedores que buscam autonomia digital — sem jargões, só resultados reais.
+                Atualmente estou me especializando em Inteligência Artificial aplicada a negócios e busco formas práticas de usar IA no dia a dia, seja para automatizar tarefas, organizar processos, melhorar atendimentos ou deixar a rotina mais leve.
               </p>
               <p>
-                Acredito que tecnologia deve ser transparente, empática e construída com pessoas, para pessoas.
+                E é exatamente isso que trago para pequenos negócios: sites simples, automações inteligentes e soluções que funcionam sem dor de cabeça. Eu explico sem jargão, construo junto com você e deixo a tecnologia trabalhar a seu favor — com leveza, acolhimento e boas risadas no caminho.
               </p>
             </div>
 
