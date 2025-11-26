@@ -12,6 +12,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AdminBlog from "./pages/AdminBlog";
 import AdminBlogForm from "./pages/AdminBlogForm";
 import BlogPost from "./pages/BlogPost";
+import BlogList from "./pages/BlogList";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<PublicRoute><Index /></PublicRoute>} />
+          <Route path="/blog" element={<PublicRoute><BlogList /></PublicRoute>} />
           <Route path="/blog/:slug" element={<PublicRoute><BlogPost /></PublicRoute>} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
