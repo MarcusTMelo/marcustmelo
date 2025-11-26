@@ -2,7 +2,7 @@ import { ArrowRight, ArrowLeft, Loader2, Search, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
@@ -24,12 +24,19 @@ const POSTS_PER_PAGE = 9;
 const BlogList = () => {
   const navigate = useNavigate();
   const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  // Fetch categories on mount
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   // Debounce search query
   useEffect(() => {
@@ -39,14 +46,31 @@ const BlogList = () => {
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
-  // Reset and fetch when search changes
+  // Reset and fetch when search or category changes
   useEffect(() => {
     setPage(0);
     setLoading(true);
-    fetchPosts(0, debouncedSearch);
-  }, [debouncedSearch]);
+    fetchPosts(0, debouncedSearch, selectedCategory);
+  }, [debouncedSearch, selectedCategory]);
 
-  const fetchPosts = async (pageNum: number, search: string = "") => {
+  const fetchCategories = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("blog_posts")
+        .select("category")
+        .eq("status", "published")
+        .not("category", "is", null);
+
+      if (error) throw error;
+
+      const uniqueCategories = [...new Set(data?.map((p) => p.category).filter(Boolean))] as string[];
+      setCategories(uniqueCategories.sort());
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
+
+  const fetchPosts = async (pageNum: number, search: string = "", category: string | null = null) => {
     try {
       const from = pageNum * POSTS_PER_PAGE;
       const to = from + POSTS_PER_PAGE - 1;
@@ -55,6 +79,11 @@ const BlogList = () => {
         .from("blog_posts")
         .select("id, title, slug, category, excerpt, featured_image, published_at", { count: "exact" })
         .eq("status", "published");
+
+      // Add category filter
+      if (category) {
+        query = query.eq("category", category);
+      }
 
       // Add search filter if query exists
       if (search.trim()) {
@@ -88,11 +117,15 @@ const BlogList = () => {
     const nextPage = page + 1;
     setPage(nextPage);
     setLoadingMore(true);
-    fetchPosts(nextPage, debouncedSearch);
+    fetchPosts(nextPage, debouncedSearch, selectedCategory);
   };
 
   const clearSearch = () => {
     setSearchQuery("");
+  };
+
+  const handleCategoryClick = (category: string | null) => {
+    setSelectedCategory(category);
   };
 
   const getCategoryColor = (category: string | null) => {
@@ -157,7 +190,7 @@ const BlogList = () => {
             </div>
 
             {/* Search Bar */}
-            <div className="max-w-md mx-auto mb-12">
+            <div className="max-w-md mx-auto mb-8">
               <div className="relative">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <Input
@@ -181,6 +214,44 @@ const BlogList = () => {
               </div>
             </div>
 
+            {/* Category Filter */}
+            {categories.length > 0 && (
+              <div className="flex flex-wrap justify-center gap-2 mb-12">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleCategoryClick(null)}
+                  className={`rounded-full px-4 transition-all duration-300 ${
+                    selectedCategory === null
+                      ? "bg-gradient-to-r from-[#C7A7FF] to-[#6EC8FF] text-background hover:opacity-90"
+                      : "bg-[#1A1A1F] border border-border/50 text-muted-foreground hover:border-[#C7A7FF]/50 hover:text-foreground"
+                  }`}
+                >
+                  Todos
+                </Button>
+                {categories.map((category) => (
+                  <Button
+                    key={category}
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleCategoryClick(category)}
+                    className={`rounded-full px-4 transition-all duration-300 ${
+                      selectedCategory === category
+                        ? "text-background hover:opacity-90"
+                        : "bg-[#1A1A1F] border border-border/50 text-muted-foreground hover:text-foreground"
+                    }`}
+                    style={
+                      selectedCategory === category
+                        ? { backgroundColor: getCategoryColor(category) }
+                        : { borderColor: `${getCategoryColor(category)}30` }
+                    }
+                  >
+                    {category}
+                  </Button>
+                ))}
+              </div>
+            )}
+
             {/* Loading State */}
             {loading && (
               <div className="text-center py-12 text-muted-foreground">
@@ -192,8 +263,8 @@ const BlogList = () => {
             {!loading && posts.length === 0 && (
               <div className="text-center py-12">
                 <p className="text-lg text-muted-foreground">
-                  {debouncedSearch
-                    ? `Nenhum artigo encontrado para "${debouncedSearch}"`
+                  {debouncedSearch || selectedCategory
+                    ? `Nenhum artigo encontrado${debouncedSearch ? ` para "${debouncedSearch}"` : ""}${selectedCategory ? ` na categoria "${selectedCategory}"` : ""}`
                     : "Em breve novos artigos..."}
                 </p>
               </div>
