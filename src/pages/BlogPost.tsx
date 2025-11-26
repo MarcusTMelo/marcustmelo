@@ -221,11 +221,12 @@ const BlogPost = () => {
       <Helmet>
         <title>{post.title} | Marcus T. Melo</title>
         <meta name="description" content={post.excerpt || ""} />
+        <link rel="canonical" href={`https://marcustmelo.com/blog/${post.slug}`} />
         {post.featured_image && <meta property="og:image" content={post.featured_image} />}
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.excerpt || ""} />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content={getFullUrl()} />
+        <meta property="og:url" content={`https://marcustmelo.com/blog/${post.slug}`} />
         <meta property="article:published_time" content={post.published_at || ""} />
         <meta property="article:section" content={post.category || "Geral"} />
         <meta name="twitter:card" content="summary_large_image" />
