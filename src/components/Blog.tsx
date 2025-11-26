@@ -178,6 +178,7 @@ const Blog = () => {
               <Button
                 size="lg"
                 className="bg-gradient-to-r from-[#C7A7FF] to-[#6EC8FF] hover:opacity-90 text-background font-semibold px-8 group"
+                onClick={() => navigate("/blog")}
               >
                 Ver Todos os Artigos
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
