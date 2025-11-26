@@ -11,6 +11,7 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminBlog from "./pages/AdminBlog";
 import AdminBlogForm from "./pages/AdminBlogForm";
+import AdminCategories from "./pages/AdminCategories";
 import BlogPost from "./pages/BlogPost";
 import BlogList from "./pages/BlogList";
 
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/admin/blog" element={<AdminBlog />} />
           <Route path="/admin/blog/new" element={<AdminBlogForm />} />
           <Route path="/admin/blog/edit/:id" element={<AdminBlogForm />} />
+          <Route path="/admin/categories" element={<AdminCategories />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<PublicRoute><NotFound /></PublicRoute>} />
         </Routes>
