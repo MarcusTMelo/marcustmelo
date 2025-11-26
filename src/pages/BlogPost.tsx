@@ -186,6 +186,36 @@ const BlogPost = () => {
 
   const readingTime = calculateReadingTime(post.content);
 
+  const getFullUrl = () => {
+    return typeof window !== "undefined" ? window.location.href : "";
+  };
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "description": post.excerpt || "",
+    "image": post.featured_image || "",
+    "datePublished": post.published_at || "",
+    "dateModified": post.published_at || "",
+    "author": {
+      "@type": "Person",
+      "name": "Marcus T. Melo",
+      "url": "https://marcustmelo.com"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Marcus T. Melo"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": getFullUrl()
+    },
+    "articleSection": post.category || "Geral",
+    "wordCount": post.content ? post.content.replace(/<[^>]*>/g, "").split(/\s+/).filter(Boolean).length : 0,
+    "timeRequired": `PT${readingTime}M`
+  };
+
   return (
     <>
       <Helmet>
@@ -195,10 +225,16 @@ const BlogPost = () => {
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.excerpt || ""} />
         <meta property="og:type" content="article" />
+        <meta property="og:url" content={getFullUrl()} />
+        <meta property="article:published_time" content={post.published_at || ""} />
+        <meta property="article:section" content={post.category || "Geral"} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={post.title} />
         <meta name="twitter:description" content={post.excerpt || ""} />
         {post.featured_image && <meta name="twitter:image" content={post.featured_image} />}
+        <script type="application/ld+json">
+          {JSON.stringify(jsonLd)}
+        </script>
       </Helmet>
 
       <div className="min-h-screen bg-background">
