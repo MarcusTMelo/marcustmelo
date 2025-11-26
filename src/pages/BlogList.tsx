@@ -1,7 +1,8 @@
-import { ArrowRight, ArrowLeft, Loader2 } from "lucide-react";
+import { ArrowRight, ArrowLeft, Loader2, Search, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { Input } from "@/components/ui/input";
+import { useEffect, useState, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
@@ -27,20 +28,41 @@ const BlogList = () => {
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
 
+  // Debounce search query
   useEffect(() => {
-    fetchPosts(0);
-  }, []);
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchQuery);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
-  const fetchPosts = async (pageNum: number) => {
+  // Reset and fetch when search changes
+  useEffect(() => {
+    setPage(0);
+    setLoading(true);
+    fetchPosts(0, debouncedSearch);
+  }, [debouncedSearch]);
+
+  const fetchPosts = async (pageNum: number, search: string = "") => {
     try {
       const from = pageNum * POSTS_PER_PAGE;
       const to = from + POSTS_PER_PAGE - 1;
 
-      const { data, error, count } = await supabase
+      let query = supabase
         .from("blog_posts")
         .select("id, title, slug, category, excerpt, featured_image, published_at", { count: "exact" })
-        .eq("status", "published")
+        .eq("status", "published");
+
+      // Add search filter if query exists
+      if (search.trim()) {
+        const searchTerm = `%${search.trim()}%`;
+        query = query.or(`title.ilike.${searchTerm},excerpt.ilike.${searchTerm}`);
+      }
+
+      const { data, error, count } = await query
         .order("published_at", { ascending: false })
         .range(from, to);
 
@@ -66,7 +88,11 @@ const BlogList = () => {
     const nextPage = page + 1;
     setPage(nextPage);
     setLoadingMore(true);
-    fetchPosts(nextPage);
+    fetchPosts(nextPage, debouncedSearch);
+  };
+
+  const clearSearch = () => {
+    setSearchQuery("");
   };
 
   const getCategoryColor = (category: string | null) => {
@@ -121,13 +147,38 @@ const BlogList = () => {
             </Button>
 
             {/* Section Header */}
-            <div className="text-center mb-16">
+            <div className="text-center mb-12">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] bg-clip-text text-transparent">
                 Blog & Artigos
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
                 Todos os conteúdos sobre tecnologia simples, automação e IA humanizada para pequenos negócios.
               </p>
+            </div>
+
+            {/* Search Bar */}
+            <div className="max-w-md mx-auto mb-12">
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder="Buscar artigos..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  maxLength={100}
+                  className="pl-12 pr-10 py-6 bg-[#1A1A1F] border-border/50 focus:border-[#C7A7FF]/50 rounded-xl text-foreground placeholder:text-muted-foreground"
+                />
+                {searchQuery && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={clearSearch}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 p-0 hover:bg-transparent"
+                  >
+                    <X className="w-4 h-4 text-muted-foreground hover:text-foreground" />
+                  </Button>
+                )}
+              </div>
             </div>
 
             {/* Loading State */}
@@ -141,7 +192,9 @@ const BlogList = () => {
             {!loading && posts.length === 0 && (
               <div className="text-center py-12">
                 <p className="text-lg text-muted-foreground">
-                  Em breve novos artigos...
+                  {debouncedSearch
+                    ? `Nenhum artigo encontrado para "${debouncedSearch}"`
+                    : "Em breve novos artigos..."}
                 </p>
               </div>
             )}
