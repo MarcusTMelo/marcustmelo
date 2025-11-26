@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowLeft } from "lucide-react";
+import { ArrowRight, ArrowLeft, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
@@ -18,30 +18,55 @@ interface BlogPost {
   published_at: string | null;
 }
 
+const POSTS_PER_PAGE = 9;
+
 const BlogList = () => {
   const navigate = useNavigate();
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
-    fetchPosts();
+    fetchPosts(0);
   }, []);
 
-  const fetchPosts = async () => {
+  const fetchPosts = async (pageNum: number) => {
     try {
-      const { data, error } = await supabase
+      const from = pageNum * POSTS_PER_PAGE;
+      const to = from + POSTS_PER_PAGE - 1;
+
+      const { data, error, count } = await supabase
         .from("blog_posts")
-        .select("id, title, slug, category, excerpt, featured_image, published_at")
+        .select("id, title, slug, category, excerpt, featured_image, published_at", { count: "exact" })
         .eq("status", "published")
-        .order("published_at", { ascending: false });
+        .order("published_at", { ascending: false })
+        .range(from, to);
 
       if (error) throw error;
-      setPosts(data || []);
+
+      if (pageNum === 0) {
+        setPosts(data || []);
+      } else {
+        setPosts((prev) => [...prev, ...(data || [])]);
+      }
+
+      const totalFetched = (pageNum + 1) * POSTS_PER_PAGE;
+      setHasMore(count ? totalFetched < count : false);
     } catch (error) {
       console.error("Error fetching posts:", error);
     } finally {
       setLoading(false);
+      setLoadingMore(false);
     }
+  };
+
+  const loadMore = () => {
+    const nextPage = page + 1;
+    setPage(nextPage);
+    setLoadingMore(true);
+    fetchPosts(nextPage);
   };
 
   const getCategoryColor = (category: string | null) => {
@@ -123,66 +148,90 @@ const BlogList = () => {
 
             {/* Blog Grid */}
             {!loading && posts.length > 0 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {posts.map((post) => (
-                  <article
-                    key={post.id}
-                    onClick={() => navigate(`/blog/${post.slug}`)}
-                    className="group relative bg-[#1A1A1F] border border-border/50 rounded-2xl overflow-hidden hover:border-[#C7A7FF]/50 transition-all duration-500 hover:shadow-lg hover:shadow-[#C7A7FF]/20 cursor-pointer animate-fade-in"
-                  >
-                    {/* Featured Image or Gradient Placeholder */}
-                    <div className={`h-48 bg-gradient-to-br ${getCategoryGradient(post.category)} relative overflow-hidden`}>
-                      {post.featured_image ? (
-                        <img
-                          src={post.featured_image}
-                          alt={post.title}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="w-24 h-24 border-2 border-white/20 rounded-full" />
-                        </div>
-                      )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1F] to-transparent opacity-60" />
-                    </div>
-
-                    {/* Card Content */}
-                    <div className="p-6">
-                      <Badge
-                        className="mb-3"
-                        style={{
-                          backgroundColor: `${getCategoryColor(post.category)}20`,
-                          color: getCategoryColor(post.category),
-                          borderColor: `${getCategoryColor(post.category)}30`,
-                        }}
-                      >
-                        {post.category || "Geral"}
-                      </Badge>
-
-                      <h2 className="text-xl font-bold mb-3 group-hover:bg-gradient-to-r group-hover:from-[#C7A7FF] group-hover:to-[#6EC8FF] group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
-                        {post.title}
-                      </h2>
-
-                      <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
-                        {post.excerpt || ""}
-                      </p>
-
-                      <div className="flex items-center justify-between text-xs text-muted-foreground/70">
-                        <span>
-                          {post.published_at
-                            ? format(new Date(post.published_at), "dd MMM yyyy")
-                            : ""}
-                        </span>
+              <>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {posts.map((post) => (
+                    <article
+                      key={post.id}
+                      onClick={() => navigate(`/blog/${post.slug}`)}
+                      className="group relative bg-[#1A1A1F] border border-border/50 rounded-2xl overflow-hidden hover:border-[#C7A7FF]/50 transition-all duration-500 hover:shadow-lg hover:shadow-[#C7A7FF]/20 cursor-pointer animate-fade-in"
+                    >
+                      {/* Featured Image or Gradient Placeholder */}
+                      <div className={`h-48 bg-gradient-to-br ${getCategoryGradient(post.category)} relative overflow-hidden`}>
+                        {post.featured_image ? (
+                          <img
+                            src={post.featured_image}
+                            alt={post.title}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="w-24 h-24 border-2 border-white/20 rounded-full" />
+                          </div>
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1F] to-transparent opacity-60" />
                       </div>
-                    </div>
 
-                    {/* Hover Arrow */}
-                    <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300">
-                      <ArrowRight className="w-5 h-5 text-[#C7A7FF]" />
-                    </div>
-                  </article>
-                ))}
-              </div>
+                      {/* Card Content */}
+                      <div className="p-6">
+                        <Badge
+                          className="mb-3"
+                          style={{
+                            backgroundColor: `${getCategoryColor(post.category)}20`,
+                            color: getCategoryColor(post.category),
+                            borderColor: `${getCategoryColor(post.category)}30`,
+                          }}
+                        >
+                          {post.category || "Geral"}
+                        </Badge>
+
+                        <h2 className="text-xl font-bold mb-3 group-hover:bg-gradient-to-r group-hover:from-[#C7A7FF] group-hover:to-[#6EC8FF] group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
+                          {post.title}
+                        </h2>
+
+                        <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
+                          {post.excerpt || ""}
+                        </p>
+
+                        <div className="flex items-center justify-between text-xs text-muted-foreground/70">
+                          <span>
+                            {post.published_at
+                              ? format(new Date(post.published_at), "dd MMM yyyy")
+                              : ""}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Hover Arrow */}
+                      <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300">
+                        <ArrowRight className="w-5 h-5 text-[#C7A7FF]" />
+                      </div>
+                    </article>
+                  ))}
+                </div>
+
+                {/* Load More Button */}
+                {hasMore && (
+                  <div className="text-center mt-12">
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      onClick={loadMore}
+                      disabled={loadingMore}
+                      className="border-[#C7A7FF]/50 text-[#C7A7FF] hover:bg-[#C7A7FF]/10 hover:border-[#C7A7FF] px-8"
+                    >
+                      {loadingMore ? (
+                        <>
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                          Carregando...
+                        </>
+                      ) : (
+                        "Carregar mais artigos"
+                      )}
+                    </Button>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </section>
