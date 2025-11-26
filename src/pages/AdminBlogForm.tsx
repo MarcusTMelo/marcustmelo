@@ -198,6 +198,32 @@ const AdminBlogForm = () => {
     setImagePreview("");
   };
 
+  const getUniqueSlug = async (baseSlug: string, currentPostId?: string): Promise<string> => {
+    let slug = baseSlug;
+    let counter = 1;
+
+    while (true) {
+      const query = supabase
+        .from("blog_posts")
+        .select("id")
+        .eq("slug", slug);
+
+      // Exclude current post when editing
+      if (currentPostId) {
+        query.neq("id", currentPostId);
+      }
+
+      const { data } = await query.maybeSingle();
+
+      if (!data) {
+        return slug;
+      }
+
+      slug = `${baseSlug}-${counter}`;
+      counter++;
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -214,8 +240,15 @@ const AdminBlogForm = () => {
 
     try {
       const status = isPublished ? "published" : "draft";
+      
+      // Get unique slug for new posts
+      const finalSlug = isEdit 
+        ? await getUniqueSlug(formData.slug, id) 
+        : await getUniqueSlug(formData.slug);
+
       const postData = {
         ...formData,
+        slug: finalSlug,
         status,
         published_at: isPublished && formData.status === "draft" ? new Date().toISOString() : undefined,
       };
