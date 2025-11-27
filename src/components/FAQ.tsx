@@ -6,51 +6,51 @@ import {
 } from "@/components/ui/accordion";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
+export const faqItems = [
+  {
+    question: "Eu preciso entender de tecnologia para usar essas soluções?",
+    answer: "Não! Eu configuro tudo pra você. E deixo tudo funcionando do jeito mais simples possível — como apertar um botão. Se você sabe usar WhatsApp, já está pronto para usar IA e automações."
+  },
+  {
+    question: "Isso funciona para pequenos negócios mesmo?",
+    answer: "Funciona principalmente para pequenos negócios. Meu foco é ajudar padarias, salões, clínicas, petshops, lojas e serviços locais a ganharem tempo e atender melhor sem gastar muito."
+  },
+  {
+    question: "Quanto custa implementar uma automação ou assistente virtual?",
+    answer: "Depende do que você precisa. Mas sempre trabalho com soluções acessíveis, usando IA e ferramentas que cabem no bolso. Depois da primeira conversa, te digo exatamente quanto vai custar — sem surpresas."
+  },
+  {
+    question: "Eu posso mudar ou atualizar as automações depois?",
+    answer: "Pode! Posso ajustar os fluxos sempre que seu negócio mudar. E se quiser aprender, posso te ensinar a mexer também."
+  },
+  {
+    question: "Minha empresa é pequena, vale a pena ter uma assistente de IA?",
+    answer: "MUITO. Ela responde clientes, tira dúvidas, organiza pedidos e libera você para fazer o que importa: atender bem e vender mais."
+  },
+  {
+    question: "Isso substitui pessoas?",
+    answer: "Não. A IA só cuida do básico — perguntas repetidas, horários, informações, agendamentos. As conversas importantes continuam sendo suas."
+  },
+  {
+    question: "Você atende só em Águas Claras?",
+    answer: "Atendo Águas Claras, mas posso ajudar qualquer pessoa no Brasil. Tudo acontece online, de forma simples."
+  },
+  {
+    question: "Como funciona o processo para começar?",
+    answer: "É assim:\n\n• Você me conta o que precisa\n• Eu analiso seu negócio\n• Te entrego uma proposta clara\n• Configuro tudo e te ensino a usar\n• Fica tudo funcionando no automático"
+  },
+  {
+    question: "Em quanto tempo fica pronto?",
+    answer: "Depende da complexidade, mas muitas automações ficam prontas em 1 a 3 dias."
+  },
+  {
+    question: "E se eu tiver problemas depois?",
+    answer: "É só me chamar. Dou suporte e ajusto o que for preciso — sem te deixar na mão."
+  }
+];
+
 const FAQ = () => {
   const { elementRef, isVisible } = useIntersectionObserver();
-  
-  const faqItems = [
-    {
-      question: "Eu preciso entender de tecnologia para usar essas soluções?",
-      answer: "Não! Eu configuro tudo pra você. E deixo tudo funcionando do jeito mais simples possível — como apertar um botão. Se você sabe usar WhatsApp, já está pronto para usar IA e automações."
-    },
-    {
-      question: "Isso funciona para pequenos negócios mesmo?",
-      answer: "Funciona principalmente para pequenos negócios. Meu foco é ajudar padarias, salões, clínicas, petshops, lojas e serviços locais a ganharem tempo e atender melhor sem gastar muito."
-    },
-    {
-      question: "Quanto custa implementar uma automação ou assistente virtual?",
-      answer: "Depende do que você precisa. Mas sempre trabalho com soluções acessíveis, usando IA e ferramentas que cabem no bolso. Depois da primeira conversa, te digo exatamente quanto vai custar — sem surpresas."
-    },
-    {
-      question: "Eu posso mudar ou atualizar as automações depois?",
-      answer: "Pode! Posso ajustar os fluxos sempre que seu negócio mudar. E se quiser aprender, posso te ensinar a mexer também."
-    },
-    {
-      question: "Minha empresa é pequena, vale a pena ter uma assistente de IA?",
-      answer: "MUITO. Ela responde clientes, tira dúvidas, organiza pedidos e libera você para fazer o que importa: atender bem e vender mais."
-    },
-    {
-      question: "Isso substitui pessoas?",
-      answer: "Não. A IA só cuida do básico — perguntas repetidas, horários, informações, agendamentos. As conversas importantes continuam sendo suas."
-    },
-    {
-      question: "Você atende só em Águas Claras?",
-      answer: "Atendo Águas Claras, mas posso ajudar qualquer pessoa no Brasil. Tudo acontece online, de forma simples."
-    },
-    {
-      question: "Como funciona o processo para começar?",
-      answer: "É assim:\n\n• Você me conta o que precisa\n• Eu analiso seu negócio\n• Te entrego uma proposta clara\n• Configuro tudo e te ensino a usar\n• Fica tudo funcionando no automático"
-    },
-    {
-      question: "Em quanto tempo fica pronto?",
-      answer: "Depende da complexidade, mas muitas automações ficam prontas em 1 a 3 dias."
-    },
-    {
-      question: "E se eu tiver problemas depois?",
-      answer: "É só me chamar. Dou suporte e ajusto o que for preciso — sem te deixar na mão."
-    }
-  ];
 
   return (
     <section id="faq" className="relative bg-background py-20 px-6 md:py-32 overflow-hidden">
