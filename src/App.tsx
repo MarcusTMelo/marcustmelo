@@ -14,6 +14,8 @@ import AdminBlogForm from "./pages/AdminBlogForm";
 import AdminCategories from "./pages/AdminCategories";
 import BlogPost from "./pages/BlogPost";
 import BlogList from "./pages/BlogList";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfUse from "./pages/TermsOfUse";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +29,8 @@ const App = () => (
           <Route path="/" element={<PublicRoute><Index /></PublicRoute>} />
           <Route path="/blog" element={<PublicRoute><BlogList /></PublicRoute>} />
           <Route path="/blog/:slug" element={<PublicRoute><BlogPost /></PublicRoute>} />
+          <Route path="/politica-de-privacidade" element={<PublicRoute><PrivacyPolicy /></PublicRoute>} />
+          <Route path="/termos-de-uso" element={<PublicRoute><TermsOfUse /></PublicRoute>} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/blog" element={<AdminBlog />} />
