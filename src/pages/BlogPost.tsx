@@ -328,6 +328,22 @@ const BlogPost = () => {
             />
           </div>
 
+          {/* CTA Block */}
+          <div className="mt-12 p-6 md:p-8 rounded-2xl bg-[#1A1A1F]/80 border border-border/30">
+            <h3 className="text-xl md:text-2xl font-semibold mb-3 text-foreground">
+              Quer trazer esse tipo de tecnologia para o seu negócio?
+            </h3>
+            <p className="text-[#D6D6E0]/70 mb-5">
+              Posso te ajudar a usar IA e automações de um jeito simples, sem complicação técnica.
+            </p>
+            <Button
+              asChild
+              className="bg-gradient-to-r from-[#C7A7FF] to-[#6EC8FF] hover:opacity-90 text-background font-medium"
+            >
+              <a href="#">Vamos conversar</a>
+            </Button>
+          </div>
+
           {/* Social Share */}
           <div className="mt-12 pt-8 border-t border-border/50">
             <p className="text-sm text-muted-foreground mb-4">Compartilhe este artigo:</p>
