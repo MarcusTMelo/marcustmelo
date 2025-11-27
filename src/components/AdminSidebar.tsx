@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { NavLink } from "@/components/NavLink";
-import { LayoutDashboard, FileText, FolderOpen, LogOut, MessageSquare } from "lucide-react";
+import { LayoutDashboard, FileText, FolderOpen, LogOut, MessageSquare, Images } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -22,6 +22,7 @@ const menuItems = [
   { title: "Mensagens", url: "/admin/contacts", icon: MessageSquare, showBadge: true },
   { title: "Blog Posts", url: "/admin/blog", icon: FileText },
   { title: "Categorias", url: "/admin/categories", icon: FolderOpen },
+  { title: "Imagens", url: "/admin/images", icon: Images },
 ];
 
 export function AdminSidebar() {
