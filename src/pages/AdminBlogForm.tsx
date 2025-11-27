@@ -19,13 +19,10 @@ import { toast } from "@/hooks/use-toast";
 import { ArrowLeft, Upload, X } from "lucide-react";
 import { RichTextEditor } from "@/components/RichTextEditor";
 
-const CATEGORIES = [
-  "Automação",
-  "IA",
-  "Tech",
-  "Negócios",
-  "Tutoriais",
-];
+interface Category {
+  id: string;
+  name: string;
+}
 
 const AdminBlogForm = () => {
   const navigate = useNavigate();
@@ -36,10 +33,11 @@ const AdminBlogForm = () => {
   const [initialLoading, setInitialLoading] = useState(isEdit);
   const [uploading, setUploading] = useState(false);
   const [imagePreview, setImagePreview] = useState<string>("");
+  const [categories, setCategories] = useState<Category[]>([]);
   const [formData, setFormData] = useState({
     title: "",
     slug: "",
-    category: "",
+    category_id: "",
     excerpt: "",
     content: "",
     featured_image: "",
@@ -49,10 +47,24 @@ const AdminBlogForm = () => {
 
   useEffect(() => {
     checkAuth();
+    fetchCategories();
     if (isEdit) {
       fetchPost();
     }
   }, [id]);
+
+  const fetchCategories = async () => {
+    const { data, error } = await supabase
+      .from("blog_categories")
+      .select("id, name")
+      .order("name");
+
+    if (error) {
+      console.error("Error fetching categories:", error);
+    } else {
+      setCategories(data || []);
+    }
+  };
 
   const checkAuth = async () => {
     const { data: { session } } = await supabase.auth.getSession();
@@ -86,7 +98,7 @@ const AdminBlogForm = () => {
       setFormData({
         title: data.title,
         slug: data.slug,
-        category: data.category || "",
+        category_id: data.category_id || "",
         excerpt: data.excerpt || "",
         content: data.content || "",
         featured_image: data.featured_image || "",
@@ -363,18 +375,18 @@ const AdminBlogForm = () => {
                 <div className="space-y-2">
                   <Label htmlFor="category">Categoria</Label>
                   <Select
-                    value={formData.category}
+                    value={formData.category_id}
                     onValueChange={(value) =>
-                      setFormData({ ...formData, category: value })
+                      setFormData({ ...formData, category_id: value })
                     }
                   >
                     <SelectTrigger className="bg-background/50 border-border/50">
                       <SelectValue placeholder="Selecione uma categoria" />
                     </SelectTrigger>
                     <SelectContent className="bg-background border-border/50 z-50">
-                      {CATEGORIES.map((cat) => (
-                        <SelectItem key={cat} value={cat}>
-                          {cat}
+                      {categories.map((cat) => (
+                        <SelectItem key={cat.id} value={cat.id}>
+                          {cat.name}
                         </SelectItem>
                       ))}
                     </SelectContent>

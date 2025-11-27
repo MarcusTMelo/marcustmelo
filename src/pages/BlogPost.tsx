@@ -13,21 +13,23 @@ interface BlogPostData {
   id: string;
   title: string;
   slug: string;
-  category: string | null;
+  category_id: string | null;
   excerpt: string | null;
   content: string | null;
   featured_image: string | null;
   published_at: string | null;
   views_count: number;
+  blog_categories: { name: string } | null;
 }
 
 interface RelatedPost {
   id: string;
   title: string;
   slug: string;
-  category: string | null;
+  category_id: string | null;
   excerpt: string | null;
   featured_image: string | null;
+  blog_categories: { name: string } | null;
 }
 
 const BlogPost = () => {
@@ -46,7 +48,7 @@ const BlogPost = () => {
     try {
       const { data, error } = await supabase
         .from("blog_posts")
-        .select("*")
+        .select("*, blog_categories(name)")
         .eq("slug", slug)
         .eq("status", "published")
         .maybeSingle();
@@ -57,7 +59,7 @@ const BlogPost = () => {
         setNotFound(true);
       } else {
         setPost(data);
-        fetchRelatedPosts(data.category, data.id);
+        fetchRelatedPosts(data.category_id, data.id);
         
         // Increment view count asynchronously
         supabase
@@ -78,17 +80,17 @@ const BlogPost = () => {
     }
   };
 
-  const fetchRelatedPosts = async (category: string | null, currentPostId: string) => {
+  const fetchRelatedPosts = async (categoryId: string | null, currentPostId: string) => {
     try {
       let query = supabase
         .from("blog_posts")
-        .select("id, title, slug, category, excerpt, featured_image")
+        .select("id, title, slug, category_id, excerpt, featured_image, blog_categories(name)")
         .eq("status", "published")
         .neq("id", currentPostId)
         .limit(3);
 
-      if (category) {
-        query = query.eq("category", category);
+      if (categoryId) {
+        query = query.eq("category_id", categoryId);
       }
 
       const { data, error } = await query.order("published_at", { ascending: false });
@@ -211,7 +213,7 @@ const BlogPost = () => {
       "@type": "WebPage",
       "@id": getFullUrl()
     },
-    "articleSection": post.category || "Geral",
+    "articleSection": post.blog_categories?.name || "Geral",
     "wordCount": post.content ? post.content.replace(/<[^>]*>/g, "").split(/\s+/).filter(Boolean).length : 0,
     "timeRequired": `PT${readingTime}M`
   };
@@ -228,7 +230,7 @@ const BlogPost = () => {
         <meta property="og:type" content="article" />
         <meta property="og:url" content={`https://marcustmelo.com/blog/${post.slug}`} />
         <meta property="article:published_time" content={post.published_at || ""} />
-        <meta property="article:section" content={post.category || "Geral"} />
+        <meta property="article:section" content={post.blog_categories?.name || "Geral"} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={post.title} />
         <meta name="twitter:description" content={post.excerpt || ""} />
@@ -274,15 +276,15 @@ const BlogPost = () => {
 
           {/* Category, Date & Reading Time */}
           <div className="flex items-center gap-4 mb-6 flex-wrap">
-            {post.category && (
+            {post.blog_categories?.name && (
               <Badge
                 style={{
-                  backgroundColor: `${getCategoryColor(post.category)}20`,
-                  color: getCategoryColor(post.category),
-                  borderColor: `${getCategoryColor(post.category)}30`,
+                  backgroundColor: `${getCategoryColor(post.blog_categories.name)}20`,
+                  color: getCategoryColor(post.blog_categories.name),
+                  borderColor: `${getCategoryColor(post.blog_categories.name)}30`,
                 }}
               >
-                {post.category}
+                {post.blog_categories.name}
               </Badge>
             )}
             {post.published_at && (
@@ -373,46 +375,49 @@ const BlogPost = () => {
                 Posts Relacionados
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {relatedPosts.map((relatedPost) => (
-                  <Link
-                    key={relatedPost.id}
-                    to={`/blog/${relatedPost.slug}`}
-                    className="group relative bg-[#1A1A1F] border border-border/50 rounded-xl overflow-hidden hover:border-[#C7A7FF]/50 transition-all duration-300 hover:shadow-lg hover:shadow-[#C7A7FF]/10"
-                  >
-                    <div className={`h-32 bg-gradient-to-br ${getCategoryGradient(relatedPost.category)} relative overflow-hidden`}>
-                      {relatedPost.featured_image ? (
-                        <img
-                          src={relatedPost.featured_image}
-                          alt={relatedPost.title}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="w-12 h-12 border-2 border-white/20 rounded-full" />
-                        </div>
-                      )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1F] to-transparent opacity-60" />
-                    </div>
-                    <div className="p-4">
-                      <Badge
-                        className="mb-2 text-xs"
-                        style={{
-                          backgroundColor: `${getCategoryColor(relatedPost.category)}20`,
-                          color: getCategoryColor(relatedPost.category),
-                          borderColor: `${getCategoryColor(relatedPost.category)}30`,
-                        }}
-                      >
-                        {relatedPost.category || "Geral"}
-                      </Badge>
-                      <h3 className="font-semibold text-sm line-clamp-2 group-hover:text-[#C7A7FF] transition-colors">
-                        {relatedPost.title}
-                      </h3>
-                    </div>
-                    <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300">
-                      <ArrowRight className="w-4 h-4 text-[#C7A7FF]" />
-                    </div>
-                  </Link>
-                ))}
+                {relatedPosts.map((relatedPost) => {
+                  const relatedCategoryName = relatedPost.blog_categories?.name || null;
+                  return (
+                    <Link
+                      key={relatedPost.id}
+                      to={`/blog/${relatedPost.slug}`}
+                      className="group relative bg-[#1A1A1F] border border-border/50 rounded-xl overflow-hidden hover:border-[#C7A7FF]/50 transition-all duration-300 hover:shadow-lg hover:shadow-[#C7A7FF]/10"
+                    >
+                      <div className={`h-32 bg-gradient-to-br ${getCategoryGradient(relatedCategoryName)} relative overflow-hidden`}>
+                        {relatedPost.featured_image ? (
+                          <img
+                            src={relatedPost.featured_image}
+                            alt={relatedPost.title}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="w-12 h-12 border-2 border-white/20 rounded-full" />
+                          </div>
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1F] to-transparent opacity-60" />
+                      </div>
+                      <div className="p-4">
+                        <Badge
+                          className="mb-2 text-xs"
+                          style={{
+                            backgroundColor: `${getCategoryColor(relatedCategoryName)}20`,
+                            color: getCategoryColor(relatedCategoryName),
+                            borderColor: `${getCategoryColor(relatedCategoryName)}30`,
+                          }}
+                        >
+                          {relatedCategoryName || "Geral"}
+                        </Badge>
+                        <h3 className="font-semibold text-sm line-clamp-2 group-hover:text-[#C7A7FF] transition-colors">
+                          {relatedPost.title}
+                        </h3>
+                      </div>
+                      <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300">
+                        <ArrowRight className="w-4 h-4 text-[#C7A7FF]" />
+                      </div>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           )}
