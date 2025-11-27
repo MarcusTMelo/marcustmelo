@@ -38,6 +38,7 @@ export type Database = {
       blog_posts: {
         Row: {
           category: string | null
+          category_id: string | null
           content: string | null
           created_at: string
           excerpt: string | null
@@ -52,6 +53,7 @@ export type Database = {
         }
         Insert: {
           category?: string | null
+          category_id?: string | null
           content?: string | null
           created_at?: string
           excerpt?: string | null
@@ -66,6 +68,7 @@ export type Database = {
         }
         Update: {
           category?: string | null
+          category_id?: string | null
           content?: string | null
           created_at?: string
           excerpt?: string | null
@@ -78,7 +81,15 @@ export type Database = {
           updated_at?: string
           views_count?: number
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "blog_posts_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "blog_categories"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       site_settings: {
         Row: {

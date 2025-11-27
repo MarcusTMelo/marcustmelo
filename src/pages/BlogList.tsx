@@ -13,10 +13,16 @@ interface BlogPost {
   id: string;
   title: string;
   slug: string;
-  category: string | null;
+  category_id: string | null;
   excerpt: string | null;
   featured_image: string | null;
   published_at: string | null;
+  blog_categories: { name: string } | null;
+}
+
+interface Category {
+  id: string;
+  name: string;
 }
 
 const POSTS_PER_PAGE = 9;
@@ -24,7 +30,7 @@ const POSTS_PER_PAGE = 9;
 const BlogList = () => {
   const navigate = useNavigate();
   const [posts, setPosts] = useState<BlogPost[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -56,15 +62,12 @@ const BlogList = () => {
   const fetchCategories = async () => {
     try {
       const { data, error } = await supabase
-        .from("blog_posts")
-        .select("category")
-        .eq("status", "published")
-        .not("category", "is", null);
+        .from("blog_categories")
+        .select("id, name")
+        .order("name");
 
       if (error) throw error;
-
-      const uniqueCategories = [...new Set(data?.map((p) => p.category).filter(Boolean))] as string[];
-      setCategories(uniqueCategories.sort());
+      setCategories(data || []);
     } catch (error) {
       console.error("Error fetching categories:", error);
     }
@@ -77,12 +80,12 @@ const BlogList = () => {
 
       let query = supabase
         .from("blog_posts")
-        .select("id, title, slug, category, excerpt, featured_image, published_at", { count: "exact" })
+        .select("id, title, slug, category_id, excerpt, featured_image, published_at, blog_categories(name)", { count: "exact" })
         .eq("status", "published");
 
-      // Add category filter
+      // Add category filter by id
       if (category) {
-        query = query.eq("category", category);
+        query = query.eq("category_id", category);
       }
 
       // Add search filter if query exists
@@ -124,11 +127,11 @@ const BlogList = () => {
     setSearchQuery("");
   };
 
-  const handleCategoryClick = (category: string | null) => {
-    setSelectedCategory(category);
+  const handleCategoryClick = (categoryId: string | null) => {
+    setSelectedCategory(categoryId);
   };
 
-  const getCategoryColor = (category: string | null) => {
+  const getCategoryColor = (categoryName: string | null) => {
     const colors: Record<string, string> = {
       "Automação": "#C7A7FF",
       "IA": "#6EC8FF",
@@ -136,10 +139,10 @@ const BlogList = () => {
       "Negócios": "#4A8CFF",
       "Tutoriais": "#C7A7FF",
     };
-    return colors[category || ""] || "#C7A7FF";
+    return colors[categoryName || ""] || "#C7A7FF";
   };
 
-  const getCategoryGradient = (category: string | null) => {
+  const getCategoryGradient = (categoryName: string | null) => {
     const gradients: Record<string, string> = {
       "Automação": "from-[#C7A7FF] to-[#6EC8FF]",
       "IA": "from-[#6EC8FF] to-[#4A8CFF]",
@@ -147,7 +150,7 @@ const BlogList = () => {
       "Negócios": "from-[#4A8CFF] to-[#6EC8FF]",
       "Tutoriais": "from-[#C7A7FF] to-[#FF7ACB]",
     };
-    return gradients[category || ""] || "from-[#C7A7FF] to-[#6EC8FF]";
+    return gradients[categoryName || ""] || "from-[#C7A7FF] to-[#6EC8FF]";
   };
 
   return (
@@ -231,22 +234,22 @@ const BlogList = () => {
                 </Button>
                 {categories.map((category) => (
                   <Button
-                    key={category}
+                    key={category.id}
                     variant="ghost"
                     size="sm"
-                    onClick={() => handleCategoryClick(category)}
+                    onClick={() => handleCategoryClick(category.id)}
                     className={`rounded-full px-4 transition-all duration-300 ${
-                      selectedCategory === category
+                      selectedCategory === category.id
                         ? "text-background hover:opacity-90"
                         : "bg-[#1A1A1F] border border-border/50 text-muted-foreground hover:text-foreground"
                     }`}
                     style={
-                      selectedCategory === category
-                        ? { backgroundColor: getCategoryColor(category) }
-                        : { borderColor: `${getCategoryColor(category)}30` }
+                      selectedCategory === category.id
+                        ? { backgroundColor: getCategoryColor(category.name) }
+                        : { borderColor: `${getCategoryColor(category.name)}30` }
                     }
                   >
-                    {category}
+                    {category.name}
                   </Button>
                 ))}
               </div>
@@ -264,7 +267,7 @@ const BlogList = () => {
               <div className="text-center py-12">
                 <p className="text-lg text-muted-foreground">
                   {debouncedSearch || selectedCategory
-                    ? `Nenhum artigo encontrado${debouncedSearch ? ` para "${debouncedSearch}"` : ""}${selectedCategory ? ` na categoria "${selectedCategory}"` : ""}`
+                    ? `Nenhum artigo encontrado${debouncedSearch ? ` para "${debouncedSearch}"` : ""}${selectedCategory ? ` nesta categoria` : ""}`
                     : "Em breve novos artigos..."}
                 </p>
               </div>
@@ -274,64 +277,67 @@ const BlogList = () => {
             {!loading && posts.length > 0 && (
               <>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {posts.map((post) => (
-                    <article
-                      key={post.id}
-                      onClick={() => navigate(`/blog/${post.slug}`)}
-                      className="group relative bg-[#1A1A1F] border border-border/50 rounded-2xl overflow-hidden hover:border-[#C7A7FF]/50 transition-all duration-500 hover:shadow-lg hover:shadow-[#C7A7FF]/20 cursor-pointer animate-fade-in"
-                    >
-                      {/* Featured Image or Gradient Placeholder */}
-                      <div className={`h-48 bg-gradient-to-br ${getCategoryGradient(post.category)} relative overflow-hidden`}>
-                        {post.featured_image ? (
-                          <img
-                            src={post.featured_image}
-                            alt={post.title}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="w-24 h-24 border-2 border-white/20 rounded-full" />
-                          </div>
-                        )}
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1F] to-transparent opacity-60" />
-                      </div>
-
-                      {/* Card Content */}
-                      <div className="p-6">
-                        <Badge
-                          className="mb-3"
-                          style={{
-                            backgroundColor: `${getCategoryColor(post.category)}20`,
-                            color: getCategoryColor(post.category),
-                            borderColor: `${getCategoryColor(post.category)}30`,
-                          }}
-                        >
-                          {post.category || "Geral"}
-                        </Badge>
-
-                        <h2 className="text-xl font-bold mb-3 group-hover:bg-gradient-to-r group-hover:from-[#C7A7FF] group-hover:to-[#6EC8FF] group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
-                          {post.title}
-                        </h2>
-
-                        <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
-                          {post.excerpt || ""}
-                        </p>
-
-                        <div className="flex items-center justify-between text-xs text-muted-foreground/70">
-                          <span>
-                            {post.published_at
-                              ? format(new Date(post.published_at), "dd MMM yyyy")
-                              : ""}
-                          </span>
+                  {posts.map((post) => {
+                    const categoryName = post.blog_categories?.name || null;
+                    return (
+                      <article
+                        key={post.id}
+                        onClick={() => navigate(`/blog/${post.slug}`)}
+                        className="group relative bg-[#1A1A1F] border border-border/50 rounded-2xl overflow-hidden hover:border-[#C7A7FF]/50 transition-all duration-500 hover:shadow-lg hover:shadow-[#C7A7FF]/20 cursor-pointer animate-fade-in"
+                      >
+                        {/* Featured Image or Gradient Placeholder */}
+                        <div className={`h-48 bg-gradient-to-br ${getCategoryGradient(categoryName)} relative overflow-hidden`}>
+                          {post.featured_image ? (
+                            <img
+                              src={post.featured_image}
+                              alt={post.title}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <div className="w-24 h-24 border-2 border-white/20 rounded-full" />
+                            </div>
+                          )}
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1F] to-transparent opacity-60" />
                         </div>
-                      </div>
 
-                      {/* Hover Arrow */}
-                      <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300">
-                        <ArrowRight className="w-5 h-5 text-[#C7A7FF]" />
-                      </div>
-                    </article>
-                  ))}
+                        {/* Card Content */}
+                        <div className="p-6">
+                          <Badge
+                            className="mb-3"
+                            style={{
+                              backgroundColor: `${getCategoryColor(categoryName)}20`,
+                              color: getCategoryColor(categoryName),
+                              borderColor: `${getCategoryColor(categoryName)}30`,
+                            }}
+                          >
+                            {categoryName || "Geral"}
+                          </Badge>
+
+                          <h2 className="text-xl font-bold mb-3 group-hover:bg-gradient-to-r group-hover:from-[#C7A7FF] group-hover:to-[#6EC8FF] group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
+                            {post.title}
+                          </h2>
+
+                          <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
+                            {post.excerpt || ""}
+                          </p>
+
+                          <div className="flex items-center justify-between text-xs text-muted-foreground/70">
+                            <span>
+                              {post.published_at
+                                ? format(new Date(post.published_at), "dd MMM yyyy")
+                                : ""}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Hover Arrow */}
+                        <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300">
+                          <ArrowRight className="w-5 h-5 text-[#C7A7FF]" />
+                        </div>
+                      </article>
+                    );
+                  })}
                 </div>
 
                 {/* Load More Button */}
