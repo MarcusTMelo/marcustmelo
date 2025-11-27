@@ -7,6 +7,7 @@ import { ArrowLeft, ArrowRight, Clock, Home, ChevronRight } from "lucide-react";
 import { format } from "date-fns";
 import { Helmet } from "react-helmet";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 import DOMPurify from 'dompurify';
 
 interface BlogPostData {
@@ -244,8 +245,9 @@ const BlogPost = () => {
       </Helmet>
 
       <div className="min-h-screen bg-background">
+        <Navbar />
         {/* Breadcrumbs */}
-        <div className="border-b border-border/50">
+        <div className="border-b border-border/50 pt-20">
           <div className="max-w-4xl mx-auto px-6 py-4">
             <nav className="flex items-center gap-2 text-sm text-muted-foreground">
               <Link to="/" className="flex items-center gap-1 hover:text-[#C7A7FF] transition-colors">
