@@ -203,11 +203,6 @@ const Contact = () => {
                   </Button>
                 </div>
               </div>
-
-              {/* Response note */}
-              <p className="text-muted-foreground text-sm text-center pt-2">
-                Responderei assim que possível 🙂
-              </p>
             </form>
           </div>
         </div>
