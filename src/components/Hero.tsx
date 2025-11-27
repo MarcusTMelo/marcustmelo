@@ -4,7 +4,7 @@ import { Spotlight } from "@/components/ui/spotlight";
 
 const Hero = () => {
   return (
-    <div id="hero" className="relative w-full min-h-[700px] overflow-hidden" style={{ backgroundColor: "#0B0B0D" }}>
+    <div id="hero" className="relative w-full min-h-[700px] pt-20 overflow-hidden" style={{ backgroundColor: "#0B0B0D" }}>
       {/* Névoas sutis atmosféricas */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#0D0B12] via-[#0B0B0D] to-[#0D0B12]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(199,167,255,0.08),transparent_65%)]" />

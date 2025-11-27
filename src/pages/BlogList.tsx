@@ -8,6 +8,7 @@ import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 
 interface BlogPost {
   id: string;
@@ -164,7 +165,8 @@ const BlogList = () => {
       </Helmet>
 
       <main className="bg-background min-h-screen">
-        <section className="relative py-20 px-6 md:py-32 overflow-hidden">
+        <Navbar />
+        <section className="relative py-20 px-6 md:py-32 pt-28 md:pt-36 overflow-hidden">
           {/* Decorative background gradients */}
           <div className="absolute inset-0 pointer-events-none">
             <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-[#C7A7FF] opacity-5 blur-[120px] rounded-full" />
