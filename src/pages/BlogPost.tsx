@@ -192,6 +192,8 @@ const BlogPost = () => {
     return typeof window !== "undefined" ? window.location.href : "";
   };
 
+  const categoryName = post.blog_categories?.name || "Geral";
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -213,7 +215,8 @@ const BlogPost = () => {
       "@type": "WebPage",
       "@id": getFullUrl()
     },
-    "articleSection": post.blog_categories?.name || "Geral",
+    "articleSection": categoryName,
+    "keywords": [categoryName, "IA", "automação", "tecnologia", "pequenos negócios"].filter(Boolean).join(", "),
     "wordCount": post.content ? post.content.replace(/<[^>]*>/g, "").split(/\s+/).filter(Boolean).length : 0,
     "timeRequired": `PT${readingTime}M`
   };
