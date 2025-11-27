@@ -11,10 +11,11 @@ interface BlogPost {
   id: string;
   title: string;
   slug: string;
-  category: string | null;
+  category_id: string | null;
   excerpt: string | null;
   featured_image: string | null;
   published_at: string | null;
+  blog_categories: { name: string } | null;
 }
 
 const Blog = () => {
@@ -31,7 +32,7 @@ const Blog = () => {
     try {
       const { data, error } = await supabase
         .from("blog_posts")
-        .select("id, title, slug, category, excerpt, featured_image, published_at")
+        .select("id, title, slug, category_id, excerpt, featured_image, published_at, blog_categories(name)")
         .eq("status", "published")
         .order("published_at", { ascending: false })
         .limit(6);
@@ -45,7 +46,7 @@ const Blog = () => {
     }
   };
 
-  const getCategoryColor = (category: string | null) => {
+  const getCategoryColor = (categoryName: string | null) => {
     const colors: Record<string, string> = {
       "Automação": "#C7A7FF",
       "IA": "#6EC8FF",
@@ -53,10 +54,10 @@ const Blog = () => {
       "Negócios": "#4A8CFF",
       "Tutoriais": "#C7A7FF",
     };
-    return colors[category || ""] || "#C7A7FF";
+    return colors[categoryName || ""] || "#C7A7FF";
   };
 
-  const getCategoryGradient = (category: string | null) => {
+  const getCategoryGradient = (categoryName: string | null) => {
     const gradients: Record<string, string> = {
       "Automação": "from-[#C7A7FF] to-[#6EC8FF]",
       "IA": "from-[#6EC8FF] to-[#4A8CFF]",
@@ -64,7 +65,7 @@ const Blog = () => {
       "Negócios": "from-[#4A8CFF] to-[#6EC8FF]",
       "Tutoriais": "from-[#C7A7FF] to-[#FF7ACB]",
     };
-    return gradients[category || ""] || "from-[#C7A7FF] to-[#6EC8FF]";
+    return gradients[categoryName || ""] || "from-[#C7A7FF] to-[#6EC8FF]";
   };
 
   return (
@@ -106,71 +107,74 @@ const Blog = () => {
         {!loading && posts.length > 0 && (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-              {posts.map((post, index) => (
-                <article
-                  key={post.id}
-                  onClick={() => navigate(`/blog/${post.slug}`)}
-                  className={`group relative bg-[#1A1A1F] border border-border/50 rounded-2xl overflow-hidden hover:border-[#C7A7FF]/50 transition-all duration-500 hover:shadow-lg hover:shadow-[#C7A7FF]/20 cursor-pointer ${
-                    isVisible
-                      ? 'opacity-100 translate-y-0'
-                      : 'opacity-0 translate-y-8'
-                  }`}
-                  style={{
-                    transitionDelay: `${(index + 2) * 150}ms`,
-                  }}
-                >
-                  {/* Featured Image or Gradient Placeholder */}
-                  <div className={`h-48 bg-gradient-to-br ${getCategoryGradient(post.category)} relative overflow-hidden`}>
-                    {post.featured_image ? (
-                      <img 
-                        src={post.featured_image} 
-                        alt={post.title}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-24 h-24 border-2 border-white/20 rounded-full" />
-                      </div>
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1F] to-transparent opacity-60" />
-                  </div>
-
-                  {/* Card Content */}
-                  <div className="p-6">
-                    <Badge
-                      className="mb-3"
-                      style={{
-                        backgroundColor: `${getCategoryColor(post.category)}20`,
-                        color: getCategoryColor(post.category),
-                        borderColor: `${getCategoryColor(post.category)}30`,
-                      }}
-                    >
-                      {post.category || "Geral"}
-                    </Badge>
-
-                    <h3 className="text-xl font-bold mb-3 group-hover:bg-gradient-to-r group-hover:from-[#C7A7FF] group-hover:to-[#6EC8FF] group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
-                      {post.title}
-                    </h3>
-
-                    <p className="text-[#D6D6E0]/70 text-sm mb-4 line-clamp-3">
-                      {post.excerpt || ""}
-                    </p>
-
-                    <div className="flex items-center justify-between text-xs text-[#D6D6E0]/50">
-                      <span>
-                        {post.published_at
-                          ? format(new Date(post.published_at), "dd MMM yyyy")
-                          : ""}
-                      </span>
+              {posts.map((post, index) => {
+                const categoryName = post.blog_categories?.name || null;
+                return (
+                  <article
+                    key={post.id}
+                    onClick={() => navigate(`/blog/${post.slug}`)}
+                    className={`group relative bg-[#1A1A1F] border border-border/50 rounded-2xl overflow-hidden hover:border-[#C7A7FF]/50 transition-all duration-500 hover:shadow-lg hover:shadow-[#C7A7FF]/20 cursor-pointer ${
+                      isVisible
+                        ? 'opacity-100 translate-y-0'
+                        : 'opacity-0 translate-y-8'
+                    }`}
+                    style={{
+                      transitionDelay: `${(index + 2) * 150}ms`,
+                    }}
+                  >
+                    {/* Featured Image or Gradient Placeholder */}
+                    <div className={`h-48 bg-gradient-to-br ${getCategoryGradient(categoryName)} relative overflow-hidden`}>
+                      {post.featured_image ? (
+                        <img 
+                          src={post.featured_image} 
+                          alt={post.title}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-24 h-24 border-2 border-white/20 rounded-full" />
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1F] to-transparent opacity-60" />
                     </div>
-                  </div>
 
-                  {/* Hover Arrow */}
-                  <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300">
-                    <ArrowRight className="w-5 h-5 text-[#C7A7FF]" />
-                  </div>
-                </article>
-              ))}
+                    {/* Card Content */}
+                    <div className="p-6">
+                      <Badge
+                        className="mb-3"
+                        style={{
+                          backgroundColor: `${getCategoryColor(categoryName)}20`,
+                          color: getCategoryColor(categoryName),
+                          borderColor: `${getCategoryColor(categoryName)}30`,
+                        }}
+                      >
+                        {categoryName || "Geral"}
+                      </Badge>
+
+                      <h3 className="text-xl font-bold mb-3 group-hover:bg-gradient-to-r group-hover:from-[#C7A7FF] group-hover:to-[#6EC8FF] group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
+                        {post.title}
+                      </h3>
+
+                      <p className="text-[#D6D6E0]/70 text-sm mb-4 line-clamp-3">
+                        {post.excerpt || ""}
+                      </p>
+
+                      <div className="flex items-center justify-between text-xs text-[#D6D6E0]/50">
+                        <span>
+                          {post.published_at
+                            ? format(new Date(post.published_at), "dd MMM yyyy")
+                            : ""}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Hover Arrow */}
+                    <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300">
+                      <ArrowRight className="w-5 h-5 text-[#C7A7FF]" />
+                    </div>
+                  </article>
+                );
+              })}
             </div>
 
             {/* View All Button */}
