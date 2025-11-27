@@ -21,7 +21,6 @@ function isValidEmail(email: string): boolean {
 }
 
 function isValidPhone(phone: string): boolean {
-  // Allow only numbers, spaces, +, (), -
   const phoneRegex = /^[\d\s\+\(\)\-]+$/;
   const digitsOnly = phone.replace(/\D/g, '');
   return phoneRegex.test(phone) && digitsOnly.length >= 8;
@@ -37,7 +36,6 @@ function sanitizeText(text: string): string {
 }
 
 const handler = async (req: Request): Promise<Response> => {
-  // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
@@ -60,7 +58,6 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Validate email format
     if (!isValidEmail(email)) {
       return new Response(
         JSON.stringify({ error: "Email inválido" }),
@@ -68,7 +65,6 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Validate phone format
     if (!isValidPhone(phone)) {
       return new Response(
         JSON.stringify({ error: "Telefone inválido" }),
@@ -76,7 +72,6 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Validate field lengths
     if (name.length > 100 || email.length > 255 || phone.length > 30 || (subject && subject.length > 200) || message.length > 5000) {
       return new Response(
         JSON.stringify({ error: "Um ou mais campos excedem o tamanho máximo permitido" }),
@@ -84,17 +79,15 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Get client IP for rate limiting
     const clientIP = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || 
                      req.headers.get("cf-connecting-ip") || 
                      "unknown";
 
-    // Initialize Supabase client
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Rate limiting: check submissions from this IP in the last hour
+    // Rate limiting
     const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
     const { count, error: countError } = await supabase
       .from("contact_requests")
@@ -113,7 +106,6 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Sanitize inputs
     const sanitizedData = {
       name: sanitizeText(name),
       email: sanitizeText(email),
@@ -123,7 +115,6 @@ const handler = async (req: Request): Promise<Response> => {
       ip_address: clientIP,
     };
 
-    // Insert into database
     const { error: insertError } = await supabase
       .from("contact_requests")
       .insert(sanitizedData);
@@ -136,7 +127,6 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Format date for email
     const now = new Date();
     const formattedDate = now.toLocaleString("pt-BR", {
       timeZone: "America/Sao_Paulo",
@@ -147,11 +137,17 @@ const handler = async (req: Request): Promise<Response> => {
       minute: "2-digit",
     });
 
-    // Send email notification using Resend
+    // Send emails using Resend
     const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    
+    // IMPORTANTE: Após verificar o domínio no Resend, altere para:
+    // const fromEmail = "Marcus T. Melo <contato@marcustmelo.com>";
+    const fromEmail = "Marcus T. Melo <onboarding@resend.dev>";
+    
     if (resendApiKey) {
-      const emailSubject = `Nova mensagem pelo site – ${sanitizedData.name}`;
-      const emailHtml = `
+      // 1. Email de notificação para o admin
+      const adminEmailSubject = `Nova mensagem pelo site – ${sanitizedData.name}`;
+      const adminEmailHtml = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #333; border-bottom: 2px solid #C8B8E6; padding-bottom: 10px;">
             Nova mensagem de contato
@@ -180,33 +176,105 @@ const handler = async (req: Request): Promise<Response> => {
         </div>
       `;
 
+      // 2. Email de confirmação para o visitante
+      const userEmailSubject = `Recebi sua mensagem! 💜`;
+      const userEmailHtml = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
+          <div style="background: linear-gradient(135deg, #C8B8E6 0%, #89CFF0 100%); padding: 30px; border-radius: 12px 12px 0 0;">
+            <h1 style="color: #fff; margin: 0; font-size: 24px;">Olá, ${sanitizedData.name}! 👋</h1>
+          </div>
+          
+          <div style="background-color: #fff; padding: 30px; border: 1px solid #e0e0e0; border-top: none;">
+            <p style="font-size: 16px; line-height: 1.8; margin-bottom: 20px;">
+              Sua mensagem chegou direitinho! Muito obrigado por entrar em contato.
+            </p>
+            
+            <p style="font-size: 16px; line-height: 1.8; margin-bottom: 20px;">
+              Vou analisar com carinho o que você me enviou e te respondo em breve. 
+              Geralmente retorno em até 24 horas úteis.
+            </p>
+
+            <div style="background-color: #f8f8f8; padding: 20px; border-radius: 8px; margin: 25px 0; border-left: 4px solid #C8B8E6;">
+              <p style="margin: 0; font-size: 14px; color: #666;">
+                <strong>Resumo da sua mensagem:</strong><br><br>
+                ${sanitizedData.subject ? `<em>Assunto:</em> ${sanitizedData.subject}<br><br>` : ''}
+                <em>"${sanitizedData.message.length > 150 ? sanitizedData.message.substring(0, 150) + '...' : sanitizedData.message}"</em>
+              </p>
+            </div>
+            
+            <p style="font-size: 16px; line-height: 1.8;">
+              Enquanto isso, se precisar de algo urgente, pode me chamar diretamente no WhatsApp.
+            </p>
+            
+            <div style="text-align: center; margin: 30px 0;">
+              <a href="https://wa.me/5511999999999" style="display: inline-block; background: linear-gradient(135deg, #C8B8E6 0%, #89CFF0 100%); color: #fff; text-decoration: none; padding: 14px 30px; border-radius: 8px; font-weight: bold; font-size: 16px;">
+                💬 Chamar no WhatsApp
+              </a>
+            </div>
+          </div>
+          
+          <div style="background-color: #f5f5f5; padding: 20px; border-radius: 0 0 12px 12px; text-align: center;">
+            <p style="margin: 0; font-size: 14px; color: #888;">
+              Marcus T. Melo<br>
+              Tecnologia simples para pequenos negócios
+            </p>
+          </div>
+        </div>
+      `;
+
+      // Enviar email para o admin
       try {
-        const emailResponse = await fetch("https://api.resend.com/emails", {
+        const adminEmailResponse = await fetch("https://api.resend.com/emails", {
           method: "POST",
           headers: {
             "Authorization": `Bearer ${resendApiKey}`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            from: "Site Marcus T. Melo <onboarding@resend.dev>",
+            from: fromEmail,
             to: ["contato@marcustmelo.com"],
-            subject: emailSubject,
-            html: emailHtml,
+            subject: adminEmailSubject,
+            html: adminEmailHtml,
           }),
         });
 
-        if (!emailResponse.ok) {
-          const emailError = await emailResponse.text();
-          console.error("Error sending email:", emailError);
+        if (!adminEmailResponse.ok) {
+          const emailError = await adminEmailResponse.text();
+          console.error("Error sending admin email:", emailError);
         } else {
-          console.log("Email sent successfully");
+          console.log("Admin notification email sent successfully");
         }
       } catch (emailErr) {
-        console.error("Error sending email:", emailErr);
-        // Don't fail the request if email fails, data is already saved
+        console.error("Error sending admin email:", emailErr);
+      }
+
+      // Enviar email de confirmação para o visitante
+      try {
+        const userEmailResponse = await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${resendApiKey}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            from: fromEmail,
+            to: [sanitizedData.email],
+            subject: userEmailSubject,
+            html: userEmailHtml,
+          }),
+        });
+
+        if (!userEmailResponse.ok) {
+          const emailError = await userEmailResponse.text();
+          console.error("Error sending user confirmation email:", emailError);
+        } else {
+          console.log("User confirmation email sent successfully");
+        }
+      } catch (emailErr) {
+        console.error("Error sending user confirmation email:", emailErr);
       }
     } else {
-      console.warn("RESEND_API_KEY not configured, skipping email notification");
+      console.warn("RESEND_API_KEY not configured, skipping email notifications");
     }
 
     console.log(`Contact form submitted successfully from ${clientIP}`);
