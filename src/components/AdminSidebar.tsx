@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { NavLink } from "@/components/NavLink";
-import { LayoutDashboard, FileText, FolderOpen, LogOut } from "lucide-react";
+import { LayoutDashboard, FileText, FolderOpen, LogOut, MessageSquare } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 
 const menuItems = [
   { title: "Dashboard", url: "/admin/dashboard", icon: LayoutDashboard },
+  { title: "Mensagens", url: "/admin/contacts", icon: MessageSquare },
   { title: "Blog Posts", url: "/admin/blog", icon: FileText },
   { title: "Categorias", url: "/admin/categories", icon: FolderOpen },
 ];

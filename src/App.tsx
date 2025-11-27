@@ -12,6 +12,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AdminBlog from "./pages/AdminBlog";
 import AdminBlogForm from "./pages/AdminBlogForm";
 import AdminCategories from "./pages/AdminCategories";
+import AdminContacts from "./pages/AdminContacts";
 import BlogPost from "./pages/BlogPost";
 import BlogList from "./pages/BlogList";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="/termos-de-uso" element={<PublicRoute><TermsOfUse /></PublicRoute>} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/contacts" element={<AdminContacts />} />
           <Route path="/admin/blog" element={<AdminBlog />} />
           <Route path="/admin/blog/new" element={<AdminBlogForm />} />
           <Route path="/admin/blog/edit/:id" element={<AdminBlogForm />} />
