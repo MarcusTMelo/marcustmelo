@@ -51,6 +51,12 @@ const Footer = () => {
                 Blog
               </button>
               <button
+                onClick={() => scrollToSection("faq")}
+                className="text-muted-foreground hover:text-[#C8B8E6] transition-all duration-300 text-left hover:translate-x-2"
+              >
+                Perguntas Frequentes
+              </button>
+              <button
                 onClick={() => scrollToSection("contact")}
                 className="text-muted-foreground hover:text-[#C8B8E6] transition-all duration-300 text-left hover:translate-x-2"
               >
