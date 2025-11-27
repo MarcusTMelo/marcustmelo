@@ -6,26 +6,133 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
+
+interface FormData {
+  name: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
+}
+
+interface FormErrors {
+  name?: string;
+  email?: string;
+  phone?: string;
+  message?: string;
+}
 
 const Contact = () => {
   const { elementRef, isVisible } = useIntersectionObserver();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState<FormData>({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  });
+  const [errors, setErrors] = useState<FormErrors>({});
+
+  const validatePhone = (phone: string): boolean => {
+    const phoneRegex = /^[\d\s\+\(\)\-]+$/;
+    const digitsOnly = phone.replace(/\D/g, '');
+    return phoneRegex.test(phone) && digitsOnly.length >= 8;
+  };
+
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Nome é obrigatório";
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Email é obrigatório";
+    } else if (!validateEmail(formData.email)) {
+      newErrors.email = "Email inválido";
+    }
+
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Telefone é obrigatório";
+    } else if (!validatePhone(formData.phone)) {
+      newErrors.phone = "Telefone inválido (mínimo 8 dígitos)";
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = "Mensagem é obrigatória";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleInputChange = (field: keyof FormData, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    if (errors[field as keyof FormErrors]) {
+      setErrors(prev => ({ ...prev, [field]: undefined }));
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+
     setIsSubmitting(true);
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    toast.success("Mensagem recebida! 💜", {
-      description: "Entrarei em contato assim que possível.",
-      duration: 6000,
-    });
-    
-    // Clear form
-    e.currentTarget.reset();
-    setIsSubmitting(false);
+    try {
+      const { data, error } = await supabase.functions.invoke('contact-form', {
+        body: {
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          phone: formData.phone.trim(),
+          subject: formData.subject.trim() || undefined,
+          message: formData.message.trim(),
+        },
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      if (data?.error) {
+        toast.error("Erro ao enviar", {
+          description: data.error,
+          duration: 6000,
+        });
+        return;
+      }
+
+      toast.success("Mensagem enviada com sucesso! 💜", {
+        description: "Vou te responder assim que possível.",
+        duration: 6000,
+      });
+      
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: "",
+      });
+    } catch (error: any) {
+      console.error("Error submitting form:", error);
+      toast.error("Não consegui enviar agora", {
+        description: "Tente novamente ou me chame no WhatsApp.",
+        duration: 6000,
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -102,10 +209,14 @@ const Contact = () => {
                   id="name"
                   name="name"
                   type="text"
-                  required
-                  className="mt-2"
+                  value={formData.name}
+                  onChange={(e) => handleInputChange("name", e.target.value)}
+                  className={`mt-2 ${errors.name ? 'border-destructive' : ''}`}
                   placeholder="Seu nome completo"
                 />
+                {errors.name && (
+                  <p className="text-destructive text-sm mt-1">{errors.name}</p>
+                )}
               </div>
 
               <div>
@@ -116,10 +227,32 @@ const Contact = () => {
                   id="email"
                   name="email"
                   type="email"
-                  required
-                  className="mt-2"
+                  value={formData.email}
+                  onChange={(e) => handleInputChange("email", e.target.value)}
+                  className={`mt-2 ${errors.email ? 'border-destructive' : ''}`}
                   placeholder="seu@email.com"
                 />
+                {errors.email && (
+                  <p className="text-destructive text-sm mt-1">{errors.email}</p>
+                )}
+              </div>
+
+              <div>
+                <Label htmlFor="phone" className="text-foreground">
+                  Telefone *
+                </Label>
+                <Input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  value={formData.phone}
+                  onChange={(e) => handleInputChange("phone", e.target.value)}
+                  className={`mt-2 ${errors.phone ? 'border-destructive' : ''}`}
+                  placeholder="(DDD) número"
+                />
+                {errors.phone && (
+                  <p className="text-destructive text-sm mt-1">{errors.phone}</p>
+                )}
               </div>
 
               <div>
@@ -130,6 +263,8 @@ const Contact = () => {
                   id="subject"
                   name="subject"
                   type="text"
+                  value={formData.subject}
+                  onChange={(e) => handleInputChange("subject", e.target.value)}
                   className="mt-2"
                   placeholder="Sobre o que você quer conversar?"
                 />
@@ -142,11 +277,15 @@ const Contact = () => {
                 <Textarea
                   id="message"
                   name="message"
-                  required
-                  className="mt-2 min-h-[150px]"
+                  value={formData.message}
+                  onChange={(e) => handleInputChange("message", e.target.value)}
+                  className={`mt-2 min-h-[150px] ${errors.message ? 'border-destructive' : ''}`}
                   placeholder="Conte-me sobre seu projeto ou necessidade..."
                 />
-                <p className="text-[#D6D6E0]/70 text-xs mt-2">
+                {errors.message && (
+                  <p className="text-destructive text-sm mt-1">{errors.message}</p>
+                )}
+                <p className="text-muted-foreground/70 text-xs mt-2">
                   Pode escrever do seu jeito. Vou entender o que você precisa.
                 </p>
               </div>
@@ -162,17 +301,17 @@ const Contact = () => {
 
               {/* Micro-texts */}
               <div className="space-y-2 text-center">
-                <p className="text-[#D6D6E0]/70 text-sm">
+                <p className="text-muted-foreground/70 text-sm">
                   Você não precisa saber explicar tudo — eu te guio 🙂
                 </p>
-                <p className="text-[#D6D6E0]/70 text-xs">
+                <p className="text-muted-foreground/70 text-xs">
                   Primeiro contato sem compromisso.
                 </p>
               </div>
 
               {/* Quick contact buttons */}
               <div className="pt-4 border-t border-border/30">
-                <p className="text-[#D6D6E0]/70 text-xs text-center mb-4">
+                <p className="text-muted-foreground/70 text-xs text-center mb-4">
                   Ou se preferir, fale direto comigo:
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3">
