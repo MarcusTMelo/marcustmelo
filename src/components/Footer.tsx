@@ -20,9 +20,6 @@ const Footer = () => {
             <p className="text-sm text-[#D6D6E0]/80">
               Automação e IA com foco em pequenos negócios — simples, humana e eficiente.
             </p>
-            <p className="text-sm text-muted-foreground">
-              10+ anos em automação • MBA em IA
-            </p>
           </div>
 
           {/* Center - Navigation */}
