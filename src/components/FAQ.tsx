@@ -62,26 +62,31 @@ const FAQ = () => {
 
       <div ref={elementRef} className="max-w-3xl mx-auto relative z-10">
         {/* Section Title */}
-        <h2 className={`text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-16 bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] bg-clip-text text-transparent transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          Perguntas Frequentes
-        </h2>
+        <div className="text-center mb-16">
+          <h2 className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] bg-clip-text text-transparent transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            Perguntas Frequentes
+          </h2>
+          <p className={`text-muted-foreground text-base md:text-lg max-w-xl mx-auto transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            Tire suas dúvidas sobre tecnologia simples, IA e automação — explicado de um jeito fácil.
+          </p>
+        </div>
 
         {/* FAQ Accordion */}
         <div
           className={`rounded-2xl bg-card/50 border-2 border-border/50 hover:border-[#4A8CFF]/30 p-6 md:p-8 transition-all duration-500 hover:shadow-[0_0_30px_rgba(74,140,255,0.15)] ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
           style={{ transitionDelay: '300ms' }}
         >
-          <Accordion type="single" collapsible className="w-full space-y-2">
+          <Accordion type="single" collapsible className="w-full">
             {faqItems.map((item, index) => (
               <AccordionItem
                 key={index}
                 value={`item-${index}`}
-                className="border-b border-border/30 last:border-0"
+                className={`border-0 ${index > 0 ? 'border-t border-border/20' : ''} py-1`}
               >
-                <AccordionTrigger className="text-left text-foreground hover:text-[#C7A7FF] transition-colors duration-200 py-4 text-base md:text-lg font-medium">
+                <AccordionTrigger className="text-left text-foreground hover:text-[#C7A7FF] transition-all duration-300 ease-in-out py-5 text-base md:text-lg font-medium [&[data-state=open]>svg]:rotate-180">
                   {item.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-[#D6D6E0] leading-relaxed pb-4 pt-2 whitespace-pre-line">
+                <AccordionContent className="text-[#D6D6E0]/80 leading-relaxed pb-5 pt-1 whitespace-pre-line">
                   {item.answer}
                 </AccordionContent>
               </AccordionItem>
