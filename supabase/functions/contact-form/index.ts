@@ -140,9 +140,7 @@ const handler = async (req: Request): Promise<Response> => {
     // Send emails using Resend
     const resendApiKey = Deno.env.get("RESEND_API_KEY");
     
-    // IMPORTANTE: Após verificar o domínio no Resend, altere para:
-    // const fromEmail = "Marcus T. Melo <contato@marcustmelo.com>";
-    const fromEmail = "Marcus T. Melo <onboarding@resend.dev>";
+    const fromEmail = "Marcus T. Melo <contato@marcustmelo.com>";
     
     if (resendApiKey) {
       // 1. Email de notificação para o admin
