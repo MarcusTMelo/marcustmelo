@@ -82,7 +82,7 @@ const Blog = () => {
             Blog & Artigos
           </h2>
           <p className={`text-lg md:text-xl text-[#D6D6E0]/80 transition-all duration-700 delay-150 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            Insights sobre automação, IA e transformação digital
+            Conteúdos simples sobre IA, automação e tecnologia para pequenos negócios.
           </p>
         </div>
 
