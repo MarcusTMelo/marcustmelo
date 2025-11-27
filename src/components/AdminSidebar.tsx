@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { NavLink } from "@/components/NavLink";
@@ -14,10 +15,11 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 const menuItems = [
   { title: "Dashboard", url: "/admin/dashboard", icon: LayoutDashboard },
-  { title: "Mensagens", url: "/admin/contacts", icon: MessageSquare },
+  { title: "Mensagens", url: "/admin/contacts", icon: MessageSquare, showBadge: true },
   { title: "Blog Posts", url: "/admin/blog", icon: FileText },
   { title: "Categorias", url: "/admin/categories", icon: FolderOpen },
 ];
@@ -26,6 +28,42 @@ export function AdminSidebar() {
   const { state } = useSidebar();
   const navigate = useNavigate();
   const isCollapsed = state === "collapsed";
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  useEffect(() => {
+    fetchUnreadCount();
+
+    // Subscribe to realtime updates
+    const channel = supabase
+      .channel('contact-requests-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'contact_requests'
+        },
+        () => {
+          fetchUnreadCount();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  const fetchUnreadCount = async () => {
+    const { count, error } = await supabase
+      .from("contact_requests")
+      .select("*", { count: "exact", head: true })
+      .eq("is_read", false);
+
+    if (!error && count !== null) {
+      setUnreadCount(count);
+    }
+  };
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -58,11 +96,28 @@ export function AdminSidebar() {
                     <NavLink
                       to={item.url}
                       end
-                      className="hover:bg-[#C7A7FF]/10"
+                      className="hover:bg-[#C7A7FF]/10 relative"
                       activeClassName="bg-[#C7A7FF]/20 text-[#C7A7FF] font-medium"
                     >
-                      <item.icon className="h-4 w-4" />
-                      {!isCollapsed && <span>{item.title}</span>}
+                      <div className="relative">
+                        <item.icon className="h-4 w-4" />
+                        {item.showBadge && unreadCount > 0 && isCollapsed && (
+                          <span className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-destructive" />
+                        )}
+                      </div>
+                      {!isCollapsed && (
+                        <>
+                          <span>{item.title}</span>
+                          {item.showBadge && unreadCount > 0 && (
+                            <Badge 
+                              variant="destructive" 
+                              className="ml-auto h-5 min-w-5 flex items-center justify-center text-xs px-1.5"
+                            >
+                              {unreadCount > 99 ? "99+" : unreadCount}
+                            </Badge>
+                          )}
+                        </>
+                      )}
                     </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

@@ -97,6 +97,7 @@ export type Database = {
           email: string
           id: string
           ip_address: string | null
+          is_read: boolean
           message: string
           name: string
           phone: string
@@ -107,6 +108,7 @@ export type Database = {
           email: string
           id?: string
           ip_address?: string | null
+          is_read?: boolean
           message: string
           name: string
           phone: string
@@ -117,6 +119,7 @@ export type Database = {
           email?: string
           id?: string
           ip_address?: string | null
+          is_read?: boolean
           message?: string
           name?: string
           phone?: string
