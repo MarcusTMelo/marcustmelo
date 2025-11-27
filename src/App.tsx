@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { PublicRoute } from "@/components/PublicRoute";
 import { CookieConsent } from "@/components/CookieConsent";
+import BackToTop from "@/components/BackToTop";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import AdminLogin from "./pages/AdminLogin";
@@ -28,6 +29,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <CookieConsent />
+        <BackToTop />
         <Routes>
           <Route path="/" element={<PublicRoute><Index /></PublicRoute>} />
           <Route path="/blog" element={<PublicRoute><BlogList /></PublicRoute>} />
