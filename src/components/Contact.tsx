@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { Mail, MessageCircle, MapPin, Zap, Send } from "lucide-react";
+import { Mail, MessageCircle, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 import { toast } from "sonner";
 
@@ -20,7 +19,7 @@ const Contact = () => {
     await new Promise(resolve => setTimeout(resolve, 1000));
     
     toast.success("Mensagem recebida! 💜", {
-      description: "Vou te responder ainda hoje.",
+      description: "Entrarei em contato assim que possível.",
       duration: 6000,
     });
     
@@ -59,7 +58,7 @@ const Contact = () => {
               </div>
             </div>
 
-            <div className="flex items-start gap-4">
+            <div className="flex items-start gap-4 hover:translate-x-2 transition-transform duration-300">
               <div className="p-3 rounded-lg bg-primary/10 text-primary">
                 <MessageCircle className="w-6 h-6" />
               </div>
@@ -76,7 +75,7 @@ const Contact = () => {
               </div>
             </div>
 
-            <div className="flex items-start gap-4">
+            <div className="flex items-start gap-4 hover:translate-x-2 transition-transform duration-300">
               <div className="p-3 rounded-lg bg-primary/10 text-primary">
                 <MapPin className="w-6 h-6" />
               </div>
@@ -86,31 +85,10 @@ const Contact = () => {
               </div>
             </div>
 
-            <div className="flex items-start gap-4">
-              <div className="p-3 rounded-lg bg-accent/10 text-accent">
-                <Zap className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-foreground mb-1">
-                  Primeira Consulta
-                </h3>
-                <p className="text-muted-foreground">
-                  30 minutos gratuitos para entender seu projeto
-                </p>
-              </div>
-            </div>
-
-            {/* Badges Row */}
-            <div className="flex flex-wrap gap-3 pt-4">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#C7A7FF]/30 bg-[#0D0B12] text-sm text-[#D6D6E0]">
-                <span>⚡</span>
-                <span>Resposta em 24h</span>
-              </div>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#C7A7FF]/30 bg-[#0D0B12] text-sm text-[#D6D6E0]">
-                <span>✅</span>
-                <span>Primeira consulta gratuita</span>
-              </div>
-            </div>
+            {/* Micro-text */}
+            <p className="text-sm text-muted-foreground mt-4">
+              Use o canal que preferir — estou por aqui.
+            </p>
           </div>
 
           {/* Right side - Contact Form */}
@@ -226,14 +204,10 @@ const Contact = () => {
                 </div>
               </div>
 
-              <div className="flex justify-center pt-2">
-                <Badge 
-                  variant="outline" 
-                  className="text-primary border-primary/30 bg-primary/5"
-                >
-                  ⚡ Resposta em até 24 horas
-                </Badge>
-              </div>
+              {/* Response note */}
+              <p className="text-muted-foreground text-sm text-center pt-2">
+                Responderei assim que possível 🙂
+              </p>
             </form>
           </div>
         </div>
