@@ -31,7 +31,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
-import { Trash2, Eye, Mail, Phone, MessageCircle, Loader2 } from "lucide-react";
+import { Trash2, Eye, Mail, Phone, MessageCircle, Loader2, Circle } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
@@ -43,6 +43,7 @@ interface ContactRequest {
   subject: string | null;
   message: string;
   created_at: string;
+  is_read: boolean;
 }
 
 const AdminContacts = () => {
@@ -97,6 +98,24 @@ const AdminContacts = () => {
     setIsLoading(false);
   };
 
+  const handleViewContact = async (contact: ContactRequest) => {
+    setSelectedContact(contact);
+    
+    // Mark as read if not already
+    if (!contact.is_read) {
+      const { error } = await supabase
+        .from("contact_requests")
+        .update({ is_read: true })
+        .eq("id", contact.id);
+
+      if (!error) {
+        setContacts(contacts.map(c => 
+          c.id === contact.id ? { ...c, is_read: true } : c
+        ));
+      }
+    }
+  };
+
   const handleDelete = async () => {
     if (!contactToDelete) return;
 
@@ -118,9 +137,28 @@ const AdminContacts = () => {
     setContactToDelete(null);
   };
 
+  const handleMarkAllAsRead = async () => {
+    const unreadIds = contacts.filter(c => !c.is_read).map(c => c.id);
+    if (unreadIds.length === 0) return;
+
+    const { error } = await supabase
+      .from("contact_requests")
+      .update({ is_read: true })
+      .in("id", unreadIds);
+
+    if (error) {
+      toast.error("Erro ao marcar como lidas");
+    } else {
+      setContacts(contacts.map(c => ({ ...c, is_read: true })));
+      toast.success("Todas as mensagens marcadas como lidas");
+    }
+  };
+
   const formatDate = (dateString: string) => {
     return format(new Date(dateString), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR });
   };
+
+  const unreadCount = contacts.filter(c => !c.is_read).length;
 
   if (!isAdmin) {
     return (
@@ -141,8 +179,18 @@ const AdminContacts = () => {
                 <h1 className="text-3xl font-bold text-foreground">Mensagens de Contato</h1>
                 <p className="text-muted-foreground mt-1">
                   {contacts.length} {contacts.length === 1 ? 'mensagem recebida' : 'mensagens recebidas'}
+                  {unreadCount > 0 && (
+                    <span className="text-primary ml-2">
+                      ({unreadCount} {unreadCount === 1 ? 'não lida' : 'não lidas'})
+                    </span>
+                  )}
                 </p>
               </div>
+              {unreadCount > 0 && (
+                <Button variant="outline" onClick={handleMarkAllAsRead}>
+                  Marcar todas como lidas
+                </Button>
+              )}
             </div>
 
             <Card className="border-border/50 bg-card/50">
@@ -163,6 +211,7 @@ const AdminContacts = () => {
                   <Table>
                     <TableHeader>
                       <TableRow>
+                        <TableHead className="w-8"></TableHead>
                         <TableHead>Nome</TableHead>
                         <TableHead>Email</TableHead>
                         <TableHead>Telefone</TableHead>
@@ -173,8 +222,18 @@ const AdminContacts = () => {
                     </TableHeader>
                     <TableBody>
                       {contacts.map((contact) => (
-                        <TableRow key={contact.id}>
-                          <TableCell className="font-medium">{contact.name}</TableCell>
+                        <TableRow 
+                          key={contact.id}
+                          className={!contact.is_read ? "bg-primary/5" : ""}
+                        >
+                          <TableCell>
+                            {!contact.is_read && (
+                              <Circle className="h-2 w-2 fill-primary text-primary" />
+                            )}
+                          </TableCell>
+                          <TableCell className={`font-medium ${!contact.is_read ? "text-foreground" : ""}`}>
+                            {contact.name}
+                          </TableCell>
                           <TableCell>
                             <a 
                               href={`mailto:${contact.email}`} 
@@ -204,7 +263,7 @@ const AdminContacts = () => {
                               <Button
                                 variant="ghost"
                                 size="icon"
-                                onClick={() => setSelectedContact(contact)}
+                                onClick={() => handleViewContact(contact)}
                                 title="Ver mensagem"
                               >
                                 <Eye className="h-4 w-4" />
