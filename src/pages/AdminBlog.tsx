@@ -31,7 +31,7 @@ interface BlogPost {
   id: string;
   title: string;
   slug: string;
-  category: string | null;
+  blog_categories: { name: string } | null;
   status: string;
   created_at: string;
   views_count: number;
@@ -71,7 +71,7 @@ const AdminBlog = () => {
     try {
       const { data, error } = await supabase
         .from("blog_posts")
-        .select("id, title, slug, category, status, created_at, views_count")
+        .select("id, title, slug, status, created_at, views_count, blog_categories(name)")
         .order("created_at", { ascending: false });
 
       if (error) throw error;
@@ -182,7 +182,7 @@ const AdminBlog = () => {
                           {post.title}
                         </TableCell>
                         <TableCell>
-                          {post.category || (
+                          {post.blog_categories?.name || (
                             <span className="text-muted-foreground">—</span>
                           )}
                         </TableCell>
