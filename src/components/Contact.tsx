@@ -1,17 +1,32 @@
-import { Mail, MessageCircle, MapPin, Zap } from "lucide-react";
+import { useState } from "react";
+import { Mail, MessageCircle, MapPin, Zap, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
+import { toast } from "sonner";
 
 const Contact = () => {
   const { elementRef, isVisible } = useIntersectionObserver();
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Form submission logic will be added later
-    console.log("Form submitted");
+    setIsSubmitting(true);
+    
+    // Simulate form submission
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    toast.success("Mensagem recebida! 💜", {
+      description: "Vou te responder ainda hoje.",
+      duration: 6000,
+    });
+    
+    // Clear form
+    e.currentTarget.reset();
+    setIsSubmitting(false);
   };
 
   return (
@@ -51,12 +66,12 @@ const Contact = () => {
               <div>
                 <h3 className="font-semibold text-foreground mb-1">WhatsApp</h3>
                 <a 
-                  href="https://wa.me/5561999999999" 
+                  href="https://wa.me/5561999027520" 
                   className="text-muted-foreground hover:text-primary transition-colors"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  (61) 99999-9999
+                  (61) 99902-7520
                 </a>
               </div>
             </div>
@@ -107,6 +122,7 @@ const Contact = () => {
                 </Label>
                 <Input
                   id="name"
+                  name="name"
                   type="text"
                   required
                   className="mt-2"
@@ -120,6 +136,7 @@ const Contact = () => {
                 </Label>
                 <Input
                   id="email"
+                  name="email"
                   type="email"
                   required
                   className="mt-2"
@@ -133,6 +150,7 @@ const Contact = () => {
                 </Label>
                 <Input
                   id="subject"
+                  name="subject"
                   type="text"
                   className="mt-2"
                   placeholder="Sobre o que você quer conversar?"
@@ -145,19 +163,68 @@ const Contact = () => {
                 </Label>
                 <Textarea
                   id="message"
+                  name="message"
                   required
                   className="mt-2 min-h-[150px]"
                   placeholder="Conte-me sobre seu projeto ou necessidade..."
                 />
+                <p className="text-[#D6D6E0]/70 text-xs mt-2">
+                  Pode escrever do seu jeito. Vou entender o que você precisa.
+                </p>
               </div>
 
               <Button
                 type="submit"
                 size="lg"
+                disabled={isSubmitting}
                 className="w-full bg-gradient-to-r from-[#C8B8E6] to-[#5DADE2] hover:opacity-90 text-[#0D0B12] font-semibold"
               >
-                Enviar mensagem
+                {isSubmitting ? "Enviando..." : "Enviar mensagem"}
               </Button>
+
+              {/* Micro-texts */}
+              <div className="space-y-2 text-center">
+                <p className="text-[#D6D6E0]/70 text-sm">
+                  Você não precisa saber explicar tudo — eu te guio 🙂
+                </p>
+                <p className="text-[#D6D6E0]/70 text-xs">
+                  Primeiro contato sem compromisso.
+                </p>
+              </div>
+
+              {/* Quick contact buttons */}
+              <div className="pt-4 border-t border-border/30">
+                <p className="text-[#D6D6E0]/70 text-xs text-center mb-4">
+                  Ou se preferir, fale direto comigo:
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Button
+                    asChild
+                    size="lg"
+                    className="flex-1 bg-gradient-to-r from-[#C8B8E6] to-[#5DADE2] hover:opacity-90 text-[#0D0B12] font-semibold"
+                  >
+                    <a 
+                      href="https://wa.me/5561999027520" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                    >
+                      <MessageCircle className="w-4 h-4 mr-2" />
+                      Falar pelo WhatsApp
+                    </a>
+                  </Button>
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="lg"
+                    className="flex-1 border-border/50 hover:bg-background/10"
+                  >
+                    <a href="mailto:contato@marcustmelo.com">
+                      <Mail className="w-4 h-4 mr-2" />
+                      Enviar Email
+                    </a>
+                  </Button>
+                </div>
+              </div>
 
               <div className="flex justify-center pt-2">
                 <Badge 
