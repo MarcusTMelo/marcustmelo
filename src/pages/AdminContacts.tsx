@@ -1,10 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { AdminSidebar } from "@/components/AdminSidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   Table,
   TableBody,
@@ -31,9 +38,10 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
-import { Trash2, Eye, Mail, Phone, MessageCircle, Loader2, Circle } from "lucide-react";
-import { format } from "date-fns";
+import { Trash2, Eye, Mail, Phone, MessageCircle, Loader2, Circle, Search, CalendarIcon, X } from "lucide-react";
+import { format, isWithinInterval, startOfDay, endOfDay } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { cn } from "@/lib/utils";
 
 interface ContactRequest {
   id: string;
@@ -54,6 +62,11 @@ const AdminContacts = () => {
   const [selectedContact, setSelectedContact] = useState<ContactRequest | null>(null);
   const [contactToDelete, setContactToDelete] = useState<ContactRequest | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  
+  // Filter states
+  const [searchQuery, setSearchQuery] = useState("");
+  const [startDate, setStartDate] = useState<Date | undefined>(undefined);
+  const [endDate, setEndDate] = useState<Date | undefined>(undefined);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -98,10 +111,36 @@ const AdminContacts = () => {
     setIsLoading(false);
   };
 
+  const filteredContacts = useMemo(() => {
+    return contacts.filter(contact => {
+      // Search filter (name or email)
+      const searchLower = searchQuery.toLowerCase().trim();
+      const matchesSearch = searchLower === "" || 
+        contact.name.toLowerCase().includes(searchLower) ||
+        contact.email.toLowerCase().includes(searchLower);
+
+      // Date filter
+      const contactDate = new Date(contact.created_at);
+      let matchesDate = true;
+      
+      if (startDate && endDate) {
+        matchesDate = isWithinInterval(contactDate, {
+          start: startOfDay(startDate),
+          end: endOfDay(endDate)
+        });
+      } else if (startDate) {
+        matchesDate = contactDate >= startOfDay(startDate);
+      } else if (endDate) {
+        matchesDate = contactDate <= endOfDay(endDate);
+      }
+
+      return matchesSearch && matchesDate;
+    });
+  }, [contacts, searchQuery, startDate, endDate]);
+
   const handleViewContact = async (contact: ContactRequest) => {
     setSelectedContact(contact);
     
-    // Mark as read if not already
     if (!contact.is_read) {
       const { error } = await supabase
         .from("contact_requests")
@@ -154,6 +193,14 @@ const AdminContacts = () => {
     }
   };
 
+  const clearFilters = () => {
+    setSearchQuery("");
+    setStartDate(undefined);
+    setEndDate(undefined);
+  };
+
+  const hasActiveFilters = searchQuery || startDate || endDate;
+
   const formatDate = (dateString: string) => {
     return format(new Date(dateString), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR });
   };
@@ -193,6 +240,94 @@ const AdminContacts = () => {
               )}
             </div>
 
+            {/* Filters */}
+            <Card className="border-border/50 bg-card/50 mb-6">
+              <CardContent className="pt-6">
+                <div className="flex flex-col sm:flex-row gap-4">
+                  {/* Search */}
+                  <div className="relative flex-1">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      placeholder="Buscar por nome ou email..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="pl-10"
+                    />
+                  </div>
+
+                  {/* Date Range */}
+                  <div className="flex gap-2">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-[140px] justify-start text-left font-normal",
+                            !startDate && "text-muted-foreground"
+                          )}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {startDate ? format(startDate, "dd/MM/yyyy") : "Data início"}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={startDate}
+                          onSelect={setStartDate}
+                          initialFocus
+                          locale={ptBR}
+                          className="pointer-events-auto"
+                        />
+                      </PopoverContent>
+                    </Popover>
+
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-[140px] justify-start text-left font-normal",
+                            !endDate && "text-muted-foreground"
+                          )}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {endDate ? format(endDate, "dd/MM/yyyy") : "Data fim"}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={endDate}
+                          onSelect={setEndDate}
+                          initialFocus
+                          locale={ptBR}
+                          className="pointer-events-auto"
+                        />
+                      </PopoverContent>
+                    </Popover>
+
+                    {hasActiveFilters && (
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={clearFilters}
+                        title="Limpar filtros"
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    )}
+                  </div>
+                </div>
+
+                {hasActiveFilters && (
+                  <p className="text-sm text-muted-foreground mt-3">
+                    Mostrando {filteredContacts.length} de {contacts.length} mensagens
+                  </p>
+                )}
+              </CardContent>
+            </Card>
+
             <Card className="border-border/50 bg-card/50">
               <CardHeader>
                 <CardTitle className="text-lg">Todas as Mensagens</CardTitle>
@@ -202,10 +337,10 @@ const AdminContacts = () => {
                   <div className="flex items-center justify-center py-12">
                     <Loader2 className="h-8 w-8 animate-spin text-primary" />
                   </div>
-                ) : contacts.length === 0 ? (
+                ) : filteredContacts.length === 0 ? (
                   <div className="text-center py-12 text-muted-foreground">
                     <MessageCircle className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                    <p>Nenhuma mensagem recebida ainda.</p>
+                    <p>{hasActiveFilters ? "Nenhuma mensagem encontrada com os filtros aplicados." : "Nenhuma mensagem recebida ainda."}</p>
                   </div>
                 ) : (
                   <Table>
@@ -221,7 +356,7 @@ const AdminContacts = () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {contacts.map((contact) => (
+                      {filteredContacts.map((contact) => (
                         <TableRow 
                           key={contact.id}
                           className={!contact.is_read ? "bg-primary/5" : ""}
