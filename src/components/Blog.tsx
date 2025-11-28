@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
@@ -13,6 +13,7 @@ interface BlogPost {
   slug: string;
   category_id: string | null;
   excerpt: string | null;
+  content: string | null;
   featured_image: string | null;
   published_at: string | null;
   blog_categories: { name: string } | null;
@@ -32,7 +33,7 @@ const Blog = () => {
     try {
       const { data, error } = await supabase
         .from("blog_posts")
-        .select("id, title, slug, category_id, excerpt, featured_image, published_at, blog_categories(name)")
+        .select("id, title, slug, category_id, excerpt, content, featured_image, published_at, blog_categories(name)")
         .eq("status", "published")
         .order("published_at", { ascending: false })
         .limit(6);
@@ -66,6 +67,14 @@ const Blog = () => {
       "Tutoriais": "from-[#C7A7FF] to-[#FF7ACB]",
     };
     return gradients[categoryName || ""] || "from-[#C7A7FF] to-[#6EC8FF]";
+  };
+
+  const calculateReadingTime = (content: string | null): number => {
+    if (!content) return 1;
+    const plainText = content.replace(/<[^>]*>/g, "");
+    const wordCount = plainText.split(/\s+/).filter(Boolean).length;
+    const readingTime = Math.ceil(wordCount / 200);
+    return Math.max(1, readingTime);
   };
 
   return (
@@ -159,11 +168,15 @@ const Blog = () => {
                         {post.excerpt || ""}
                       </p>
 
-                      <div className="flex items-center justify-between text-xs text-[#D6D6E0]/50">
+                      <div className="flex items-center gap-3 text-xs text-[#D6D6E0]/50">
                         <span>
                           {post.published_at
                             ? format(new Date(post.published_at), "dd MMM yyyy")
                             : ""}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Clock className="w-3 h-3" />
+                          {calculateReadingTime(post.content)} min
                         </span>
                       </div>
                     </div>
