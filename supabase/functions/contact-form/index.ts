@@ -12,6 +12,7 @@ interface ContactFormRequest {
   phone: string;
   subject?: string;
   message: string;
+  recaptchaToken: string;
 }
 
 // Validation helpers
@@ -48,7 +49,44 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { name, email, phone, subject, message }: ContactFormRequest = await req.json();
+    const { name, email, phone, subject, message, recaptchaToken }: ContactFormRequest = await req.json();
+
+    // Validate reCAPTCHA token
+    if (!recaptchaToken) {
+      console.error('[Contact Form] Missing reCAPTCHA token');
+      return new Response(
+        JSON.stringify({ error: 'Token de verificação ausente' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Verify reCAPTCHA token with Google API
+    const recaptchaSecret = Deno.env.get('RECAPTCHA_SECRET_KEY');
+    if (!recaptchaSecret) {
+      console.error('[Contact Form] RECAPTCHA_SECRET_KEY not configured');
+      return new Response(
+        JSON.stringify({ error: 'Configuração de segurança ausente' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const recaptchaVerifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecret}&response=${recaptchaToken}`;
+    const recaptchaResponse = await fetch(recaptchaVerifyUrl, { method: 'POST' });
+    const recaptchaResult = await recaptchaResponse.json();
+
+    console.log('[Contact Form] reCAPTCHA verification result:', { 
+      success: recaptchaResult.success, 
+      score: recaptchaResult.score,
+      action: recaptchaResult.action 
+    });
+
+    if (!recaptchaResult.success || recaptchaResult.score < 0.5) {
+      console.error('[Contact Form] reCAPTCHA verification failed:', recaptchaResult);
+      return new Response(
+        JSON.stringify({ error: 'Falha na verificação de segurança. Por favor, tente novamente.' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
 
     // Validate required fields
     if (!name || !email || !phone || !message) {
