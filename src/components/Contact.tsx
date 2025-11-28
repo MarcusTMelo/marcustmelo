@@ -7,6 +7,11 @@ import { Label } from "@/components/ui/label";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { GoogleReCaptchaProvider, useGoogleReCaptcha } from 'react-google-recaptcha-v3';
+
+// IMPORTANTE: Substitua esta chave pela sua Site Key do Google reCAPTCHA v3
+// Obtenha em: https://www.google.com/recaptcha/admin
+const RECAPTCHA_SITE_KEY = "YOUR_RECAPTCHA_SITE_KEY_HERE";
 
 interface FormData {
   name: string;
@@ -23,7 +28,8 @@ interface FormErrors {
   message?: string;
 }
 
-const Contact = () => {
+const ContactForm = () => {
+  const { executeRecaptcha } = useGoogleReCaptcha();
   const { elementRef, isVisible } = useIntersectionObserver();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<FormData>({
@@ -87,9 +93,17 @@ const Contact = () => {
       return;
     }
 
+    if (!executeRecaptcha) {
+      toast.error('reCAPTCHA não está disponível. Tente novamente em alguns instantes.');
+      return;
+    }
+
     setIsSubmitting(true);
     
     try {
+      // Gerar token do reCAPTCHA v3
+      const recaptchaToken = await executeRecaptcha('contact_form');
+
       const { data, error } = await supabase.functions.invoke('contact-form', {
         body: {
           name: formData.name.trim(),
@@ -97,6 +111,7 @@ const Contact = () => {
           phone: formData.phone.trim(),
           subject: formData.subject.trim() || undefined,
           message: formData.message.trim(),
+          recaptchaToken,
         },
       });
 
@@ -347,6 +362,14 @@ const Contact = () => {
         </div>
       </div>
     </section>
+  );
+};
+
+const Contact = () => {
+  return (
+    <GoogleReCaptchaProvider reCaptchaKey={RECAPTCHA_SITE_KEY}>
+      <ContactForm />
+    </GoogleReCaptchaProvider>
   );
 };
 
