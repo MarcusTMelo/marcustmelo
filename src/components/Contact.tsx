@@ -7,11 +7,11 @@ import { Label } from "@/components/ui/label";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { GoogleReCaptchaProvider, useGoogleReCaptcha } from 'react-google-recaptcha-v3';
+import { GoogleReCaptchaProvider, useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 // IMPORTANTE: Substitua esta chave pela sua Site Key do Google reCAPTCHA v3
 // Obtenha em: https://www.google.com/recaptcha/admin
-const RECAPTCHA_SITE_KEY = "YOUR_RECAPTCHA_SITE_KEY_HERE";
+const RECAPTCHA_SITE_KEY = "6Le2URssAAAAACUOi8CwNAKPp7SSFFjAQgbExJ61";
 
 interface FormData {
   name: string;
@@ -43,7 +43,7 @@ const ContactForm = () => {
 
   const validatePhone = (phone: string): boolean => {
     const phoneRegex = /^[\d\s\+\(\)\-]+$/;
-    const digitsOnly = phone.replace(/\D/g, '');
+    const digitsOnly = phone.replace(/\D/g, "");
     return phoneRegex.test(phone) && digitsOnly.length >= 8;
   };
 
@@ -80,31 +80,31 @@ const ContactForm = () => {
   };
 
   const handleInputChange = (field: keyof FormData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field as keyof FormErrors]) {
-      setErrors(prev => ({ ...prev, [field]: undefined }));
+      setErrors((prev) => ({ ...prev, [field]: undefined }));
     }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
 
     if (!executeRecaptcha) {
-      toast.error('reCAPTCHA não está disponível. Tente novamente em alguns instantes.');
+      toast.error("reCAPTCHA não está disponível. Tente novamente em alguns instantes.");
       return;
     }
 
     setIsSubmitting(true);
-    
+
     try {
       // Gerar token do reCAPTCHA v3
-      const recaptchaToken = await executeRecaptcha('contact_form');
+      const recaptchaToken = await executeRecaptcha("contact_form");
 
-      const { data, error } = await supabase.functions.invoke('contact-form', {
+      const { data, error } = await supabase.functions.invoke("contact-form", {
         body: {
           name: formData.name.trim(),
           email: formData.email.trim(),
@@ -131,7 +131,7 @@ const ContactForm = () => {
         description: "Vou te responder assim que possível.",
         duration: 6000,
       });
-      
+
       setFormData({
         name: "",
         email: "",
@@ -154,15 +154,21 @@ const ContactForm = () => {
     <section id="contact" className="py-24 px-4 bg-[#0B0B0D]">
       <div ref={elementRef} className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className={`text-4xl md:text-5xl font-bold text-foreground mb-4 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <h2
+            className={`text-4xl md:text-5xl font-bold text-foreground mb-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+          >
             Vamos Conversar
           </h2>
-          <p className={`text-lg text-muted-foreground max-w-2xl mx-auto transition-all duration-700 delay-150 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <p
+            className={`text-lg text-muted-foreground max-w-2xl mx-auto transition-all duration-700 delay-150 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+          >
             Tem um projeto em mente? Vamos transformar sua ideia em realidade.
           </p>
         </div>
 
-        <div className={`grid md:grid-cols-2 gap-12 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+        <div
+          className={`grid md:grid-cols-2 gap-12 transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
+        >
           {/* Left side - Contact Info */}
           <div className="space-y-8">
             <div className="flex items-start gap-4 hover:translate-x-2 transition-transform duration-300">
@@ -171,8 +177,8 @@ const ContactForm = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-foreground mb-1">Email</h3>
-                <a 
-                  href="mailto:contato@marcustmelo.com" 
+                <a
+                  href="mailto:contato@marcustmelo.com"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   contato@marcustmelo.com
@@ -186,8 +192,8 @@ const ContactForm = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-foreground mb-1">WhatsApp</h3>
-                <a 
-                  href="https://wa.me/5561999027520" 
+                <a
+                  href="https://wa.me/5561999027520"
                   className="text-muted-foreground hover:text-primary transition-colors"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -208,9 +214,7 @@ const ContactForm = () => {
             </div>
 
             {/* Micro-text */}
-            <p className="text-sm text-muted-foreground mt-4">
-              Use o canal que preferir — estou por aqui.
-            </p>
+            <p className="text-sm text-muted-foreground mt-4">Use o canal que preferir — estou por aqui.</p>
           </div>
 
           {/* Right side - Contact Form */}
@@ -226,12 +230,10 @@ const ContactForm = () => {
                   type="text"
                   value={formData.name}
                   onChange={(e) => handleInputChange("name", e.target.value)}
-                  className={`mt-2 ${errors.name ? 'border-destructive' : ''}`}
+                  className={`mt-2 ${errors.name ? "border-destructive" : ""}`}
                   placeholder="Seu nome completo"
                 />
-                {errors.name && (
-                  <p className="text-destructive text-sm mt-1">{errors.name}</p>
-                )}
+                {errors.name && <p className="text-destructive text-sm mt-1">{errors.name}</p>}
               </div>
 
               <div>
@@ -244,12 +246,10 @@ const ContactForm = () => {
                   type="email"
                   value={formData.email}
                   onChange={(e) => handleInputChange("email", e.target.value)}
-                  className={`mt-2 ${errors.email ? 'border-destructive' : ''}`}
+                  className={`mt-2 ${errors.email ? "border-destructive" : ""}`}
                   placeholder="seu@email.com"
                 />
-                {errors.email && (
-                  <p className="text-destructive text-sm mt-1">{errors.email}</p>
-                )}
+                {errors.email && <p className="text-destructive text-sm mt-1">{errors.email}</p>}
               </div>
 
               <div>
@@ -262,12 +262,10 @@ const ContactForm = () => {
                   type="tel"
                   value={formData.phone}
                   onChange={(e) => handleInputChange("phone", e.target.value)}
-                  className={`mt-2 ${errors.phone ? 'border-destructive' : ''}`}
+                  className={`mt-2 ${errors.phone ? "border-destructive" : ""}`}
                   placeholder="(DDD) número"
                 />
-                {errors.phone && (
-                  <p className="text-destructive text-sm mt-1">{errors.phone}</p>
-                )}
+                {errors.phone && <p className="text-destructive text-sm mt-1">{errors.phone}</p>}
               </div>
 
               <div>
@@ -294,12 +292,10 @@ const ContactForm = () => {
                   name="message"
                   value={formData.message}
                   onChange={(e) => handleInputChange("message", e.target.value)}
-                  className={`mt-2 min-h-[150px] ${errors.message ? 'border-destructive' : ''}`}
+                  className={`mt-2 min-h-[150px] ${errors.message ? "border-destructive" : ""}`}
                   placeholder="Conte-me sobre seu projeto ou necessidade..."
                 />
-                {errors.message && (
-                  <p className="text-destructive text-sm mt-1">{errors.message}</p>
-                )}
+                {errors.message && <p className="text-destructive text-sm mt-1">{errors.message}</p>}
                 <p className="text-muted-foreground/70 text-xs mt-2">
                   Pode escrever do seu jeito. Vou entender o que você precisa.
                 </p>
@@ -316,30 +312,20 @@ const ContactForm = () => {
 
               {/* Micro-texts */}
               <div className="space-y-2 text-center">
-                <p className="text-muted-foreground/70 text-sm">
-                  Você não precisa saber explicar tudo — eu te guio 🙂
-                </p>
-                <p className="text-muted-foreground/70 text-xs">
-                  Primeiro contato sem compromisso.
-                </p>
+                <p className="text-muted-foreground/70 text-sm">Você não precisa saber explicar tudo — eu te guio 🙂</p>
+                <p className="text-muted-foreground/70 text-xs">Primeiro contato sem compromisso.</p>
               </div>
 
               {/* Quick contact buttons */}
               <div className="pt-4 border-t border-border/30">
-                <p className="text-muted-foreground/70 text-xs text-center mb-4">
-                  Ou se preferir, fale direto comigo:
-                </p>
+                <p className="text-muted-foreground/70 text-xs text-center mb-4">Ou se preferir, fale direto comigo:</p>
                 <div className="flex flex-col sm:flex-row gap-3">
                   <Button
                     asChild
                     size="lg"
                     className="flex-1 bg-gradient-to-r from-[#C8B8E6] to-[#5DADE2] hover:opacity-90 text-[#0D0B12] font-semibold"
                   >
-                    <a 
-                      href="https://wa.me/5561999027520" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                    >
+                    <a href="https://wa.me/5561999027520" target="_blank" rel="noopener noreferrer">
                       <MessageCircle className="w-4 h-4 mr-2" />
                       Falar pelo WhatsApp
                     </a>
