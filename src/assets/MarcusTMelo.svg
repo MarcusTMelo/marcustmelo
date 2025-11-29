@@ -3,6 +3,7 @@
     <!-- Fonte -->
     <style type="text/css">
       @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&amp;display=swap');
+
       .mtm-text {
         font-family: 'Montserrat', sans-serif;
         font-weight: 900;
@@ -10,59 +11,65 @@
         letter-spacing: 2px;
         text-anchor: middle;
       }
+
+      /* ===== DARK MODE (default) ===== */
+      .logo-color {
+        stroke: #CBA7FF;
+        fill: #CBA7FF;
+      }
+
+      /* ===== LIGHT MODE ===== */
+      @media (prefers-color-scheme: light) {
+        .logo-color {
+          stroke: #7B4FC9;
+          fill: #7B4FC9;
+        }
+      }
     </style>
 
-    <!-- Glow pulsando -->
-    <filter id="neonPulse" x="-40%" y="-80%" width="180%" height="260%">
-      <!-- Blur do glow -->
+    <!-- Glow animado -->
+    <filter id="neonPulse" x="-50%" y="-80%" width="200%" height="300%">
+      <!-- Blur animado -->
       <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur">
         <animate attributeName="stdDeviation"
-                 values="2;4;2"
-                 dur="1.6s"
+                 values="2;5;2"
+                 dur="1.8s"
                  repeatCount="indefinite" />
       </feGaussianBlur>
 
       <!-- Cor do brilho -->
       <feColorMatrix in="blur" type="matrix" result="glow"
         values="0 0 0 0 0.80
-                0 0 0 0 0.65
+                0 0 0 0 0.60
                 0 0 0 0 1.00
-                0 0 0 0.80 0" />
+                0 0 0 0.75 0" />
 
-      <!-- Mistura glow + original -->
       <feMerge>
         <feMergeNode in="glow" />
         <feMergeNode in="SourceGraphic" />
       </feMerge>
     </filter>
-
-    <!-- Preenchimento do texto -->
-    <linearGradient id="textFill" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#F3E4FF" />
-      <stop offset="100%" stop-color="#CBA7FF" />
-    </linearGradient>
   </defs>
 
-  <!-- Texto principal -->
+  <!-- TEXTO -->
   <text
     x="500"
     y="95"
-    class="mtm-text"
-    fill="url(#textFill)"
+    class="mtm-text logo-color"
     filter="url(#neonPulse)"
   >
     MARCUS T. MELO
   </text>
 
-  <!-- Linha inferior -->
+  <!-- LINHA -->
   <line
     x1="75"
-    y1="140"
+    y1="145"
     x2="925"
-    y2="140"
-    stroke="#CBA7FF"
-    stroke-width="8"
+    y2="145"
+    stroke-width="10"
     stroke-linecap="round"
+    class="logo-color"
     filter="url(#neonPulse)"
   />
 </svg>
