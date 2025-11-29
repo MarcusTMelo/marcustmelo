@@ -1,8 +1,18 @@
 import { Instagram, Linkedin, MessageCircle } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate, BrowserRouter } from "react-router-dom";
 
-const Footer = () => {
+const FooterContent = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const scrollToSection = (sectionId: string) => {
+    // Se não estiver na home, navega para a home com a âncora
+    if (location.pathname !== "/") {
+      navigate(`/#${sectionId}`);
+      return;
+    }
+
+    // Se já estiver na home, faz o scroll suave
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
@@ -117,15 +127,22 @@ const Footer = () => {
 
         {/* Bottom - Micro CTA + Copyright */}
         <div className="pt-8 border-t border-border/50 text-center space-y-3">
-          <p className="text-xs text-[#D6D6E0]/60">
-            Tem uma ideia? Vamos transformar em realidade.
-          </p>
+          <p className="text-xs text-[#D6D6E0]/60">Tem uma ideia? Vamos transformar em realidade.</p>
           <p className="text-sm text-muted-foreground">
             © 2025 Marcus T. Melo • Construído com atenção, IA e design vivo.
           </p>
         </div>
       </div>
     </footer>
+  );
+};
+
+// Wrapper para evitar o erro "useNavigate only in Router context" durante o preview
+const Footer = () => {
+  return (
+    <BrowserRouter>
+      <FooterContent />
+    </BrowserRouter>
   );
 };
 
