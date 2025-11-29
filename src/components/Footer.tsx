@@ -1,5 +1,6 @@
 import { Instagram, Linkedin, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
+import logo from "@/assets/MarcusTMelo.svg";
 
 const Footer = () => {
   const scrollToSection = (sectionId: string) => {
@@ -15,7 +16,17 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-y-10 md:gap-8 mb-8">
           {/* Left - About */}
           <div className="space-y-3">
-            <h3 className="text-xl font-bold text-foreground">Marcus Túlio Melo</h3>
+            <a
+              href="/"
+              className="inline-block hover:opacity-80 transition-opacity mb-2"
+              aria-label="Marcus T. Melo - Automação & IA"
+            >
+              <img
+                src={logo}
+                alt="Marcus T. Melo - Automação & IA"
+                className="h-10 w-auto"
+              />
+            </a>
             <p className="text-lg text-[#C8B8E6]">Automação & IA</p>
             <p className="text-sm text-[#D6D6E0]/80">
               Automação e IA com foco em pequenos negócios — simples, humana e eficiente.
