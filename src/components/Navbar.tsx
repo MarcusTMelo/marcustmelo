@@ -148,7 +148,7 @@ const Navbar = () => {
             isOpen ? "max-h-[400px] opacity-100 mt-4" : "max-h-0 opacity-0"
           }`}
         >
-          <div className="flex flex-col gap-2 py-4 border-t border-[#C7A7FF]/10">
+          <div className="flex flex-col gap-2 py-4 border-t border-[#C7A7FF]/10 bg-[#0B0B0D]/95 backdrop-blur-md rounded-lg">
             {navItems.map((item) => (
               <button
                 key={item.label}
