@@ -109,7 +109,7 @@ const Navbar = () => {
             <img
               src={logo}
               alt="Marcus T. Melo - Automação & IA"
-              className="h-12 w-auto"
+              className="h-8 w-auto"
             />
           </a>
 
