@@ -41,11 +41,11 @@ const About = () => {
               <div className="absolute -inset-6 bg-gradient-to-br from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] rounded-3xl opacity-20 blur-xl group-hover:opacity-30 transition-opacity duration-500" />
               
               {/* Profile Image */}
-              <div className="relative w-[480px] h-[480px] rounded-2xl border-2 border-[#4A8CFF]/30 overflow-hidden">
+              <div className="relative w-[380px] h-[520px] rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border-2 border-[#4A8CFF]/30 overflow-hidden">
                 <img 
                   src={profileImage} 
                   alt="Marcus Túlio de Melo" 
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
               </div>
             </div>
