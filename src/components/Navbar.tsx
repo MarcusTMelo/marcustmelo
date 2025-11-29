@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import logo from "@/assets/logo-marcustmelo.png";
+import logo from "@/assets/MarcusTMelo.svg";
 
 interface NavItem {
   label: string;
@@ -109,7 +109,7 @@ const Navbar = () => {
             <img
               src={logo}
               alt="Marcus T. Melo - Automação & IA"
-              className="h-8 w-auto"
+              className="h-12 w-auto"
             />
           </a>
 
