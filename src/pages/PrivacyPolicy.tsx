@@ -5,7 +5,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 const PrivacyPolicy = () => {
-  // Garante que a página comece do topo ao ser carregada
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = "Política de Privacidade | Marcus T. Melo";
@@ -30,13 +29,14 @@ const PrivacyPolicy = () => {
             <p className="text-lg text-[#D6D6E0]">Última atualização: 29 de novembro de 2025</p>
 
             <p>
-              A MTM Automação, operada por Marcus Túlio de Melo, respeita sua privacidade e está comprometida em
-              proteger seus dados pessoais. Esta Política explica como coletamos, usamos e protegemos suas informações
-              ao utilizar nosso site e serviços.
+              A MTM Automação, operada por <strong>Marcus T. Melo</strong>, respeita sua privacidade e está comprometida
+              em proteger seus dados pessoais. Esta Política explica como coletamos, usamos e protegemos suas
+              informações ao utilizar nosso site e serviços.
             </p>
 
             <p>Esta política segue as diretrizes da Lei Geral de Proteção de Dados (LGPD – Lei 13.709/2018).</p>
 
+            {/* SEÇÃO 1 */}
             <section className="space-y-3 pt-4">
               <h2 className="text-xl font-semibold text-foreground">1. Quem somos</h2>
               <div className="bg-white/5 p-4 rounded-lg border border-white/10">
@@ -65,6 +65,7 @@ const PrivacyPolicy = () => {
               </div>
             </section>
 
+            {/* SEÇÃO 2 */}
             <section className="space-y-3 pt-2">
               <h2 className="text-xl font-semibold text-foreground">2. Informações que coletamos</h2>
 
@@ -106,6 +107,7 @@ const PrivacyPolicy = () => {
               </ul>
             </section>
 
+            {/* SEÇÃO 3 */}
             <section className="space-y-3 pt-2">
               <h2 className="text-xl font-semibold text-foreground">3. Como usamos seus dados</h2>
 
@@ -131,6 +133,7 @@ const PrivacyPolicy = () => {
               </p>
             </section>
 
+            {/* SEÇÃO 4 */}
             <section className="space-y-3 pt-2">
               <h2 className="text-xl font-semibold text-foreground">4. Compartilhamento de dados</h2>
 
@@ -158,6 +161,7 @@ const PrivacyPolicy = () => {
               </p>
             </section>
 
+            {/* SEÇÃO 5 */}
             <section className="space-y-3 pt-2">
               <h2 className="text-xl font-semibold text-foreground">5. Cookies</h2>
 
@@ -175,6 +179,7 @@ const PrivacyPolicy = () => {
               <p>Você pode desativar cookies no navegador. Isso pode limitar algumas funcionalidades.</p>
             </section>
 
+            {/* SEÇÃO 6 */}
             <section className="space-y-3 pt-2">
               <h2 className="text-xl font-semibold text-foreground">6. Seus direitos (LGPD)</h2>
               <p>Você pode solicitar:</p>
@@ -188,6 +193,7 @@ const PrivacyPolicy = () => {
                 <li>Revogação de consentimento</li>
                 <li>Oposição ao tratamento quando aplicável</li>
               </ul>
+
               <div className="bg-white/5 p-4 rounded-lg border border-white/10 mt-4">
                 <p className="m-0">
                   <strong className="text-white">Como exercer:</strong>
@@ -205,6 +211,7 @@ const PrivacyPolicy = () => {
               </div>
             </section>
 
+            {/* SEÇÃO 7 */}
             <section className="space-y-3 pt-2">
               <h2 className="text-xl font-semibold text-foreground">7. Segurança dos dados</h2>
 
@@ -218,6 +225,7 @@ const PrivacyPolicy = () => {
                 <li>Isolamento de ambientes</li>
                 <li>Monitoramento básico para prevenção de abusos</li>
               </ul>
+
               <p className="text-sm italic opacity-80">
                 Sem mencionar ferramentas específicas, para evitar fragilidade jurídica no futuro.
               </p>
@@ -233,6 +241,7 @@ const PrivacyPolicy = () => {
               <p>Se ocorrer incidente relevante, você será informada(o) em até 72 horas, conforme LGPD.</p>
             </section>
 
+            {/* SEÇÃO 8 */}
             <section className="space-y-3 pt-2">
               <h2 className="text-xl font-semibold text-foreground">8. Dados de menores</h2>
               <p>
@@ -241,6 +250,7 @@ const PrivacyPolicy = () => {
               </p>
             </section>
 
+            {/* SEÇÃO 9 */}
             <section className="space-y-3 pt-2">
               <h2 className="text-xl font-semibold text-foreground">9. Uso de Inteligência Artificial</h2>
               <div className="border-l-4 border-[#C8B8E6] pl-4 py-1 bg-white/5 rounded-r-lg">
@@ -253,6 +263,7 @@ const PrivacyPolicy = () => {
                   vieses ou desatualizações.
                 </p>
               </div>
+
               <p>Ao utilizar recursos apoiados por IA, você reconhece que:</p>
               <ul className="list-disc list-inside space-y-1 ml-4 marker:text-[#C8B8E6]">
                 <li>
@@ -263,6 +274,7 @@ const PrivacyPolicy = () => {
               </ul>
             </section>
 
+            {/* SEÇÃO 10 */}
             <section className="space-y-3 pt-2">
               <h2 className="text-xl font-semibold text-foreground">10. Alterações nesta política</h2>
               <p>Podemos atualizar esta Política periodicamente. Quando isso ocorrer:</p>
@@ -273,6 +285,7 @@ const PrivacyPolicy = () => {
               <p>Recomendamos revisão periódica desta página.</p>
             </section>
 
+            {/* SEÇÃO 11 */}
             <section className="space-y-3 pt-2">
               <h2 className="text-xl font-semibold text-foreground">11. Legislação e foro</h2>
               <p>Esta Política é regida pelas leis brasileiras, incluindo:</p>
@@ -284,6 +297,7 @@ const PrivacyPolicy = () => {
               <p>Foro: Águas Claras/DF.</p>
             </section>
 
+            {/* SEÇÃO 12 */}
             <section className="space-y-3 pt-4 border-t border-white/10">
               <h2 className="text-xl font-semibold text-foreground">12. Contato</h2>
               <p>
@@ -304,7 +318,7 @@ const PrivacyPolicy = () => {
                 <br />
                 📍 Águas Claras – DF
                 <br />
-                DPO (Encarregado de Dados): Marcus Túlio de Melo
+                DPO (Pessoa Encarregada de Dados): <strong>Marcus T. Melo</strong>
               </p>
             </section>
 
@@ -316,6 +330,7 @@ const PrivacyPolicy = () => {
           </div>
         </div>
       </div>
+
       <Footer />
     </div>
   );
