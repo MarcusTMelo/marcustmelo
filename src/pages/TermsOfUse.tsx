@@ -194,7 +194,7 @@ const TermsOfUse = () => {
               <p>
                 O tratamento de dados pessoais decorrentes do uso deste site é regulado pela{" "}
                 <a
-                  href="https://marcustmelo.com/privacy"
+                  href="https://marcustmelo.com/politica-de-privacidade"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[#C8B8E6] hover:underline transition-colors"
