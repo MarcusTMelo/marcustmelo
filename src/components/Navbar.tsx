@@ -90,6 +90,13 @@ const Navbar = () => {
     }
   };
 
+  const isActiveLink = (item: NavItem) => {
+    if (item.isRoute) {
+      return location.pathname === item.href;
+    }
+    return location.pathname === "/" && location.hash === `#${item.href}`;
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -153,7 +160,11 @@ const Navbar = () => {
               <button
                 key={item.label}
                 onClick={() => handleNavClick(item)}
-                className="px-4 py-3 text-left text-base font-medium text-[#D6D6E0] hover:text-[#C7A7FF] hover:bg-[#C7A7FF]/5 rounded-lg transition-all duration-300"
+                className={`px-4 py-3 text-left text-base font-medium rounded-lg transition-all duration-300 ${
+                  isActiveLink(item)
+                    ? "text-[#C7A7FF] bg-[#C7A7FF]/10 border-l-2 border-[#C7A7FF]"
+                    : "text-[#D6D6E0] hover:text-[#C7A7FF] hover:bg-[#C7A7FF]/5"
+                }`}
               >
                 {item.label}
               </button>
