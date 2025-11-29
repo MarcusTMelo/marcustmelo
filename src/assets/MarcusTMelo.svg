@@ -1,75 +1,36 @@
-<svg width="1000" height="200" viewBox="0 0 1000 200" xmlns="http://www.w3.org/2000/svg">
+<svg xmlns="http://www.w3.org/2000/svg" width="260" height="40" viewBox="0 0 600 80">
   <defs>
-    <!-- Fonte -->
     <style type="text/css">
       @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&amp;display=swap');
 
       .mtm-text {
         font-family: 'Montserrat', sans-serif;
         font-weight: 900;
-        font-size: 72px;
-        letter-spacing: 2px;
+        font-size: 40px;
+        letter-spacing: 4px;
         text-anchor: middle;
       }
 
-      /* ===== DARK MODE (default) ===== */
+      /* Dark mode (default) */
       .logo-color {
-        stroke: #CBA7FF;
         fill: #CBA7FF;
       }
 
-      /* ===== LIGHT MODE ===== */
+      /* Light mode */
       @media (prefers-color-scheme: light) {
         .logo-color {
-          stroke: #7B4FC9;
           fill: #7B4FC9;
         }
       }
     </style>
-
-    <!-- Glow animado -->
-    <filter id="neonPulse" x="-50%" y="-80%" width="200%" height="300%">
-      <!-- Blur animado -->
-      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur">
-        <animate attributeName="stdDeviation"
-                 values="2;5;2"
-                 dur="1.8s"
-                 repeatCount="indefinite" />
-      </feGaussianBlur>
-
-      <!-- Cor do brilho -->
-      <feColorMatrix in="blur" type="matrix" result="glow"
-        values="0 0 0 0 0.80
-                0 0 0 0 0.60
-                0 0 0 0 1.00
-                0 0 0 0.75 0" />
-
-      <feMerge>
-        <feMergeNode in="glow" />
-        <feMergeNode in="SourceGraphic" />
-      </feMerge>
-    </filter>
   </defs>
 
-  <!-- TEXTO -->
+  <!-- Texto -->
   <text
-    x="500"
-    y="95"
+    x="300"
+    y="52"
     class="mtm-text logo-color"
-    filter="url(#neonPulse)"
   >
     MARCUS T. MELO
   </text>
-
-  <!-- LINHA -->
-  <line
-    x1="75"
-    y1="145"
-    x2="925"
-    y2="145"
-    stroke-width="10"
-    stroke-linecap="round"
-    class="logo-color"
-    filter="url(#neonPulse)"
-  />
 </svg>
