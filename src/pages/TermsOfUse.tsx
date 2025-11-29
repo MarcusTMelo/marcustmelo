@@ -216,10 +216,7 @@ const TermsOfUse = () => {
                 Estes Termos de Uso podem ser atualizados periodicamente. A data indicada no início deste documento
                 reflete a versão mais recente.
               </p>
-              <p>
-                Recomenda-se que você revise esta página de tempos em tempos para se manter informado(a) sobre eventuais
-                alterações.
-              </p>
+              <p>Recomenda-se que você revise esta página de tempos em tempos para acompanhar eventuais alterações.</p>
             </section>
 
             {/* 11. Legislação e foro */}
