@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logo from "@/assets/logo-marcustmelo-final.png";
 
 interface NavItem {
   label: string;
@@ -100,12 +101,17 @@ const Navbar = () => {
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <button
-            onClick={() => handleNavClick({ label: "Início", href: "hero" })}
-            className="text-lg sm:text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] hover:opacity-80 transition-opacity"
+          <a
+            href="/"
+            className="hover:opacity-80 transition-opacity"
+            aria-label="Marcus T. Melo - Automação & IA"
           >
-            Marcus T. Melo
-          </button>
+            <img
+              src={logo}
+              alt="Marcus T. Melo - Automação & IA"
+              className="h-12 w-auto"
+            />
+          </a>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-1">
