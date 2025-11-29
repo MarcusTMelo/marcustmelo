@@ -1,5 +1,6 @@
 import { Check } from "lucide-react";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
+import profileImage from "@/assets/marcus-tulio-melo.jpg";
 
 const About = () => {
   const { elementRef, isVisible } = useIntersectionObserver();
@@ -23,9 +24,12 @@ const About = () => {
       <div ref={elementRef} className="max-w-7xl mx-auto relative z-10">
         {/* Title Section */}
         <div className="text-center mb-16">
-          <h2 className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] bg-clip-text text-transparent transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            Sobre mim — Marcus Túlio Melo
+          <h2 className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-2 bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] bg-clip-text text-transparent transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            Sobre mim
           </h2>
+          <p className={`text-2xl md:text-3xl text-[#D6D6E0] font-light transition-all duration-700 delay-150 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            Marcus Túlio de Melo
+          </p>
         </div>
 
         {/* Two Column Layout */}
@@ -36,17 +40,13 @@ const About = () => {
               {/* Gradient frame */}
               <div className="absolute -inset-6 bg-gradient-to-br from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] rounded-3xl opacity-20 blur-xl group-hover:opacity-30 transition-opacity duration-500" />
               
-              {/* Image placeholder */}
-              <div className="relative w-[480px] h-[480px] rounded-2xl bg-gradient-to-br from-card/50 to-card/30 border-2 border-[#4A8CFF]/30 overflow-hidden">
-                {/* Placeholder content */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-64 h-64 mx-auto mb-6 rounded-full bg-gradient-to-br from-[#C7A7FF]/20 to-[#6EC8FF]/20 flex items-center justify-center">
-                      <span className="text-9xl">👨‍💻</span>
-                    </div>
-                    <p className="text-[#D6D6E0]/50 text-lg">Marcus T. Melo</p>
-                  </div>
-                </div>
+              {/* Profile Image */}
+              <div className="relative w-[480px] h-[480px] rounded-2xl border-2 border-[#4A8CFF]/30 overflow-hidden">
+                <img 
+                  src={profileImage} 
+                  alt="Marcus Túlio de Melo" 
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
           </div>
