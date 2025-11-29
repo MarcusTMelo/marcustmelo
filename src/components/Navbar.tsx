@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import logo from "@/assets/logo-marcustmelo-final.png";
+import logo from "@/assets/logo-marcustmelo.png";
 
 interface NavItem {
   label: string;
