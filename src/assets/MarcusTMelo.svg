@@ -25,15 +25,22 @@
           fill: #7B4FC9;
         }
       }
+
+      /* Disable glow on mobile and for reduced motion preference */
+      @media (max-width: 768px), (prefers-reduced-motion: reduce) {
+        .with-glow {
+          filter: none !important;
+        }
+      }
     </style>
 
-    <!-- Glow animado -->
+    <!-- Glow animado - slower animation for better performance -->
     <filter id="neonPulse" x="-50%" y="-80%" width="200%" height="300%">
       <!-- Blur animado -->
-      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur">
         <animate attributeName="stdDeviation"
-                 values="2;5;2"
-                 dur="1.8s"
+                 values="2;3.5;2"
+                 dur="3s"
                  repeatCount="indefinite" />
       </feGaussianBlur>
 
@@ -42,7 +49,7 @@
         values="0 0 0 0 0.80
                 0 0 0 0 0.60
                 0 0 0 0 1.00
-                0 0 0 0.75 0" />
+                0 0 0 0.6 0" />
 
       <feMerge>
         <feMergeNode in="glow" />
@@ -55,7 +62,7 @@
   <text
     x="500"
     y="95"
-    class="mtm-text logo-color"
+    class="mtm-text logo-color with-glow"
     filter="url(#neonPulse)"
   >
     MARCUS T. MELO
@@ -69,7 +76,7 @@
     y2="145"
     stroke-width="10"
     stroke-linecap="round"
-    class="logo-color"
+    class="logo-color with-glow"
     filter="url(#neonPulse)"
   />
 </svg>
