@@ -26,7 +26,7 @@
         }
       }
 
-      /* Disable glow on mobile and for reduced motion preference */
+      /* Desativa o glow em telas pequenas e “reduzir animações” */
       @media (max-width: 768px), (prefers-reduced-motion: reduce) {
         .with-glow {
           filter: none !important;
@@ -34,9 +34,8 @@
       }
     </style>
 
-    <!-- Glow animado - slower animation for better performance -->
+    <!-- Glow animado -->
     <filter id="neonPulse" x="-50%" y="-80%" width="200%" height="300%">
-      <!-- Blur animado -->
       <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur">
         <animate attributeName="stdDeviation"
                  values="2;3.5;2"
@@ -44,7 +43,6 @@
                  repeatCount="indefinite" />
       </feGaussianBlur>
 
-      <!-- Cor do brilho -->
       <feColorMatrix in="blur" type="matrix" result="glow"
         values="0 0 0 0 0.80
                 0 0 0 0 0.60
@@ -61,22 +59,10 @@
   <!-- TEXTO -->
   <text
     x="500"
-    y="95"
+    y="115"
     class="mtm-text logo-color with-glow"
     filter="url(#neonPulse)"
   >
     MARCUS T. MELO
   </text>
-
-  <!-- LINHA -->
-  <line
-    x1="75"
-    y1="145"
-    x2="925"
-    y2="145"
-    stroke-width="10"
-    stroke-linecap="round"
-    class="logo-color with-glow"
-    filter="url(#neonPulse)"
-  />
 </svg>
