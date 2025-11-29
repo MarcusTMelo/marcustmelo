@@ -30,9 +30,9 @@ const PrivacyPolicy = () => {
             <p className="text-lg text-[#D6D6E0]">Última atualização: 29 de novembro de 2025</p>
 
             <p>
-              A MTM Automação, operada por Marcus Túlio Melo, respeita sua privacidade e está comprometida em proteger
-              seus dados pessoais. Esta Política explica como coletamos, usamos e protegemos suas informações ao
-              utilizar nosso site e serviços.
+              A MTM Automação, operada por Marcus Túlio de Melo, respeita sua privacidade e está comprometida em
+              proteger seus dados pessoais. Esta Política explica como coletamos, usamos e protegemos suas informações
+              ao utilizar nosso site e serviços.
             </p>
 
             <p>Esta política segue as diretrizes da Lei Geral de Proteção de Dados (LGPD – Lei 13.709/2018).</p>
@@ -304,7 +304,7 @@ const PrivacyPolicy = () => {
                 <br />
                 📍 Águas Claras – DF
                 <br />
-                DPO (Encarregado de Dados): Marcus Túlio Melo
+                DPO (Encarregado de Dados): Marcus Túlio de Melo
               </p>
             </section>
 
