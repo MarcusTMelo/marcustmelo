@@ -110,13 +110,13 @@ const Navbar = () => {
           {/* Logo */}
           <a
             href="/"
-            className="hover:opacity-80 transition-opacity"
+            className="hover:opacity-90 transition-all duration-300"
             aria-label="Marcus T. Melo - Automação & IA"
           >
             <img
               src={logo}
               alt="Marcus T. Melo - Automação & IA"
-              className="h-12 w-auto"
+              className="h-10 w-auto sm:h-11"
             />
           </a>
 
