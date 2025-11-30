@@ -27,10 +27,24 @@
         }
       }
       
+      @keyframes glowPulse {
+        0%, 100% {
+          filter: url(#subtleGlow);
+        }
+        50% {
+          filter: url(#strongGlow);
+        }
+      }
+      
+      .with-glow {
+        animation: glowPulse 3s ease-in-out 1.5s infinite;
+      }
+      
       /* Desativa o glow em telas pequenas e "reduzir animações" */
       @media (max-width: 768px), (prefers-reduced-motion: reduce) {
         .with-glow {
-          filter: none !important;
+          filter: url(#subtleGlow) !important;
+          animation: none !important;
         }
         .logo-line {
           animation: none;
@@ -54,6 +68,20 @@
                 0 0 0 0 0.65
                 0 0 0 0 1.00
                 0 0 0 0.4 0" />
+      <feMerge>
+        <feMergeNode in="glow" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    
+    <!-- Glow mais intenso para o pulso -->
+    <filter id="strongGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
+      <feColorMatrix in="blur" type="matrix" result="glow"
+        values="0 0 0 0 0.78
+                0 0 0 0 0.65
+                0 0 0 0 1.00
+                0 0 0 0.6 0" />
       <feMerge>
         <feMergeNode in="glow" />
         <feMergeNode in="SourceGraphic" />
