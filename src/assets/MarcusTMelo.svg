@@ -1,1 +1,52 @@
-<svg width="1000" height="200" viewBox="0 0 1000 200" xmlns="http://www.w3.org/2000/svg"> <defs> <!-- Fonte --> <style type="text/css"> @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&amp;display=swap'); .mtm-text { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 72px; letter-spacing: 2px; text-anchor: middle; } /* ===== DARK MODE (default) ===== */ .logo-color { stroke: #CBA7FF; fill: #CBA7FF; } /* ===== LIGHT MODE ===== */ @media (prefers-color-scheme: light) { .logo-color { stroke: #7B4FC9; fill: #7B4FC9; } } /* Desativa o glow em telas pequenas e “reduzir animações” */ @media (max-width: 768px), (prefers-reduced-motion: reduce) { .with-glow { filter: none !important; } } </style> <!-- Glow animado --> <filter id="neonPulse" x="-50%" y="-80%" width="200%" height="300%"> <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"> <animate attributeName="stdDeviation" values="2;3.5;2" dur="3s" repeatCount="indefinite" /> </feGaussianBlur> <feColorMatrix in="blur" type="matrix" result="glow" values="0 0 0 0 0.80 0 0 0 0 0.60 0 0 0 0 1.00 0 0 0 0.6 0" /> <feMerge> <feMergeNode in="glow" /> <feMergeNode in="SourceGraphic" /> </feMerge> </filter> </defs> <!-- TEXTO --> <text x="500" y="115" class="mtm-text logo-color with-glow" filter="url(#neonPulse)" > MARCUS T. MELO </text> </svg>
+<svg width="1000" height="200" viewBox="0 0 1000 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style type="text/css">
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@700;800&amp;display=swap');
+      
+      .mtm-text {
+        font-family: 'Inter', sans-serif;
+        font-weight: 800;
+        font-size: 68px;
+        letter-spacing: -1px;
+        text-anchor: middle;
+      }
+      
+      .logo-gradient {
+        fill: url(#logoGradient);
+      }
+      
+      /* Desativa o glow em telas pequenas e "reduzir animações" */
+      @media (max-width: 768px), (prefers-reduced-motion: reduce) {
+        .with-glow {
+          filter: none !important;
+        }
+      }
+    </style>
+    
+    <!-- Gradiente principal alinhado com a paleta do site -->
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#C7A7FF;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#6EC8FF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4A8CFF;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Glow suave e elegante -->
+    <filter id="subtleGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
+      <feColorMatrix in="blur" type="matrix" result="glow"
+        values="0 0 0 0 0.78
+                0 0 0 0 0.65
+                0 0 0 0 1.00
+                0 0 0 0.4 0" />
+      <feMerge>
+        <feMergeNode in="glow" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- TEXTO -->
+  <text x="500" y="120" class="mtm-text logo-gradient with-glow" filter="url(#subtleGlow)">
+    MARCUS T. MELO
+  </text>
+</svg>
