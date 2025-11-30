@@ -49,4 +49,11 @@
   <text x="500" y="120" class="mtm-text logo-gradient with-glow" filter="url(#subtleGlow)">
     MARCUS T. MELO
   </text>
+  
+  <!-- LINHA DECORATIVA -->
+  <line x1="250" y1="145" x2="750" y2="145" 
+        stroke="url(#logoGradient)" 
+        stroke-width="2" 
+        stroke-linecap="round"
+        opacity="0.6" />
 </svg>
