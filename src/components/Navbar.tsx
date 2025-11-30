@@ -126,7 +126,11 @@ const Navbar = () => {
               <button
                 key={item.label}
                 onClick={() => handleNavClick(item)}
-                className="px-4 py-2 text-sm font-medium text-[#D6D6E0] hover:text-[#C7A7FF] transition-colors duration-300"
+                className={`px-4 py-2 text-sm font-medium transition-all duration-300 rounded-lg ${
+                  isActiveLink(item)
+                    ? "text-[#C7A7FF] bg-[#C7A7FF]/10"
+                    : "text-[#D6D6E0] hover:text-[#C7A7FF] hover:bg-[#C7A7FF]/5"
+                }`}
               >
                 {item.label}
               </button>
