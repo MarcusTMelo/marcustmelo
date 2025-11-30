@@ -15,7 +15,7 @@ const WorkStyle = () => {
   ];
 
   return (
-    <section className="relative py-24 px-6 overflow-hidden bg-gradient-to-b from-background via-background/95 to-background">
+    <section id="work-style" className="relative py-24 px-6 overflow-hidden bg-gradient-to-b from-background via-background/95 to-background">
       <div ref={elementRef} className="max-w-6xl mx-auto relative z-10">
         {/* Title */}
         <h2 className={`text-4xl md:text-5xl font-bold text-center mb-8 bg-gradient-to-r from-primary via-[#6EC8FF] to-[#4A8CFF] bg-clip-text text-transparent transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>

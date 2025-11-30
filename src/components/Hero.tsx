@@ -3,6 +3,13 @@ import { SplineScene } from "@/components/ui/spline";
 import { Spotlight } from "@/components/ui/spotlight";
 
 const Hero = () => {
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <div id="hero" className="relative w-full min-h-[700px] pt-20 overflow-hidden" style={{ backgroundColor: "#0B0B0D" }}>
       {/* Névoas sutis atmosféricas */}
@@ -87,11 +94,15 @@ const Hero = () => {
 
           {/* Botões CTA */}
           <div className="flex flex-wrap gap-4 pt-4">
-            <button className="group relative px-8 py-4 font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] text-white hover:shadow-[0_0_30px_rgba(199,167,255,0.4)]">
+            <button 
+              onClick={() => scrollToSection('contact')}
+              className="group relative px-8 py-4 font-semibold rounded-full overflow-hidden transition-all duration-300 hover:scale-105 bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] text-white hover:shadow-[0_0_30px_rgba(199,167,255,0.4)]"
+            >
               <span className="relative z-10">Vamos conversar</span>
             </button>
 
             <button
+              onClick={() => scrollToSection('work-style')}
               className="px-8 py-4 font-semibold rounded-full transition-all duration-300 bg-white/[0.03] backdrop-blur-sm border hover:bg-white/[0.06]"
               style={{ color: "#D6D6E0", borderColor: "rgba(199,167,255,0.2)" }}
             >
