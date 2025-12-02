@@ -13,19 +13,21 @@ const Footer = () => {
   return (
     <footer className="bg-[#0D0B12] border-t border-[#5DADE2]/20">
       <div className="max-w-7xl mx-auto px-4 py-12">
-        {/* Newsletter Form */}
-        <div className="max-w-2xl mx-auto mb-12">
-          <NewsletterForm source="footer" />
-        </div>
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-y-10 md:gap-8 mb-8">
-          {/* Left - About */}
-          <div className="space-y-3">
-            <h3 className="text-xl font-bold text-foreground">Marcus T. Melo</h3>
-            <p className="text-lg text-[#C8B8E6]">Automação & IA</p>
-            <p className="text-sm text-[#D6D6E0]/80">
-              Automação e IA com foco em pequenos negócios — simples, humana e eficiente.
-            </p>
+          {/* Left - About + Newsletter */}
+          <div className="space-y-4">
+            <div className="space-y-3">
+              <h3 className="text-xl font-bold text-foreground">Marcus T. Melo</h3>
+              <p className="text-lg text-[#C8B8E6]">Automação & IA</p>
+              <p className="text-sm text-[#D6D6E0]/80">
+                Automação e IA com foco em pequenos negócios — simples, humana e eficiente.
+              </p>
+            </div>
+            
+            {/* Newsletter Form - Compact Version */}
+            <div className="pt-2">
+              <NewsletterForm source="footer" compact />
+            </div>
           </div>
 
           {/* Center - Navigation */}
