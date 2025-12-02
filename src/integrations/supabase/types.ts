@@ -127,6 +127,33 @@ export type Database = {
         }
         Relationships: []
       }
+      newsletter_subscribers: {
+        Row: {
+          consent: boolean
+          created_at: string
+          email: string
+          id: string
+          name: string | null
+          source: string | null
+        }
+        Insert: {
+          consent?: boolean
+          created_at?: string
+          email: string
+          id?: string
+          name?: string | null
+          source?: string | null
+        }
+        Update: {
+          consent?: boolean
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string | null
+          source?: string | null
+        }
+        Relationships: []
+      }
       site_settings: {
         Row: {
           id: string

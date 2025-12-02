@@ -8,6 +8,7 @@ import { format } from "date-fns";
 import { Helmet } from "react-helmet";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import NewsletterForm from "@/components/NewsletterForm";
 import DOMPurify from 'dompurify';
 
 interface BlogPostData {
@@ -442,6 +443,11 @@ const BlogPost = () => {
               </div>
             </div>
           )}
+
+          {/* Newsletter Form */}
+          <div className="mt-16 pt-8 border-t border-border/50">
+            <NewsletterForm source="post" />
+          </div>
 
           {/* Back to Blog */}
           <div className="mt-16 pt-8 border-t border-border/50">
