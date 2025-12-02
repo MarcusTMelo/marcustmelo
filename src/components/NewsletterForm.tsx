@@ -9,9 +9,10 @@ import { toast } from "@/hooks/use-toast";
 
 interface NewsletterFormProps {
   source: "footer" | "post";
+  compact?: boolean;
 }
 
-const NewsletterForm = ({ source }: NewsletterFormProps) => {
+const NewsletterForm = ({ source, compact = false }: NewsletterFormProps) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
@@ -114,8 +115,8 @@ const NewsletterForm = ({ source }: NewsletterFormProps) => {
 
   if (success) {
     return (
-      <div className="p-6 rounded-xl bg-gradient-to-br from-[#C7A7FF]/10 to-[#6EC8FF]/10 border border-[#C7A7FF]/30">
-        <p className="text-center text-foreground font-medium">
+      <div className={compact ? "p-3 rounded-lg bg-gradient-to-br from-[#C7A7FF]/10 to-[#6EC8FF]/10 border border-[#C7A7FF]/30" : "p-6 rounded-xl bg-gradient-to-br from-[#C7A7FF]/10 to-[#6EC8FF]/10 border border-[#C7A7FF]/30"}>
+        <p className={compact ? "text-center text-sm text-foreground" : "text-center text-foreground font-medium"}>
           Inscrição realizada com sucesso! Obrigado por acompanhar meu trabalho ✨
         </p>
       </div>
@@ -123,17 +124,17 @@ const NewsletterForm = ({ source }: NewsletterFormProps) => {
   }
 
   return (
-    <div className="p-6 rounded-xl bg-[#1A1A1F]/80 border border-border/30">
-      <h3 className="text-xl font-semibold mb-2 text-foreground">
+    <div className={compact ? "p-4 rounded-lg bg-[#1A1A1F]/60 border border-border/20" : "p-6 rounded-xl bg-[#1A1A1F]/80 border border-border/30"}>
+      <h3 className={compact ? "text-base font-semibold mb-1 text-foreground" : "text-xl font-semibold mb-2 text-foreground"}>
         Receba novidades por e-mail
       </h3>
-      <p className="text-sm text-muted-foreground mb-5">
+      <p className={compact ? "text-xs text-muted-foreground mb-3" : "text-sm text-muted-foreground mb-5"}>
         Inscreva-se para receber atualizações sobre IA, automação e dicas práticas para pequenos negócios.
       </p>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className={compact ? "space-y-2.5" : "space-y-4"}>
         <div>
-          <Label htmlFor={`name-${source}`} className="text-sm text-muted-foreground">
+          <Label htmlFor={`name-${source}`} className={compact ? "text-xs text-muted-foreground" : "text-sm text-muted-foreground"}>
             Nome (opcional)
           </Label>
           <Input
@@ -143,13 +144,13 @@ const NewsletterForm = ({ source }: NewsletterFormProps) => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             disabled={loading}
-            className="mt-1"
+            className={compact ? "mt-0.5 h-8 text-sm" : "mt-1"}
             maxLength={100}
           />
         </div>
 
         <div>
-          <Label htmlFor={`email-${source}`} className="text-sm text-muted-foreground">
+          <Label htmlFor={`email-${source}`} className={compact ? "text-xs text-muted-foreground" : "text-sm text-muted-foreground"}>
             E-mail <span className="text-destructive">*</span>
           </Label>
           <Input
@@ -160,7 +161,7 @@ const NewsletterForm = ({ source }: NewsletterFormProps) => {
             onChange={(e) => setEmail(e.target.value)}
             disabled={loading}
             required
-            className="mt-1"
+            className={compact ? "mt-0.5 h-8 text-sm" : "mt-1"}
           />
         </div>
 
@@ -170,12 +171,12 @@ const NewsletterForm = ({ source }: NewsletterFormProps) => {
             checked={consent}
             onCheckedChange={(checked) => setConsent(checked as boolean)}
             disabled={loading}
-            className="mt-1"
+            className={compact ? "mt-0.5" : "mt-1"}
             required
           />
           <Label
             htmlFor={`consent-${source}`}
-            className="text-sm text-muted-foreground leading-relaxed cursor-pointer"
+            className={compact ? "text-xs text-muted-foreground leading-snug cursor-pointer" : "text-sm text-muted-foreground leading-relaxed cursor-pointer"}
           >
             Quero receber novidades por e-mail e aceito a{" "}
             <Link
@@ -190,22 +191,24 @@ const NewsletterForm = ({ source }: NewsletterFormProps) => {
         <Button
           type="submit"
           disabled={loading}
-          className="w-full bg-gradient-to-r from-[#C7A7FF] to-[#6EC8FF] hover:opacity-90 text-background font-medium"
+          className={compact ? "w-full h-8 text-sm bg-gradient-to-r from-[#C7A7FF] to-[#6EC8FF] hover:opacity-90 text-background font-medium" : "w-full bg-gradient-to-r from-[#C7A7FF] to-[#6EC8FF] hover:opacity-90 text-background font-medium"}
         >
           {loading ? "Inscrevendo..." : "Inscrever-se"}
         </Button>
       </form>
 
-      <p className="text-xs text-muted-foreground mt-4 text-center">
-        Saiba como tratamos seus dados na nossa{" "}
-        <Link
-          to="/politica-de-privacidade"
-          className="text-[#C7A7FF] hover:text-[#6EC8FF] underline underline-offset-2 transition-colors"
-        >
-          Política de Privacidade
-        </Link>
-        .
-      </p>
+      {!compact && (
+        <p className="text-xs text-muted-foreground mt-4 text-center">
+          Saiba como tratamos seus dados na nossa{" "}
+          <Link
+            to="/politica-de-privacidade"
+            className="text-[#C7A7FF] hover:text-[#6EC8FF] underline underline-offset-2 transition-colors"
+          >
+            Política de Privacidade
+          </Link>
+          .
+        </p>
+      )}
     </div>
   );
 };
