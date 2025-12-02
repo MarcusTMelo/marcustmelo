@@ -16,6 +16,7 @@ import AdminBlogForm from "./pages/AdminBlogForm";
 import AdminCategories from "./pages/AdminCategories";
 import AdminContacts from "./pages/AdminContacts";
 import AdminImages from "./pages/AdminImages";
+import AdminSubscribers from "./pages/AdminSubscribers";
 import BlogPost from "./pages/BlogPost";
 import BlogList from "./pages/BlogList";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -45,6 +46,7 @@ const App = () => (
           <Route path="/admin/blog/edit/:id" element={<AdminBlogForm />} />
           <Route path="/admin/categories" element={<AdminCategories />} />
           <Route path="/admin/images" element={<AdminImages />} />
+          <Route path="/admin/subscribers" element={<AdminSubscribers />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<PublicRoute><NotFound /></PublicRoute>} />
         </Routes>

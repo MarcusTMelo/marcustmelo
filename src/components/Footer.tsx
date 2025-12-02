@@ -1,5 +1,6 @@
 import { Instagram, Linkedin, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
+import NewsletterForm from "./NewsletterForm";
 
 const Footer = () => {
   const scrollToSection = (sectionId: string) => {
@@ -12,6 +13,11 @@ const Footer = () => {
   return (
     <footer className="bg-[#0D0B12] border-t border-[#5DADE2]/20">
       <div className="max-w-7xl mx-auto px-4 py-12">
+        {/* Newsletter Form */}
+        <div className="max-w-2xl mx-auto mb-12">
+          <NewsletterForm source="footer" />
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-y-10 md:gap-8 mb-8">
           {/* Left - About */}
           <div className="space-y-3">
