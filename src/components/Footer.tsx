@@ -26,7 +26,7 @@ const Footer = () => {
             
             {/* Newsletter Form - Compact Version */}
             <div className="pt-2">
-              <NewsletterForm source="footer" compact />
+              <NewsletterForm compact />
             </div>
           </div>
 
