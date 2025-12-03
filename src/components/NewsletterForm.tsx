@@ -4,20 +4,30 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 
 interface NewsletterFormProps {
-  source: "footer" | "post";
   compact?: boolean;
 }
 
-const NewsletterForm = ({ source, compact = false }: NewsletterFormProps) => {
+const NewsletterForm = ({ compact = false }: NewsletterFormProps) => {
+  const location = useLocation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [consent, setConsent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+
+  // Detect source based on current route
+  const getSource = (): string => {
+    const path = location.pathname;
+    // If on a specific blog post page (not just /blog)
+    if (path.startsWith("/blog/") && path.length > 6) {
+      return "blog_post";
+    }
+    return "footer";
+  };
 
   const validateEmail = (email: string) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -73,7 +83,7 @@ const NewsletterForm = ({ source, compact = false }: NewsletterFormProps) => {
           email: email.trim().toLowerCase(),
           name: name.trim() || null,
           consent: true,
-          source: source,
+          source: getSource(),
         });
 
       if (error) {
@@ -134,11 +144,11 @@ const NewsletterForm = ({ source, compact = false }: NewsletterFormProps) => {
 
       <form onSubmit={handleSubmit} className={compact ? "space-y-2.5" : "space-y-4"}>
         <div>
-          <Label htmlFor={`name-${source}`} className={compact ? "text-xs text-muted-foreground" : "text-sm text-muted-foreground"}>
+          <Label htmlFor="newsletter-name" className={compact ? "text-xs text-muted-foreground" : "text-sm text-muted-foreground"}>
             Nome (opcional)
           </Label>
           <Input
-            id={`name-${source}`}
+            id="newsletter-name"
             type="text"
             placeholder="Seu nome (opcional)"
             value={name}
@@ -150,11 +160,11 @@ const NewsletterForm = ({ source, compact = false }: NewsletterFormProps) => {
         </div>
 
         <div>
-          <Label htmlFor={`email-${source}`} className={compact ? "text-xs text-muted-foreground" : "text-sm text-muted-foreground"}>
+          <Label htmlFor="newsletter-email" className={compact ? "text-xs text-muted-foreground" : "text-sm text-muted-foreground"}>
             E-mail <span className="text-destructive">*</span>
           </Label>
           <Input
-            id={`email-${source}`}
+            id="newsletter-email"
             type="email"
             placeholder="seu@email.com"
             value={email}
@@ -167,7 +177,7 @@ const NewsletterForm = ({ source, compact = false }: NewsletterFormProps) => {
 
         <div className="flex items-start gap-2">
           <Checkbox
-            id={`consent-${source}`}
+            id="newsletter-consent"
             checked={consent}
             onCheckedChange={(checked) => setConsent(checked as boolean)}
             disabled={loading}
@@ -175,7 +185,7 @@ const NewsletterForm = ({ source, compact = false }: NewsletterFormProps) => {
             required
           />
           <Label
-            htmlFor={`consent-${source}`}
+            htmlFor="newsletter-consent"
             className={compact ? "text-xs text-muted-foreground leading-snug cursor-pointer" : "text-sm text-muted-foreground leading-relaxed cursor-pointer"}
           >
             Quero receber novidades por e-mail e aceito a{" "}

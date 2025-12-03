@@ -145,9 +145,9 @@ const AdminSubscribers = () => {
 
   const getSourceBadge = (source: string | null) => {
     if (source === "footer") {
-      return <Badge variant="secondary">Rodapé</Badge>;
-    } else if (source === "post") {
-      return <Badge variant="outline">Post</Badge>;
+      return <Badge variant="secondary">Footer</Badge>;
+    } else if (source === "blog_post") {
+      return <Badge variant="outline">Blog Post</Badge>;
     }
     return <Badge variant="outline">-</Badge>;
   };
@@ -205,15 +205,15 @@ const AdminSubscribers = () => {
                   <p className="text-2xl font-bold text-foreground">{subscribers.length}</p>
                 </div>
                 <div className="p-4 rounded-lg bg-card border border-border">
-                  <p className="text-sm text-muted-foreground">Do Rodapé</p>
+                  <p className="text-sm text-muted-foreground">Do Footer</p>
                   <p className="text-2xl font-bold text-foreground">
                     {subscribers.filter((s) => s.source === "footer").length}
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-card border border-border">
-                  <p className="text-sm text-muted-foreground">Dos Posts</p>
+                  <p className="text-sm text-muted-foreground">Do Blog Post</p>
                   <p className="text-2xl font-bold text-foreground">
-                    {subscribers.filter((s) => s.source === "post").length}
+                    {subscribers.filter((s) => s.source === "blog_post").length}
                   </p>
                 </div>
               </div>
