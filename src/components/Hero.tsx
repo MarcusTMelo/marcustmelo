@@ -62,33 +62,20 @@ const Hero = () => {
 
           {/* Descrição */}
           <div className="space-y-4" style={{ color: "#D6D6E0", opacity: 0.9 }}>
-          <p className="text-lg md:text-xl leading-relaxed">
-            Transformo processos, negócios e rotinas através de sistemas inteligentes e automações criadas com{" "}
-            <span
-              className="font-semibold"
-              style={{ color: "#FF7ACB", filter: "drop-shadow(0 0 8px rgba(255,122,203,0.5))" }}
-            >
-              alma
-            </span>
-            ,{" "}
-            <span
-              className="font-semibold"
-              style={{ color: "#C7A7FF", filter: "drop-shadow(0 0 8px rgba(199,167,255,0.5))" }}
-            >
-              cor
-            </span>{" "}
-            e{" "}
-            <span
-              className="font-semibold"
-              style={{ color: "#6EC8FF", filter: "drop-shadow(0 0 8px rgba(110,200,255,0.5))" }}
-            >
-              inteligência
-            </span>
-            , sem jargão técnico e sem soluções engessadas.
-          </p>
+            <p className="text-lg md:text-xl leading-relaxed">
+              Seu negócio organizado, moderno e atendendo sozinho.
+            </p>
 
-            <p className="text-base md:text-lg italic leading-relaxed" style={{ color: "#D6D6E0", opacity: 0.7 }}>
-              Tecnologia acessível, em linguagem simples, para pessoas reais, negócios reais e problemas reais.
+            <p className="text-base md:text-lg leading-relaxed" style={{ color: "#D6D6E0", opacity: 0.85 }}>
+              Soluções práticas para consultórios, lojas e prestadores de serviço. 
+              Transformo tarefas manuais em processos automáticos, para você{" "}
+              <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#C7A7FF] to-[#4A8CFF]">
+                recuperar seu tempo
+              </span>{" "}
+              e{" "}
+              <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#FF7ACB] to-[#6EC8FF]">
+                não perder vendas
+              </span>.
             </p>
           </div>
 
@@ -106,7 +93,7 @@ const Hero = () => {
               className="px-8 py-4 font-semibold rounded-full transition-all duration-300 bg-white/[0.03] backdrop-blur-sm border hover:bg-white/[0.06]"
               style={{ color: "#D6D6E0", borderColor: "rgba(199,167,255,0.2)" }}
             >
-              Conheça meu trabalho
+              Descubra como posso ajudar
             </button>
           </div>
         </div>
