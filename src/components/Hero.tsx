@@ -67,7 +67,7 @@ const Hero = () => {
             </p>
 
             <p className="text-base md:text-lg leading-relaxed" style={{ color: "#D6D6E0", opacity: 0.85 }}>
-              Soluções práticas para consultórios, lojas e prestadores de serviço. 
+              Soluções práticas para negócios locais e profissionais independentes. 
               Transformo tarefas manuais em processos automáticos, para você{" "}
               <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#C7A7FF] to-[#4A8CFF]">
                 recuperar seu tempo
