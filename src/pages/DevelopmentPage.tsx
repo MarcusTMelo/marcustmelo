@@ -1,44 +1,50 @@
+import { Code2, Settings, Monitor, Link } from "lucide-react";
+import AuroraEffect from "./AuroraEffect"; // Importe o novo componente
+
 const DevelopmentPage = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-deep-graphite p-4">
-      <div className="text-center space-y-8 max-w-lg">
-        {/* 1. Elemento Visual Sofisticado (Substituindo os ícones simples) */}
+    // Fundo Deep Graphite e posição relativa para o Aurora Effect
+    <div className="relative flex min-h-screen items-center justify-center bg-[#0B0B0D] text-white overflow-hidden p-4">
+      {/* 1. Efeito Interativo de Aurora Boreal (Segue o mouse) */}
+      <AuroraEffect />
+
+      {/* 2. Conteúdo Central (Z-Index maior para ficar por cima do efeito) */}
+      <div className="relative z-10 text-center space-y-7 max-w-lg bg-deep-graphite/10 backdrop-blur-sm p-8 rounded-xl border border-white/5 shadow-2xl">
+        {/* Ícone de Engenharia Refinado: Mais clean e utilizando a paleta */}
         <div className="flex justify-center">
-          {/* Poderia ser um componente customizado que exibe o 'M' do seu favicon 
-              com um gradiente suave, ou uma esfera de vidro fosco com brilho interno. */}
-          <div
-            className="w-32 h-32 bg-gradient-to-br from-[#CBA7FF] to-[#7B4FC9] rounded-3xl shadow-2xl 
-                      flex items-center justify-center opacity-80 animate-pulse-slow"
-          >
-            <span className="text-6xl font-serif text-white/90">M</span>
+          <div className="relative flex items-center justify-center h-20 w-20 p-2 border-2 border-[#A9C0FF]/60 rounded-full bg-[#CBA7FF]/10">
+            <Settings className="h-10 w-10 text-[#CBA7FF]" />
+            <Code2 className="h-6 w-6 text-[#A9C0FF] absolute -bottom-1 -right-1 p-1 bg-[#0B0B0D] rounded-full" />
           </div>
         </div>
 
-        {/* 2. Títulos Refinados */}
-        <div className="space-y-3">
-          <h1 className="text-5xl font-extrabold text-[#EEC6F9]">Em Construção: A Próxima Evolução</h1>
-          <p className="text-xl text-[#A9C0FF]">
-            Ajustando os algoritmos e polindo a estética. Nosso ecossistema de **Automação & IA Humanizada** retorna em
-            breve.
+        <div className="space-y-2">
+          {/* Título e Subtítulo Pragmáticos */}
+          <h1 className="text-4xl font-bold text-white">Refinando os Detalhes</h1>
+          <p className="text-lg text-[#A9C0FF]">
+            A engenharia da **Automação & IA Humanizada** está recebendo ajustes finos.
           </p>
         </div>
 
-        {/* 3. CTA e Links (Onde a pessoa pode ir agora) */}
-        <div className="pt-6">
-          <a
-            href="https://www.linkedin.com/in/marcustmelo/" // Assumindo este é o seu perfil
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium 
-                       rounded-lg shadow-sm text-deep-graphite bg-[#CBA7FF] hover:bg-[#A9C0FF] transition-colors"
-          >
-            Acompanhe o Refinamento (LinkedIn)
-          </a>
+        <div className="space-y-2 pt-4">
+          <p className="text-sm text-white/70">Estamos migrando sistemas e otimizando a arquitetura Lovable Cloud.</p>
+          <p className="text-sm text-white/70">
+            O resultado será fluidez e inteligência. Agradeço sua paciência elegante.
+          </p>
         </div>
 
-        {/* 4. Nota de Rodapé elegante */}
-        <div className="space-y-2 pt-8">
-          <p className="text-sm text-deep-graphite/40">A tecnologia com alma exige tempo. Agradeço sua compreensão.</p>
+        {/* CTA para o LinkedIn */}
+        <div className="pt-4">
+          <a
+            href="https://www.linkedin.com/in/marcustmelo/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center space-x-2 px-4 py-2 border border-transparent text-sm font-medium 
+                           rounded-md shadow-sm text-[#0B0B0D] bg-[#CBA7FF] hover:bg-[#A9C0FF] transition-colors duration-300"
+          >
+            <Link className="h-4 w-4" />
+            <span>Acompanhe os Bastidores (LinkedIn)</span>
+          </a>
         </div>
       </div>
     </div>
