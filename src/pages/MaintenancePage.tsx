@@ -1,8 +1,10 @@
 import { Settings, Clock } from "lucide-react";
+import AuroraEffect from "@/components/AuroraEffect";
 
 const MaintenancePage = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background p-4">
+    <div className="flex min-h-screen items-center justify-center bg-background p-4 relative">
+      <AuroraEffect />
       <div className="text-center space-y-6 max-w-md">
         <div className="flex justify-center">
           <div className="relative">
