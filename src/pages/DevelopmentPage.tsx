@@ -1,5 +1,5 @@
 import { Settings, Mail } from "lucide-react";
-import AuroraEffect from "./AuroraEffect"; // Mantenha a importação do efeito
+import AuroraEffect from "@/components/AuroraEffect";
 
 const DevelopmentPage = () => {
   return (
