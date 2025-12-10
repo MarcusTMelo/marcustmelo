@@ -6,18 +6,18 @@ const HowCanIHelp = () => {
   const features = [
     {
       icon: Workflow,
-      title: "Mais organização, menos bagunça digital",
-      text: "Sua rotina fica mais clara e mais leve com formulários simples, registros organizados, páginas fáceis de usar e sistemas que fazem sentido para o seu negócio — sem complicação.",
+      title: "Processos Visuais & Organizados",
+      text: "Sua rotina deixa de ser uma lista de pendências mental e vira um fluxo claro. Você sabe exatamente o que acontece no seu negócio, sem bagunça.",
     },
     {
       icon: Sparkles,
-      title: "Atendimentos e tarefas funcionando sozinhos",
-      text: "Crio automações inteligentes que enviam mensagens, confirmam horários, fazem lembretes e organizam informações automaticamente. Você deixa de fazer tudo manualmente e ganha tempo todos os dias.",
+      title: "Autonomia Operacional",
+      text: "Sistemas que funcionam no piloto automático. Agendamentos, lembretes e respostas acontecem sozinhos, enquanto você foca no cliente.",
     },
     {
       icon: Target,
-      title: "Soluções criadas sob medida pra você",
-      text: "Cada negócio tem sua própria forma de funcionar. Por isso, eu analiso sua necessidade e crio pequenas soluções digitais que realmente ajudam a sua rotina — simples, rápidas e personalizadas.",
+      title: "Arquitetura Personalizada",
+      text: "Não acredito em fórmulas mágicas. Desenho cada solução respeitando o ritmo, o orçamento e a realidade exata do seu negócio.",
     },
   ];
 
@@ -32,12 +32,12 @@ const HowCanIHelp = () => {
       <div ref={elementRef} className="max-w-6xl mx-auto relative z-10">
         {/* Title with gradient */}
         <h2 className={`text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-6 bg-gradient-to-r from-[#C7A7FF] via-[#6EC8FF] to-[#4A8CFF] bg-clip-text text-transparent transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          Como posso transformar seu negócio
+          Transformando o caos em clareza.
         </h2>
 
         {/* Subtitle */}
         <p className={`text-lg md:text-xl text-[#D6D6E0] text-center max-w-4xl mx-auto mb-16 leading-relaxed transition-all duration-700 delay-150 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          Eu ajudo pequenas empresas a organizarem a rotina, ganharem tempo e atenderem melhor — usando tecnologia simples, IA e automações que trabalham por você, enquanto você cuida do que importa.
+          A tecnologia não deve ser mais uma dor de cabeça. Crio a infraestrutura digital que seu negócio precisa para crescer sem que você perca a sanidade.
         </p>
 
         {/* Features grid */}
