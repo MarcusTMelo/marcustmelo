@@ -43,59 +43,59 @@ const AuroraEffect = () => {
 
   return (
     <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-      {/* Primary aurora layer - follows mouse */}
+      {/* Primary aurora layer - warm amber glow */}
       <div
-        className="absolute inset-0 opacity-60"
+        className="absolute inset-0 opacity-50"
         style={{
           background: `
             radial-gradient(
               ellipse 800px 400px at ${smoothPosition.x}px ${smoothPosition.y}px,
-              hsl(var(--primary) / 0.4),
-              hsl(var(--primary) / 0.2) 30%,
+              hsl(35 90% 55% / 0.35),
+              hsl(35 90% 55% / 0.15) 30%,
               transparent 70%
             )
           `,
         }}
       />
 
-      {/* Secondary aurora layer - offset position */}
+      {/* Secondary aurora layer - golden highlight */}
       <div
-        className="absolute inset-0 opacity-40"
+        className="absolute inset-0 opacity-35"
         style={{
           background: `
             radial-gradient(
               ellipse 600px 300px at ${smoothPosition.x + 100}px ${smoothPosition.y - 50}px,
-              hsl(210 80% 70% / 0.4),
-              hsl(210 80% 70% / 0.15) 40%,
+              hsl(45 85% 60% / 0.3),
+              hsl(45 85% 60% / 0.1) 40%,
               transparent 70%
             )
           `,
         }}
       />
 
-      {/* Tertiary aurora layer - creates depth */}
+      {/* Tertiary aurora layer - subtle purple accent */}
       <div
-        className="absolute inset-0 opacity-30"
+        className="absolute inset-0 opacity-25"
         style={{
           background: `
             radial-gradient(
               ellipse 500px 250px at ${smoothPosition.x - 80}px ${smoothPosition.y + 80}px,
-              hsl(280 70% 70% / 0.35),
-              hsl(280 70% 70% / 0.1) 35%,
+              hsl(var(--primary) / 0.3),
+              hsl(var(--primary) / 0.1) 35%,
               transparent 65%
             )
           `,
         }}
       />
 
-      {/* Ambient glow - subtle background effect */}
+      {/* Ambient glow - warm background effect */}
       <div
-        className="absolute inset-0 opacity-20"
+        className="absolute inset-0 opacity-15"
         style={{
           background: `
             radial-gradient(
               circle 1000px at ${smoothPosition.x}px ${smoothPosition.y}px,
-              hsl(var(--primary) / 0.15),
+              hsl(30 80% 50% / 0.2),
               transparent 60%
             )
           `,
