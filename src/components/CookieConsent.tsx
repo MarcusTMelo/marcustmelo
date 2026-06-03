@@ -26,7 +26,7 @@ export const CookieConsent = () => {
     localStorage.setItem(COOKIE_CONSENT_KEY, "false");
     // Disable Google Analytics if user declines
     if (typeof window !== "undefined" && (window as any).gtag) {
-      (window as any)["ga-disable-G-RWHYVQHG67"] = true;
+      (window as any)["ga-disable-G-GSYVS6KLXR"] = true;
     }
     setIsVisible(false);
   };
