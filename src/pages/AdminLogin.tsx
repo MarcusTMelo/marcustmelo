@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,6 +10,9 @@ import { Lock } from "lucide-react";
 
 const AdminLogin = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const nextParam = searchParams.get("next");
+  const safeNext = nextParam && /^\/(?!\/)/.test(nextParam) ? nextParam : null;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -32,7 +35,11 @@ const AdminLogin = () => {
       }
 
       if (data.session) {
-        navigate("/admin/dashboard");
+        if (safeNext) {
+          window.location.href = safeNext;
+        } else {
+          navigate("/admin/dashboard");
+        }
       }
     } catch (err) {
       setError("Erro ao fazer login. Tente novamente.");
