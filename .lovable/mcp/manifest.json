@@ -1,0 +1,249 @@
+{
+  "version": 1,
+  "sdk_version": "0.26.1",
+  "path": "/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://ottofzjtxfutkjoksvsu.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "marcus-t-melo-automacao-ia-humanizada",
+      "version": "0.1.0",
+      "title": "Marcus T. Melo Automação & IA Humanizada"
+    },
+    "tools": [
+      {
+        "name": "list_blog_posts",
+        "title": "Listar posts do blog",
+        "description": "Lista os posts do blog com filtro opcional por status (draft/published) e busca por título.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "draft",
+                "published"
+              ],
+              "description": "Filtra por status do post."
+            },
+            "search": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Busca por parte do título."
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20,
+              "description": "Número máximo de posts."
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_blog_post",
+        "title": "Ver post do blog",
+        "description": "Retorna o conteúdo completo de um post do blog pelo slug.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "slug": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Slug do post."
+            }
+          },
+          "required": [
+            "slug"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "create_blog_post",
+        "title": "Criar post do blog",
+        "description": "Cria um novo post do blog. Por padrão salva como rascunho (draft).",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Título do post."
+            },
+            "content": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Conteúdo do post em HTML."
+            },
+            "excerpt": {
+              "type": "string",
+              "description": "Resumo curto do post."
+            },
+            "slug": {
+              "type": "string",
+              "description": "Slug personalizado; gerado do título se omitido."
+            },
+            "category": {
+              "type": "string",
+              "description": "Nome da categoria."
+            },
+            "featured_image": {
+              "type": "string",
+              "format": "uri",
+              "description": "URL da imagem de capa."
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "draft",
+                "published"
+              ],
+              "default": "draft",
+              "description": "Status de publicação."
+            }
+          },
+          "required": [
+            "title",
+            "content"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "update_blog_post",
+        "title": "Atualizar post do blog",
+        "description": "Atualiza campos de um post existente identificado pelo slug (título, conteúdo, resumo, categoria, imagem ou status).",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "slug": {
+              "type": "string",
+              "minLength": 1,
+              "description": "Slug do post a atualizar."
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1
+            },
+            "content": {
+              "type": "string",
+              "minLength": 1
+            },
+            "excerpt": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string"
+            },
+            "featured_image": {
+              "type": "string",
+              "format": "uri"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "draft",
+                "published"
+              ]
+            }
+          },
+          "required": [
+            "slug"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_contact_requests",
+        "title": "Listar mensagens de contato",
+        "description": "Lista as mensagens recebidas pelo formulário de contato, com filtro opcional por não lidas.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "only_unread": {
+              "type": "boolean",
+              "default": false,
+              "description": "Retornar somente mensagens não lidas."
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 20,
+              "description": "Número máximo de mensagens."
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_newsletter_subscribers",
+        "title": "Listar inscritos da newsletter",
+        "description": "Lista os inscritos da newsletter com origem e data de inscrição.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 200,
+              "default": 50,
+              "description": "Número máximo de inscritos."
+            }
+          },
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
