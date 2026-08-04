@@ -21,6 +21,7 @@ import BlogPost from "./pages/BlogPost";
 import BlogList from "./pages/BlogList";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfUse from "./pages/TermsOfUse";
+import OAuthConsent from "./pages/OAuthConsent";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,7 @@ const App = () => (
           <Route path="/politica-de-privacidade" element={<PublicRoute><PrivacyPolicy /></PublicRoute>} />
           <Route path="/termos-de-uso" element={<PublicRoute><TermsOfUse /></PublicRoute>} />
           <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/.lovable/oauth/consent" element={<OAuthConsent />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/contacts" element={<AdminContacts />} />
           <Route path="/admin/blog" element={<AdminBlog />} />
